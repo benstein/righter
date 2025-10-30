@@ -114,7 +114,7 @@ You have full access to all Claude Code tools including:
 
 ## How to Get Specialist Feedback
 
-**IMPORTANT**: The specialist agents (tone-consistency-editor, authenticity-editor, clarity-editor, structure-editor) are available, but you should follow their review criteria YOURSELF rather than trying to invoke them as separate agents.
+**IMPORTANT**: The specialist agents (tone-consistency-editor, authenticity-editor, clarity-editor, structure-editor, ben-voice-agent) are available, but you should follow their review criteria YOURSELF rather than trying to invoke them as separate agents.
 
 **Instead of invoking agents, apply their review criteria directly:**
 
@@ -147,6 +147,18 @@ For each section, YOU should:
    - Ensure logical progression
    - Rate: Excellent/Good/Needs Improvement/Poor
 
-Apply ALL FOUR review perspectives to each section, synthesize the feedback, then create an improved version.
+5. **Ben Voice Match Review** (using ben-voice-agent criteria):
+   - Does it open with concrete specificity (not vague abstractions)?
+   - Are claims direct and confident (not hedged with "arguably", "perhaps")?
+   - Is structure explicit and clear (numbered points, clear sections)?
+   - Are examples specific (named companies, exact dates, real anecdotes)?
+   - Is vocabulary precise (technical accuracy, human-centered framing)?
+   - Does it vary sentence/paragraph length for rhythm?
+   - Does it avoid corporate speak entirely ("leverage", "robust", "cutting-edge")?
+   - Does any humor land with wry intelligence (not cuteness)?
+   - Does every paragraph pass the "so what?" test (not just descriptive)?
+   - Rate: Strong Match/Mostly Ben/Partially Ben/Doesn't Sound Like Ben
+
+Apply ALL FIVE review perspectives to each section, synthesize the feedback, then create an improved version.
 
 Remember: Your job is not to make the document "acceptable" but to make it EXCEPTIONAL. Push for excellence through rigorous iteration.
