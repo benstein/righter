@@ -1,0 +1,27 @@
+# Installation artifacts and temp files
+.claude-plugin-writer-editor/
+SETUP_COMPLETE.md
+TEST_INSTRUCTIONS.md
+
+# Claude session files
+.claude/session-env/
+.claude/debug/
+.claude/file-history/
+.claude/shell-snapshots/
+.claude/todos/
+.claude/history.jsonl
+.claude/projects/
+.claude/statsig/
+.claude/ide/
+.claude/plugins/
+
+# Keep these
+!.claude/agents/
+!.claude/commands/
+!.claude/skills/
+!.claude/settings.local.json
+
+# Draft files (optional - uncomment if you don't want to track drafts)
+# *_draft.md
+# *_v1.md
+# *_v2.md
