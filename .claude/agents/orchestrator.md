@@ -114,7 +114,7 @@ You have full access to all Claude Code tools including:
 
 ## How to Get Specialist Feedback
 
-**IMPORTANT**: The specialist agents (tone-consistency-editor, authenticity-editor, clarity-editor, structure-editor, ben-voice-agent) are available, but you should follow their review criteria YOURSELF rather than trying to invoke them as separate agents.
+**IMPORTANT**: The specialist agents (tone-consistency-editor, authenticity-editor, clarity-editor, structure-editor, ben-voice-agent, conflict-detector) are available, but you should follow their review criteria YOURSELF rather than trying to invoke them as separate agents.
 
 **Instead of invoking agents, apply their review criteria directly:**
 
@@ -161,4 +161,82 @@ For each section, YOU should:
 
 Apply ALL FIVE review perspectives to each section, synthesize the feedback, then create an improved version.
 
-Remember: Your job is not to make the document "acceptable" but to make it EXCEPTIONAL. Push for excellence through rigorous iteration.
+## Priority Rules for Conflict Resolution
+
+When review criteria conflict, follow this priority hierarchy:
+
+### TIER 1: Non-Negotiable (MUST)
+1. **Authenticity** - Remove ALL AI tells, corporate speak, and bland language
+   - If Ben Voice wants to use "leverage" → NO. Find Ben-like alternative.
+   - If Structure wants "robust solution" → NO. Use specific language instead.
+   - AI tells are NEVER acceptable, regardless of other criteria.
+
+2. **Ben Voice Structure** - Match Ben's core patterns
+   - Concrete, specific openings (not vague abstractions)
+   - Direct, confident claims (no hedging with "arguably", "perhaps")
+   - Explicit structural signposting (numbered points, clear sections)
+   - Specific examples (named entities, exact dates, real anecdotes)
+
+### TIER 2: High Priority (SHOULD)
+3. **Clarity** - Ensure comprehension
+   - If Ben Voice creates ambiguity → add clarity without hedging
+   - Example: "Make it direct" + "needs example" = direct statement followed by specific example
+   - Never sacrifice clarity for style
+
+4. **Structure** - Maintain flow and organization
+   - If Voice changes break flow → adjust transitions
+   - Keep logical progression even when matching voice
+
+### TIER 3: Polish (NICE TO HAVE)
+5. **Tone** - Appropriate register
+   - Adjust tone to match context
+   - Lowest priority in conflicts
+
+### Conflict Resolution Examples
+
+**Scenario: Ben Voice wants direct claim, Clarity wants more explanation**
+- ✅ DO: "Identity matters fundamentally. [Paragraph explaining why with specific examples]"
+- ❌ DON'T: Choose one or the other
+
+**Scenario: Ben Voice analysis suggests "leverage", Authenticity forbids it**
+- ✅ DO: Find Ben-like alternative ("use", "employ", "apply")
+- ❌ DON'T: Use "leverage" even if it "sounds like Ben's tone"
+
+**Scenario: Structure wants smooth transition, Ben Voice wants punchy opening**
+- ✅ DO: Punchy opening (Voice wins, same tier priority but Structure can add brief transition)
+- ❌ DON'T: Smooth over the punch with generic transition
+
+**Scenario: Multiple perspectives want different things**
+- ✅ DO: Address all feedback by combining approaches (specific example + direct claim + no AI tells)
+- ❌ DON'T: Pick one perspective and ignore others
+
+## Validation Step: Invoke Conflict Detector (When Needed)
+
+After creating your revision, evaluate if there's risk of hidden conflicts:
+
+**Invoke conflict-detector agent if:**
+- You made significant structural or voice changes
+- You're unsure if authenticity was maintained
+- Multiple perspectives pulled in different directions
+- The revision feels like it might have introduced new issues
+
+**How to invoke:**
+Use the Task tool:
+```
+Task tool with:
+- subagent_type: "general-purpose"
+- description: "Detect conflicts in revision"
+- prompt: "You are the conflict-detector agent. Compare the original and revised text below. Look for conflicts where one improvement introduced new problems. Original: [text]. Revised: [text]. Report any conflicts found."
+```
+
+**When conflict-detector finds issues:**
+- Review its specific findings
+- Create another revision addressing the conflicts
+- Ensure Tier 1 priorities (Authenticity, Ben Voice Structure) are maintained
+- Re-check with conflict detector if needed
+
+**Happy path (no issues detected):**
+- Proceed to next section
+- No extra agent invocation needed
+
+Remember: Your job is not to make the document "acceptable" but to make it EXCEPTIONAL. Push for excellence through rigorous iteration, with clear priority rules to guide conflict resolution.
