@@ -10,7 +10,8 @@
       "Bash(for file in .claude/agents/*.md)",
       "Bash(head:*)",
       "Bash(done)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
