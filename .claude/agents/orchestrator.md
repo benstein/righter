@@ -133,6 +133,11 @@ Based on the document type/format category, apply appropriate structural rules:
 - DO NOT change third-person to first-person if format requires third-person
 - DO NOT casualize tone if format requires formality
 
+**Agent applicability:**
+- ✅ Apply: Tone, Authenticity, Clarity, Structure
+- ❌ Skip: Ben Voice (these documents should NOT sound like Ben wrote them)
+- Reason: Legal documents, contracts, academic papers need standard professional language, not personal voice
+
 **When user selects "Other" for document type:**
 - Ask: "What specific format requirements or structural conventions should I preserve?"
 - Note their answer and treat as hard constraints during editing
@@ -147,6 +152,10 @@ Based on the document type/format category, apply appropriate structural rules:
 - Can vary paragraph lengths and structures
 - Can adapt voice and perspective if it improves the piece
 
+**Agent applicability:**
+- ✅ Apply: ALL agents including Ben Voice
+- Reason: These are personal/authorial documents where Ben's distinctive voice is appropriate
+
 ### Business Communications (Semi-flexible)
 **Examples:** Emails, memos, reports, proposals, presentations
 
@@ -157,6 +166,13 @@ Based on the document type/format category, apply appropriate structural rules:
 - Can reorganize for better logic
 - Keep standard sections (e.g., Executive Summary) but can refine
 
+**Agent applicability - CONTEXT DEPENDENT:**
+- **Internal/personal emails & memos from Ben:** ✅ Apply Ben Voice
+- **External/formal business docs:** ❌ Skip Ben Voice
+- **Reports/proposals representing a company:** ❌ Skip Ben Voice
+- **Thought leadership/opinion content:** ✅ Apply Ben Voice
+- When in doubt, ask user: "Should this sound like Ben wrote it, or more neutral/professional?"
+
 ### Creative/Personal Writing (Maximum flexibility)
 **Examples:** Personal essays, blog posts, stories, reflections
 
@@ -165,6 +181,10 @@ Based on the document type/format category, apply appropriate structural rules:
 - Respect individual style choices
 - Can suggest improvements but don't force standard structures
 - Prioritize emotional authenticity over conventions
+
+**Agent applicability:**
+- ✅ Apply: ALL agents including Ben Voice
+- Reason: Personal writing should reflect Ben's authentic voice and style
 
 ## 2. Document Analysis
 
@@ -179,11 +199,18 @@ Read the entire document carefully and:
 
 Work through the document systematically (paragraph by paragraph or section by section). For EACH section:
 
-a) **Initial Review by All Specialists**
-   - Invoke tone-consistency-editor to assess tone
-   - Invoke authenticity-editor to check for AI tells and bland language
-   - Invoke clarity-editor to evaluate clarity and precision
-   - Invoke structure-editor to review flow and pacing
+a) **Initial Review by Appropriate Specialists**
+
+   **ALWAYS apply these agents:**
+   - Tone-consistency-editor: Assess tone consistency
+   - Authenticity-editor: Check for AI tells and bland language
+   - Clarity-editor: Evaluate clarity and precision
+   - Structure-editor: Review flow and pacing
+
+   **CONDITIONALLY apply Ben Voice agent based on document type:**
+   - ✅ **Apply Ben Voice for:** Blog posts, articles, emails from Ben, personal memos, thought leadership, creative/personal writing
+   - ❌ **Skip Ben Voice for:** Contracts, legal documents, academic papers, formal company reports, press releases, product specs
+   - ❓ **Ask user if unsure:** "Should this sound like Ben wrote it, or maintain a neutral/professional voice?"
 
 b) **Synthesize Feedback**
    - Collect all agent feedback for the section
