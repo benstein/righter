@@ -13,8 +13,18 @@ This directory is configured to use the `@a-bonus/google-docs-mcp` server for Go
 ### 1. Install the MCP Server
 
 ```bash
-npm install -g @a-bonus/google-docs-mcp
+# Clone the repository
+git clone https://github.com/a-bonus/google-docs-mcp.git ~/mcp-servers/google-docs
+cd ~/mcp-servers/google-docs
+
+# Install dependencies
+npm install
+
+# Build the TypeScript code
+npm run build
 ```
+
+This installs it to `~/mcp-servers/google-docs/` (you can choose a different location if preferred).
 
 ### 2. Create Google Cloud Project & Enable APIs
 
@@ -38,56 +48,46 @@ npm install -g @a-bonus/google-docs-mcp
 5. Click "Create"
 6. Download the credentials JSON file
 
-### 4. Set Up Credentials Locally
+### 4. Set Up Credentials in MCP Server Directory
 
 ```bash
-# Create config directory
-mkdir -p ~/.config/google-docs-mcp
-
-# Move downloaded credentials file
-mv ~/Downloads/client_secret_*.json ~/.config/google-docs-mcp/credentials.json
+# Move downloaded credentials file to MCP server directory
+mv ~/Downloads/client_secret_*.json ~/mcp-servers/google-docs/credentials.json
 ```
 
-**Important:** The credentials file should be named exactly `credentials.json`
+**Important:** The credentials file must be in the MCP server directory and named exactly `credentials.json`
 
-### 5. Verify MCP Configuration
+### 5. First-Time Authorization
 
-The `.mcp.json` file in this directory is already configured:
+Run the server once to complete OAuth flow:
+
+```bash
+cd ~/mcp-servers/google-docs
+node ./dist/server.js
+```
+
+This will:
+1. Open a browser for Google authentication
+2. Ask you to grant permissions
+3. Generate `token.json` in the same directory
+4. Exit automatically once complete
+
+### 6. Update MCP Configuration
+
+Update the `.mcp.json` file in this directory to point to your installation:
 
 ```json
 {
   "mcpServers": {
     "google-docs": {
-      "command": "npx",
-      "args": ["-y", "@a-bonus/google-docs-mcp"],
-      "env": {
-        "GOOGLE_DOCS_CREDENTIALS_PATH": "${HOME}/.config/google-docs-mcp/credentials.json",
-        "GOOGLE_DOCS_TOKEN_PATH": "${HOME}/.config/google-docs-mcp/token.json"
-      }
+      "command": "node",
+      "args": ["${HOME}/mcp-servers/google-docs/dist/server.js"]
     }
   }
 }
 ```
 
-### 6. First Authentication
-
-The first time you use Google Docs features, you'll be prompted to authenticate:
-
-```bash
-cd /Users/ben/Work/righter
-claude
-
-# When you use /refine with a Google Docs URL, it will:
-# 1. Open a browser for OAuth authentication
-# 2. Ask you to grant permissions
-# 3. Save a token to ~/.config/google-docs-mcp/token.json
-```
-
-**Permissions requested:**
-- Read/write Google Docs
-- Access Google Drive files
-
-These are standard and necessary for the integration.
+**Note:** The credentials.json and token.json are automatically read from the MCP server directory.
 
 ### 7. Test the Integration
 
@@ -118,26 +118,27 @@ If authentication is successful, the orchestrator will:
 
 ```bash
 # Verify installation
-npm list -g @a-bonus/google-docs-mcp
+ls ~/mcp-servers/google-docs/dist/server.js
 
-# Reinstall if needed
-npm install -g @a-bonus/google-docs-mcp
+# If missing, rebuild
+cd ~/mcp-servers/google-docs
+npm run build
 ```
 
 ### Credentials File Not Found
 
 ```bash
 # Check file exists
-ls ~/.config/google-docs-mcp/credentials.json
+ls ~/mcp-servers/google-docs/credentials.json
 
 # Verify it's valid JSON
-cat ~/.config/google-docs-mcp/credentials.json | jq .
+cat ~/mcp-servers/google-docs/credentials.json | jq .
 ```
 
 ### Authentication Fails
 
-1. Delete token file: `rm ~/.config/google-docs-mcp/token.json`
-2. Try authentication again
+1. Delete token file: `rm ~/mcp-servers/google-docs/token.json`
+2. Run authorization again: `cd ~/mcp-servers/google-docs && node ./dist/server.js`
 3. Make sure APIs are enabled in Google Cloud Console
 4. Check OAuth consent screen is configured
 
@@ -155,12 +156,13 @@ Should show "google-docs" server with status "connected"
 After setup, you'll have:
 
 ```
-~/.config/google-docs-mcp/
+~/mcp-servers/google-docs/
+  ├── dist/server.js      (compiled MCP server)
   ├── credentials.json    (your OAuth client credentials)
   └── token.json          (generated after first auth)
 
 /Users/ben/Work/righter/
-  └── .mcp.json           (MCP server configuration)
+  └── .mcp.json           (MCP server configuration pointing to above)
 ```
 
 ## Features Available
