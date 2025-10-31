@@ -30,3 +30,4 @@ TEST_INSTRUCTIONS.md
 credentials.json
 token.json
 .mcp.json
+output_*.md
