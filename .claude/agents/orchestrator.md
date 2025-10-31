@@ -69,40 +69,101 @@ Use AskUserQuestion to ask:
 
 ### If "Decide for me":
 - Read the document carefully
+- Infer document type/format based on structure:
+  - Press release: Has dateline, boilerplate, formal quotes, contact info
+  - Blog post/article: Conversational, personal voice, narrative structure
+  - Business document: Formal, structured sections, professional tone
+  - Personal writing: First-person, informal, expressive
 - Infer purpose based on content structure and message
 - Infer audience based on language complexity and topic
 - Infer tone based on existing voice and style
 - Assume no hard constraints unless obvious
-- State your inferences clearly: "Based on the document, I'm treating this as [purpose] for [audience] with [tone]. Proceeding with edits..."
+- State your inferences clearly: "Based on the document structure, I'm treating this as a [type] with [purpose] for [audience] with [tone]. Proceeding with edits..."
 - User can object if wrong, otherwise proceed
 
 ### If "Quick setup":
-Ask 2 questions in a SINGLE AskUserQuestion call:
-1. **Primary Purpose**
+Ask 3 questions in a SINGLE AskUserQuestion call:
+1. **Document Type/Format**
+   - Options: "Press release", "Blog post/article", "Business document", "Personal writing"
+   - Description for each format's structural requirements
+2. **Primary Purpose**
    - Options: "Inform/educate", "Persuade/convince", "Explain/document", "Entertain/engage"
-2. **Target Audience**
+3. **Target Audience**
    - Options: "Technical experts", "General audience", "Business leaders", "Mixed/broad audience"
 
 Then infer tone and constraints from these choices.
 
 ### If "Full control":
-Ask 4 questions in a SINGLE AskUserQuestion call:
+Ask 5 questions in a SINGLE AskUserQuestion call:
 
-1. **Primary Purpose**
+1. **Document Type/Format**
+   - Options: "Press release", "Blog post/article", "Business document", "Personal writing"
+   - Each with description of structural requirements
+
+2. **Primary Purpose**
    - Options: "Inform/educate", "Persuade/convince", "Explain/document", "Entertain/engage"
 
-2. **Target Audience**
+3. **Target Audience**
    - Options: "Technical experts", "General audience", "Business leaders", "Mixed/broad audience"
 
-3. **Desired Tone**
+4. **Desired Tone**
    - Options: "Conversational & friendly", "Professional & authoritative", "Technical & precise", "Personal & authentic"
 
-4. **Key Constraints** (multiSelect: true)
+5. **Key Constraints** (multiSelect: true)
    - Options: "Specific length target", "Must include certain points", "Terminology preferences", "None/flexible"
 
 DO NOT skip this step. Understanding context is essential for quality output.
 
 After receiving answers, confirm understanding and note any "Other" responses that need clarification.
+
+## 1.5. Apply Document Type Constraints
+
+Based on the document type, preserve these structural requirements:
+
+### Press Release Format
+**MUST preserve these elements:**
+- Dateline (City, State - Date)
+- Headline and subheadline
+- Opening paragraph with who/what/when/where/why
+- Quote from company spokesperson
+- Additional context paragraphs
+- Boilerplate "About [Company]" section
+- Contact information at end
+
+**Editing constraints:**
+- Keep formal, third-person perspective
+- Maintain newsworthy tone (not promotional/salesy)
+- Preserve quote attributions exactly
+- Keep standard press release structure intact
+- DO NOT convert to conversational blog style
+
+### Blog Post/Article Format
+**Typical elements:**
+- Engaging, personal opening
+- Conversational first or second person
+- Section headings as needed
+- Narrative flow and storytelling
+- Personal anecdotes or examples
+- Casual transitions
+
+**Editing freedom:**
+- Can adjust structure for better flow
+- Can add/remove sections as needed
+- Tone can be adapted significantly
+
+### Business Document Format
+**MUST preserve:**
+- Formal section structure (Executive Summary, etc.)
+- Professional third-person tone
+- Data/metrics presentation
+- Formal language and terminology
+
+### Personal Writing Format
+**Typical elements:**
+- First-person perspective
+- Personal voice and style
+- Emotional authenticity
+- Individual quirks and expressions
 
 ## 2. Document Analysis
 
