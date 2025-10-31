@@ -35,18 +35,54 @@ The orchestrator coordinates these specialist agents:
 
 Your job is simple:
 1. Use the Task tool to invoke the "writing-orchestrator" agent
-2. Provide the document content or file path
+2. Provide the document content, file path, OR Google Docs URL
 3. Pass along any user instructions (e.g., "make this clearer", "more professional tone")
 4. Let the orchestrator handle the rest
 
-## Example Invocation
+## Input Types Supported
 
+The orchestrator can work with:
+
+1. **Google Docs URL**: `https://docs.google.com/document/d/ABC123/edit`
+   - Orchestrator will read from Google Docs
+   - Create revision tabs in the same document
+   - Original stays safe, revisions in new tabs
+
+2. **Local file path**: `/path/to/draft.md`
+   - Orchestrator will read the file
+   - Output markdown for you to review
+
+3. **Pasted content**: User pastes text directly
+   - Orchestrator works with the text
+   - Output markdown for you to review
+
+## Example Invocations
+
+**With Google Docs URL:**
 ```
 I'll start the document refinement process by invoking the writing orchestrator agent.
 
-[Use Task tool with subagent_type="general-purpose" to invoke the writing-orchestrator agent]
+[Use Task tool with subagent_type="general-purpose"]
 
-Prompt: "You are the writing-orchestrator agent. The user wants to refine the following document: [document path or content]. User's request: [specific instructions or 'make it way better']. Please follow your defined workflow to transform this into exceptional content."
+Prompt: "You are the writing-orchestrator agent. The user wants to refine this Google Doc: https://docs.google.com/document/d/ABC123/edit. User's request: [specific instructions or 'make it way better']. Please follow your defined workflow, read from Google Docs using MCP tools, and create revision tabs."
+```
+
+**With local file:**
+```
+I'll start the document refinement process by invoking the writing orchestrator agent.
+
+[Use Task tool with subagent_type="general-purpose"]
+
+Prompt: "You are the writing-orchestrator agent. The user wants to refine the file at: /path/to/draft.md. User's request: [specific instructions]. Please follow your defined workflow."
+```
+
+**With pasted content:**
+```
+I'll start the document refinement process by invoking the writing orchestrator agent.
+
+[Use Task tool with subagent_type="general-purpose"]
+
+Prompt: "You are the writing-orchestrator agent. The user wants to refine this content: [pasted text]. User's request: [specific instructions]. Please follow your defined workflow."
 ```
 
 ## Important Notes

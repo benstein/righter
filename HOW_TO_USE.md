@@ -39,13 +39,30 @@ You should see:
 
 ### Step 3: Use It!
 
-#### Option A: Use the /refine command
+#### Option A: With Google Docs URL (Recommended!)
+
+```bash
+/refine https://docs.google.com/document/d/YOUR_DOC_ID/edit
+```
+
+The orchestrator will:
+1. Read your document from Google Docs
+2. Ask context questions
+3. Create revision tabs (Revision 1, Revision 2, etc.)
+4. Your original stays safe in the first tab
+5. Review revisions side-by-side in Google Docs
+
+**Setup required:** See [GOOGLE_DOCS_SETUP.md](GOOGLE_DOCS_SETUP.md) for one-time MCP configuration.
+
+#### Option B: With local file
 
 ```bash
 /refine path/to/your-draft.md
 ```
 
-#### Option B: Just ask for help
+Outputs markdown you can copy.
+
+#### Option C: Just ask for help
 
 ```
 I have a draft blog post that needs improvement. Can you help make it clearer and more engaging?
@@ -53,13 +70,15 @@ I have a draft blog post that needs improvement. Can you help make it clearer an
 
 The orchestrator will automatically activate and start asking you questions.
 
-#### Option C: Paste content directly
+#### Option D: Paste content directly
 
 ```
 Please refine this draft:
 
 [paste your content here]
 ```
+
+Outputs markdown you can copy.
 
 ## What Happens
 
