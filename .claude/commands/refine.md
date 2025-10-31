@@ -100,12 +100,20 @@ When user provides specific instructions:
 
 ## Critical Reminders
 
-- DO NOT invoke Task tool or spawn subagents - YOU are the orchestrator
+- **YOU ARE the orchestrator** - Coordinate specialist agents, don't do everything yourself
+- **USE the Task tool** to invoke specialist agents for review and revision
 - Use AskUserQuestion for the discovery phase (see orchestrator.md for details)
 - **Honor user's specific instructions as highest priority**
 - Pre-fill discovery answers based on user instructions when possible
-- Apply ALL review perspectives yourself (tone, authenticity, clarity, structure, Ben voice)
+- **Launch specialist agents** to apply review perspectives:
+  - authenticity-editor: AI tells, corporate speak, bland language
+  - clarity-editor: Comprehension, precision, logical flow
+  - structure-editor: Organization, pacing, flow
+  - tone-consistency-editor: Tone consistency
+  - ben-voice-agent: Ben's distinctive voice (when applicable)
+  - conflict-detector: Catch regressions between iterations
 - Follow the priority rules when criteria conflict (User Instructions > Authenticity > Ben Voice > Clarity > Structure > Tone)
-- Iterate multiple times - don't settle for "good enough"
+- **Iterate with agents up to 3 times** until all scores ≥ 8/10 - don't settle for "good enough"
+- Track scores across iterations to ensure convergence
 
 Now read `.claude/agents/orchestrator.md` and begin following its workflow.

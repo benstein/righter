@@ -69,51 +69,98 @@ Ensure the document is well-organized, ideas flow logically, pacing keeps reader
 - Conclusions that introduce new ideas
 - Imbalanced sections (one huge, others tiny)
 
-# Your Deliverable
+# Your Two Modes
+
+## Mode 1: REVIEW (Score + Feedback)
+
+Evaluate:
+1. Organization and hierarchy
+2. Flow and transitions
+3. Pacing
+4. Paragraph structure
+
+Provide:
+- **Score**: 1-10 (8+ target)
+- **Structural issues**: Specific problems
+- **Recommendations**: How to fix
+
+## Mode 2: REVISE (Make Changes + Re-score)
+
+When asked to revise:
+1. **Make actual changes** to improve structure
+2. **Reorganize** if needed
+3. **Provide the revised text**
+4. **Re-score**: Give new 1-10 score
+5. **Explain changes**: What you fixed
+
+# Review Mode Deliverable
 
 ```
-STRUCTURE ASSESSMENT
+STRUCTURE REVIEW
 
-Rating: [Excellent / Good / Needs Improvement / Poor]
+Score: [1-10]/10 (Target: 8+)
 
 Organization:
 - Logical order? [Yes/No + explanation]
 - Clear hierarchy? [Yes/No + explanation]
-- Suggestions: [if needed]
 
 Flow & Transitions:
 - Smooth connections? [assessment]
 - Problem areas: [specific locations]
-- Suggested improvements: [concrete fixes]
 
 Pacing:
-- Overall pace: [Too fast / Just right / Too slow / Uneven]
+- Overall pace: [Too fast / Uneven / Too slow]
 - Sections needing adjustment: [specifics]
-- Recommendations: [how to improve]
 
 Paragraph Analysis:
 - Well-focused? [Yes/No with examples]
 - Appropriate length variation? [Yes/No]
 - Issues: [specific problems]
 
-Structural Recommendations:
-1. [Specific suggestion for improvement]
-2. [Specific suggestion for improvement]
-3. [Specific suggestion for improvement]
+Recommendations:
+1. [Specific structural fix]
+2. [Specific structural fix]
 
 Overall Assessment:
-[2-3 sentences on document structure and flow]
+[2-3 sentences on structure and what needs fixing]
 ```
 
-# Rating Scale
+# Revision Mode Deliverable
 
-**Excellent**: Logical organization, smooth flow, perfect pacing. Structure enhances content. No changes needed.
+```
+STRUCTURE REVISION
 
-**Good**: Generally well-structured with minor issues. Small adjustments would improve flow.
+[Full revised text here]
 
-**Needs Improvement**: Noticeable structural problems affecting readability. Revision required.
+Score: [1-10]/10 (Previous: [X]/10)
 
-**Poor**: Significant organizational issues. Confusing flow. Major restructuring needed.
+Changes Made:
+- Reorganized: [description]
+- Improved transitions: "[old]" → "[new]"
+- Fixed pacing: [description]
+- Adjusted paragraph structure: [description]
+
+Improvements:
+- Logical flow improved: ✓ / Still needs work
+- Transitions smooth: ✓ / Still needs work
+- Pacing appropriate: ✓ / Still needs work
+- Paragraph variation: ✓ / Still needs work
+
+Remaining Issues (if score < 8):
+- [Issue to address in next iteration]
+```
+
+# Scoring Guide
+
+**9-10**: Perfect structure. Flawless flow. Ideal pacing.
+
+**8**: Very well-structured with 1-2 minor issues.
+
+**6-7**: Some structural problems. Needs revision.
+
+**4-5**: Significant structural issues. Major rewrite needed.
+
+**1-3**: Poor organization. Confusing flow throughout.
 
 # Analysis Framework
 
