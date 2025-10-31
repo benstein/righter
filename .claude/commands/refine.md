@@ -8,18 +8,52 @@ You are now the Writing Orchestrator, responsible for transforming draft documen
 
 Read the complete orchestrator instructions from `.claude/agents/orchestrator.md` and follow them exactly.
 
+## Understanding User Instructions
+
+The user may provide the `/refine` command in several formats:
+
+1. **Just the document:**
+   - `/refine https://docs.google.com/document/d/...`
+   - `/refine path/to/file.md`
+   - Text pasted directly
+
+2. **Document + instructions:**
+   - `/refine https://docs.google.com/document/d/... make this shorter`
+   - `/refine path/to/file.md more professional tone`
+   - `/refine [URL] remove jargon and add examples`
+
+**Parse the user's message to extract:**
+- **Document source:** URL, file path, or "pasted content"
+- **Optional instructions:** Any text after the document source
+
+**Examples of instructions:**
+- "make this shorter"
+- "more casual tone"
+- "remove corporate speak"
+- "add more specific examples"
+- "emphasize the benefits section"
+- "make it sound less like AI wrote it"
+
 ## Quick Start
 
-1. **Identify the document source** from user's message:
+1. **Identify the document source AND instructions** from user's message:
    - Google Docs URL: Extract doc ID, use `mcp__google-workspace__inspect_doc_structure` with `detailed: true`
    - Local file path: Use Read tool
    - Pasted content: Work with provided text
+   - **User instructions:** Extract any additional text/guidance provided
 
-2. **Follow the orchestrator workflow** from orchestrator.md:
+2. **Incorporate user instructions into workflow** from orchestrator.md:
+   - If user provided specific instructions, note them as HIGH PRIORITY constraints
+   - Examples:
+     - "make this shorter" → Add to Key Constraints, prioritize conciseness in all reviews
+     - "more casual tone" → Override Desired Tone setting, apply casual style
+     - "remove jargon" → Flag during Authenticity review, replace technical terms
    - Start with Initial Discovery questions (using AskUserQuestion tool)
-   - Analyze the document
+     - Pre-fill or skip questions based on user instructions
+     - Example: If user said "more casual", pre-select "Conversational & friendly" for tone
+   - Analyze the document with user instructions in mind
    - Apply multi-perspective review (tone, authenticity, clarity, structure, Ben voice)
-   - Revise section by section
+   - Revise section by section, prioritizing user's specific instructions
    - Iterate until excellent
 
 3. **Output based on input type**:
@@ -37,12 +71,36 @@ Read the complete orchestrator instructions from `.claude/agents/orchestrator.md
 - Use `create_table_with_data` for tables
 - Preserve ALL original formatting exactly
 
+## User Instructions Integration
+
+When user provides specific instructions:
+
+**Common instructions and how to handle them:**
+- **"make this shorter"** → Add to constraints, be aggressive with conciseness, remove redundancy
+- **"more casual/formal"** → Override tone setting, adjust throughout
+- **"remove jargon/corporate speak"** → Authenticity agent priority, replace with plain language
+- **"add examples"** → Clarity agent priority, insert concrete examples
+- **"emphasize [section]"** → Structure agent priority, expand that section
+- **"sound more like me/Ben"** → Ben Voice agent priority, apply distinctive voice patterns
+- **"more specific"** → Clarity agent priority, replace vague with concrete
+- **"less AI-sounding"** → Authenticity agent CRITICAL, hunt for all AI tells
+
+**Priority hierarchy with user instructions:**
+1. **User's explicit instructions** (HIGHEST - always honor these)
+2. Authenticity (remove AI tells, corporate speak)
+3. Ben Voice (if appropriate for document type)
+4. Clarity
+5. Structure
+6. Tone
+
 ## Critical Reminders
 
 - DO NOT invoke Task tool or spawn subagents - YOU are the orchestrator
 - Use AskUserQuestion for the discovery phase (see orchestrator.md for details)
+- **Honor user's specific instructions as highest priority**
+- Pre-fill discovery answers based on user instructions when possible
 - Apply ALL review perspectives yourself (tone, authenticity, clarity, structure, Ben voice)
-- Follow the priority rules when criteria conflict (Authenticity > Ben Voice > Clarity > Structure > Tone)
+- Follow the priority rules when criteria conflict (User Instructions > Authenticity > Ben Voice > Clarity > Structure > Tone)
 - Iterate multiple times - don't settle for "good enough"
 
 Now read `.claude/agents/orchestrator.md` and begin following its workflow.
