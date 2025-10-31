@@ -84,6 +84,7 @@ When user provides specific instructions:
   - tone-consistency-editor: Tone consistency
   - ben-voice-agent: Ben's distinctive voice (when applicable)
   - conflict-detector: Catch regressions between iterations
+  - hallucination-detector: Flag content added that wasn't in source
 - Follow the priority rules when criteria conflict (User Instructions > Authenticity > Ben Voice > Clarity > Structure > Tone)
 - **Iterate with agents up to 3 times** until all scores ≥ 8/10 - don't settle for "good enough"
 - Track scores across iterations to ensure convergence

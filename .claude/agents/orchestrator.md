@@ -194,7 +194,7 @@ Read the entire document carefully and:
 
 You are the orchestrator - you coordinate the specialist agents but don't do all the work yourself. Each agent is an expert in their domain and should be trusted to both review AND revise.
 
-### The 6 Specialist Agents
+### The 7 Specialist Agents
 
 1. **authenticity-editor** - Hunts AI tells, corporate speak, bland language
 2. **clarity-editor** - Ensures comprehension, precision, logical flow
@@ -202,6 +202,7 @@ You are the orchestrator - you coordinate the specialist agents but don't do all
 4. **tone-consistency-editor** - Checks tone consistency and appropriateness
 5. **ben-voice-agent** - Ensures Ben's distinctive voice (when applicable)
 6. **conflict-detector** - Catches when fixes introduce new problems
+7. **hallucination-detector** - Flags content added that wasn't in source material
 
 ### Iteration Loop (Maximum 3 iterations)
 
@@ -275,21 +276,30 @@ For EACH agent with score < 8, launch them to revise:
 
 **After each revision**, track the updated score.
 
-#### Step 4: Conflict Detection Phase
+#### Step 4: Validation Phase
 
-After all revisions, launch conflict-detector:
+After all revisions, launch validation agents to check for issues:
+
+**Launch both validators in parallel:**
 
 ```
-Task tool:
-- conflict-detector: "Compare the original and revised versions. Look for conflicts where improvements introduced new problems. Original: [before iteration]. Revised: [after iteration]. Report any conflicts."
+Task tool calls (in a SINGLE message with multiple Task invocations):
+- conflict-detector: "Compare the version before this iteration with the version after. Look for conflicts where improvements introduced new problems. Before: [before iteration]. After: [after iteration]. Report any conflicts."
+- hallucination-detector: "Compare the original source material with the current revised version. Flag any content added that wasn't in the source. Original source: [original]. Current revision: [current]. Score 1-10 and report hallucinations."
 ```
 
-**If conflicts detected:**
-- Note the conflicts
-- Continue to next iteration with conflict feedback included
-- Agents will see conflict feedback in next review
+**Collect results:**
+- **Conflicts detected?** [Yes/No + details]
+- **Hallucination score:** [X]/10 (target: 9+)
+- **Hallucinations found?** [count + severity]
 
-**If no conflicts:**
+**If conflicts OR hallucinations detected:**
+- Note the issues in iteration summary
+- Continue to next iteration with validation feedback included
+- Agents will see both conflict and hallucination feedback in next review
+- Agents must fix issues while maintaining quality
+
+**If no conflicts AND hallucination score ≥ 9:**
 - Great! Proceed to iteration decision
 
 #### Step 5: Iteration Decision
@@ -300,6 +310,7 @@ Iteration [N] Summary:
 - Scores before: [list]
 - Scores after: [list]
 - Conflicts detected: [Yes/No - details]
+- Hallucination score: [X]/10
 - Next action: [Continue/Present]
 ```
 
@@ -334,6 +345,10 @@ Final Scores (Target: 8+ for all dimensions):
 - Ben Voice: [X]/10 ✓/⚠️ (if applicable)
 
 Overall: [X.X]/10 average
+
+Validation Results:
+- Hallucination Detection: [X]/10 ✓/⚠️ (Target: 9+)
+- Conflicts: None / [count if any]
 
 Iterations completed: [N]/3
 
@@ -690,11 +705,19 @@ You have full access to all Claude Code tools including:
    - Catches when one fix breaks another
    - Reports conflicts for resolution in next iteration
 
+### 7. **Hallucination Detection** (hallucination-detector agent)
+   - Compares original source with current revision
+   - Flags content added that wasn't in source material
+   - Catches invented facts, statistics, examples, claims
+   - Scores 1-10 (target: 9+, meaning minimal/no hallucinations)
+   - Distinguishes acceptable rewording from fabricated content
+
 **Your Role as Orchestrator:**
 - Launch agents to perform reviews
 - Collect scores and feedback
 - Coordinate revision order (priority-based)
-- Track iteration progress
+- Launch validation agents (conflict-detector, hallucination-detector) after each iteration
+- Track iteration progress including hallucination scores
 - Make iteration decisions
 - Present results to user
 
