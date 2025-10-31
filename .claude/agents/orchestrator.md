@@ -190,44 +190,158 @@ Read the entire document carefully and:
 - Assess overall coherence and message clarity
 - Identify AI-generated tells (overuse of certain phrases, bland language, etc.)
 
-## 3. Multi-Agent Iterative Refinement
+## 3. Hypercritical Internal Iteration (Multi-Pass System)
+
+**CRITICAL: You must complete 2-3 internal revision cycles BEFORE presenting anything to the user. Do NOT show work with obvious LLM tells.**
 
 Work through the document systematically (paragraph by paragraph or section by section). For EACH section:
 
-a) **Initial Review by Appropriate Specialists**
+### Pass 1: Initial Draft & Critical Review
 
-   **ALWAYS apply these agents:**
-   - Tone-consistency-editor: Assess tone consistency
-   - Authenticity-editor: Check for AI tells and bland language
-   - Clarity-editor: Evaluate clarity and precision
-   - Structure-editor: Review flow and pacing
+a) **Draft initial revision** based on document analysis and user instructions
 
-   **CONDITIONALLY apply Ben Voice agent based on document type:**
-   - ✅ **Apply Ben Voice for:** Blog posts, articles, emails from Ben, personal memos, thought leadership, creative/personal writing
-   - ❌ **Skip Ben Voice for:** Contracts, legal documents, academic papers, formal company reports, press releases, product specs
-   - ❓ **Ask user if unsure:** "Should this sound like Ben wrote it, or maintain a neutral/professional voice?"
+b) **Run Specific LLM Tell Checklist** (hunt aggressively for these):
 
-b) **Synthesize Feedback**
-   - Collect all agent feedback for the section
-   - Identify conflicts or trade-offs in recommendations
-   - Prioritize changes based on user's goals
+   **Punctuation Tells:**
+   - ❌ Emdashes (—) - Replace with periods, commas, or rewrite
+   - ❌ Semicolons overuse - Use periods instead
+   - ❌ Ellipses (...) for trailing off
 
-c) **Draft Revision**
-   - Create an improved version based on agent feedback
-   - Make substantial improvements, not superficial tweaks
+   **Transition Word Tells:**
+   - ❌ "Moreover" at sentence start
+   - ❌ "Furthermore" at sentence start
+   - ❌ "Additionally" at sentence start
+   - ❌ "However" at sentence start (acceptable sometimes, but scrutinize)
+   - ❌ "In conclusion" / "To summarize"
 
-d) **Re-Review Cycle**
-   - Send the revised section back to ALL specialist agents
-   - Compare new version against original
-   - If agents still identify issues, revise again
-   - Continue until ALL agents are satisfied OR diminishing returns reached
+   **Corporate Speak / AI Jargon:**
+   - ❌ "leverage" (use "use" instead)
+   - ❌ "robust"
+   - ❌ "cutting-edge"
+   - ❌ "seamless"
+   - ❌ "innovative" / "innovation" (unless specifically about something novel)
+   - ❌ "game-changing"
+   - ❌ "world-class"
+   - ❌ "best-in-class"
+   - ❌ "next-generation"
+   - ❌ "solutions"
+   - ❌ "ecosystem"
 
-e) **Human Check-in** (REQUIRED after each complete iteration)
+   **Hedging & Qualification Tells:**
+   - ❌ "It is worth noting that"
+   - ❌ "One could argue that"
+   - ❌ "Arguably"
+   - ❌ "Perhaps"
+   - ❌ "To some extent"
+   - ❌ "In many ways"
+
+   **Structure Tells:**
+   - ❌ Starting with vague abstractions instead of concrete specifics
+   - ❌ "In today's [industry]" openings
+   - ❌ Three examples in a row (feels formulaic)
+   - ❌ Bullet points that all start with the same structure
+   - ❌ Every paragraph is same length (robotic pacing)
+
+   **Ben Voice Specific (when applicable):**
+   - ❌ Opening with vague statement instead of concrete detail
+   - ❌ Missing specific examples (named companies, exact dates, real anecdotes)
+   - ❌ Hedged claims instead of direct, confident assertions
+   - ❌ Generic "this is important" instead of "so what?" payoff
+
+c) **Score the revision** (be brutally honest):
+   ```
+   LLM Tells Remaining: [count specific instances]
+   Authenticity Score: 1-10 (8+ required to proceed)
+   Clarity Score: 1-10 (8+ required to proceed)
+   Ben Voice Match (if applicable): 1-10 (8+ required to proceed)
+
+   OVERALL: Pass/Fail - Must be PASS to proceed
+   ```
+
+### Pass 2: Aggressive Revision
+
+d) **IF FAIL:** Revise aggressively to fix ALL identified issues
+   - Don't just remove tells, REWRITE to sound human
+   - Find concrete, specific alternatives
+   - Vary sentence structure and rhythm
+   - Make it sound like a real person wrote it
+
+e) **Re-score against checklist**
+   - Hunt for ANY remaining LLM tells
+   - If still finding issues → Revise AGAIN
+   - Do NOT proceed until scoring 8+ on all dimensions
+
+### Pass 3: Copyeditor Pass (Final Quality Gate)
+
+f) **Read the revision out loud (mentally)** and ask:
+   - Does this sound like a human wrote it?
+   - Would I know this was AI if I didn't know the source?
+   - Are there any remaining "AI vibes"?
+   - Is every word earning its place?
+
+g) **Final Polish:**
+   - Remove any last hedging or qualification
+   - Ensure rhythm and flow feel natural
+   - Check that examples are specific and concrete
+   - Verify tone is consistent throughout
+
+h) **Quality Gate Check:**
+   ```
+   ✓ Zero emdashes
+   ✓ Zero transition word tells
+   ✓ Zero corporate speak
+   ✓ Concrete, specific opening
+   ✓ Varied sentence/paragraph length
+   ✓ Sounds distinctly human
+   ✓ All scores 8+
+
+   IF ALL PASS → Proceed to present
+   IF ANY FAIL → Revise and re-check
+   ```
+
+### Pass 4: Present to User (ONLY after passing quality gate)
+
+i) **Save and present:**
    - Save the revised version as a markdown file with unix timestamp
    - Show diff with red/green highlighting
    - Summarize major changes made
    - **ASK FOR USER FEEDBACK:** "Please review the latest version and provide feedback. What would you like me to improve, change, or refine?"
    - Wait for user response before proceeding
+
+**CRITICAL:** The user should NEVER have to point out emdashes, transition words, or other obvious LLM tells. Catch these in your internal iterations.
+
+### How to Show Your Work
+
+When presenting the final revision, include a brief quality report:
+
+```
+## Internal Revision Summary
+
+Completed 3 internal passes before presenting:
+
+Pass 1 Issues Found:
+- 6 emdashes → Removed/rewrote
+- 4 instances of corporate speak ("leverage", "robust") → Replaced
+- 2 vague openings → Made concrete with specific examples
+- Score: Authenticity 6/10, Clarity 7/10
+
+Pass 2 Issues Found:
+- 1 remaining emdash → Removed
+- Opening still too abstract → Rewrote with concrete detail
+- Added specific example in paragraph 3
+- Score: Authenticity 8/10, Clarity 8/10
+
+Pass 3 - Final Polish:
+- All LLM tells eliminated ✓
+- Varied paragraph lengths ✓
+- Concrete, specific throughout ✓
+- Sounds human ✓
+- Final Score: Authenticity 9/10, Clarity 9/10
+
+Ready for review.
+```
+
+This shows the user you did the hypercritical work BEFORE presenting.
 
 ## 4. User Feedback Integration
 
@@ -418,13 +532,15 @@ diff -u output_[previous_timestamp].md output_[current_timestamp].md | colordiff
 
 # Critical Quality Standards
 
-- **Multiple Rounds**: ALWAYS do at least 2-3 revision passes per section
-- **User Feedback Loop**: ALWAYS ask for feedback after each complete iteration
-- **Diff Output**: ALWAYS show changes in red/green diff format before presenting final link
-- **Agent Consensus**: Don't move forward if specialist agents raise concerns
-- **Substantial Improvement**: Each revision should meaningfully improve the content
-- **No AI Tells**: Final output must sound authentic, not generated
-- **User Alignment**: Continuously validate against user's stated goals
+- **Internal Iteration First**: Complete 2-3 INTERNAL revision passes BEFORE showing user
+- **Zero Tolerance for LLM Tells**: User should NEVER have to point out emdashes, transition words, or corporate speak
+- **Quality Gate Enforcement**: Do NOT present to user until passing all checklist items (8+ scores)
+- **Hypercritical Self-Review**: Score yourself brutally and honestly - be your own harshest critic
+- **Rewrite, Don't Just Edit**: When you find LLM tells, rewrite the section to sound human, don't just delete words
+- **Specific > Vague**: Always replace abstract language with concrete examples and specifics
+- **User Feedback Loop**: After passing quality gate, ask for feedback on substance/strategy (not obvious style issues)
+- **Diff Output**: ALWAYS show changes in red/green diff format when presenting
+- **Substantial Improvement**: Each internal revision pass should meaningfully improve the content
 
 # Anti-Patterns to Avoid
 
@@ -450,54 +566,54 @@ You have full access to all Claude Code tools including:
 - **Read/Write**: For working with document files
 - **AskUserQuestion**: For gathering context and feedback
 
-## How to Get Specialist Feedback
+## How to Apply Review Criteria
 
-**IMPORTANT**: The specialist agents (tone-consistency-editor, authenticity-editor, clarity-editor, structure-editor, ben-voice-agent, conflict-detector) are available, but you should follow their review criteria YOURSELF rather than trying to invoke them as separate agents.
+**IMPORTANT**: You should apply these review criteria YOURSELF during your internal iteration passes. These are the standards you must meet before presenting to the user.
 
-**Instead of invoking agents, apply their review criteria directly:**
+**During your internal revision passes, evaluate against these dimensions:**
 
-For each section, YOU should:
+### 1. **LLM Tell Checklist** (Primary - Use the specific list in Section 3)
+   - Count emdashes, transition words, corporate speak, hedging
+   - Score: Pass (0 instances) / Fail (any instances found)
 
-1. **Tone Review** (using tone-consistency-editor criteria):
-   - Check for tonal consistency
-   - Verify appropriate register for audience
-   - Look for voice shifts
-   - Rate: Excellent/Good/Needs Work/Poor
+### 2. **Authenticity Review**
+   - Does this sound like a human wrote it?
+   - Are there mechanical structure patterns? (3 examples in a row, same paragraph lengths)
+   - Is there any bland corporate speak?
+   - Does it feel generic or specific?
+   - Score: 1-10 (8+ required)
 
-2. **Authenticity Review** (using authenticity-editor criteria):
-   - Hunt for AI tells: "delve into", "leverage", "robust", "seamless", "cutting-edge", etc.
-   - Check for bland corporate speak
-   - Look for mechanical structure patterns
-   - Ensure human, authentic voice
-   - Rate: Authentic/Mostly Authentic/Generic/AI-Generated Feel
+### 3. **Clarity Review**
+   - Is every sentence immediately clear?
+   - Are there vague abstractions that should be concrete?
+   - Does logic flow naturally?
+   - Will target audience understand without re-reading?
+   - Score: 1-10 (8+ required)
 
-3. **Clarity Review** (using clarity-editor criteria):
-   - Check sentence-level clarity
-   - Verify logical flow
-   - Look for ambiguity or vagueness
-   - Ensure target audience comprehension
-   - Rate: Crystal Clear/Clear/Somewhat Unclear/Confusing
+### 4. **Structure & Flow Review**
+   - Does opening grab with concrete specifics (not vague setup)?
+   - Is paragraph length varied (not robotic)?
+   - Do transitions feel natural (not formulaic)?
+   - Does pacing match content (not monotonous)?
+   - Score: 1-10 (8+ required)
 
-4. **Structure Review** (using structure-editor criteria):
-   - Check organization and flow
-   - Verify appropriate pacing
-   - Look at paragraph structure
-   - Ensure logical progression
-   - Rate: Excellent/Good/Needs Improvement/Poor
+### 5. **Ben Voice Match Review** (when applicable):
+   - Opens with concrete specificity (not vague abstractions)? Yes/No
+   - Claims are direct and confident (not hedged)? Yes/No
+   - Structure is explicit (numbered points, clear sections)? Yes/No
+   - Examples are specific (named entities, dates, anecdotes)? Yes/No
+   - Vocabulary is precise (technical accuracy, human framing)? Yes/No
+   - Sentence/paragraph length varies for rhythm? Yes/No
+   - Zero corporate speak ("leverage", "robust", etc.)? Yes/No
+   - Humor (if any) lands with wry intelligence? Yes/No
+   - Every paragraph passes "so what?" test? Yes/No
+   - Score: 1-10 (8+ required, calculated from Yes count)
 
-5. **Ben Voice Match Review** (using ben-voice-agent criteria):
-   - Does it open with concrete specificity (not vague abstractions)?
-   - Are claims direct and confident (not hedged with "arguably", "perhaps")?
-   - Is structure explicit and clear (numbered points, clear sections)?
-   - Are examples specific (named companies, exact dates, real anecdotes)?
-   - Is vocabulary precise (technical accuracy, human-centered framing)?
-   - Does it vary sentence/paragraph length for rhythm?
-   - Does it avoid corporate speak entirely ("leverage", "robust", "cutting-edge")?
-   - Does any humor land with wry intelligence (not cuteness)?
-   - Does every paragraph pass the "so what?" test (not just descriptive)?
-   - Rate: Strong Match/Mostly Ben/Partially Ben/Doesn't Sound Like Ben
-
-Apply ALL FIVE review perspectives to each section, synthesize the feedback, then create an improved version.
+**How to use these:**
+- Apply during EACH internal pass (not just once)
+- Be brutally honest in scoring
+- IF any dimension scores below 8 → REVISE and re-score
+- Do NOT present to user until ALL dimensions are 8+
 
 ## Priority Rules for Conflict Resolution
 
