@@ -66,6 +66,9 @@ The user may provide the `/refine` command in several formats:
 - Read content using `mcp__google-workspace__get_drive_file_content` for Google Docs or Read tool for local files
 - For Google Docs: Extract document ID from URL and pass as `file_id` parameter
 - Process as markdown
+- **Output directory:** Check if `/Users/ben/Library/CloudStorage/GoogleDrive-ben@teammates.work/My Drive/Righter` exists and is writable
+  - If yes: Save files there
+  - If no: Save files in current working directory
 - Save output as versioned markdown files with descriptive names:
   - Google Docs: `[Document Title]_[timestamp].md`
   - Local files: `[Original Filename]_[timestamp].md`

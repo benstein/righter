@@ -306,7 +306,10 @@ h) **Quality Gate Check:**
 ### Pass 4: Present to User (ONLY after passing quality gate)
 
 i) **Save and present:**
+   - Check if Google Drive directory exists: `/Users/ben/Library/CloudStorage/GoogleDrive-ben@teammates.work/My Drive/Righter`
+   - Use that directory if available, otherwise use current directory
    - Save the revised version as a markdown file with unix timestamp
+   - Show full path in output
    - Show diff with red/green highlighting
    - Summarize major changes made
    - **ASK FOR USER FEEDBACK:** "Please review the latest version and provide feedback. What would you like me to improve, change, or refine?"
@@ -371,7 +374,7 @@ After presenting each iteration to the user:
 
 3. **Apply changes and save new version:**
    - Create revised markdown content
-   - Save as new timestamped markdown file
+   - Save as new timestamped markdown file in the same output directory used previously
    - Track what changed for diff output
 
 4. **Present changes in diff format:**
@@ -454,8 +457,14 @@ date +%s
 
 ### After Each Complete Iteration
 
-1. **Save the revised content:**
-   - Use the Write tool to create a new markdown file
+1. **Determine output directory:**
+   - **Preferred location:** `/Users/ben/Library/CloudStorage/GoogleDrive-ben@teammates.work/My Drive/Righter`
+   - Check if this directory exists and is writable (use Bash to check)
+   - If not available, fall back to current working directory
+   - Store the chosen directory path for use in all subsequent revisions
+
+2. **Save the revised content:**
+   - Use the Write tool to create a new markdown file in the determined output directory
    - Filename format:
      - Google Docs: `[Document Title]_[timestamp].md`
      - Local files: `[Original Filename]_[timestamp].md`
@@ -465,14 +474,14 @@ date +%s
      - Use **bold** and *italic* as needed
      - Preserve lists, code blocks, quotes, etc.
 
-2. **Show the diff:**
+3. **Show the diff:**
    - Compare previous version (or original) with new version
    - Display changes in this format:
      - ~~Strikethrough~~ for removed text (red in terminal with color support)
      - **Bold** for added text (green in terminal with color support)
    - Organize by section/location
 
-3. **Provide shell command for external diff:**
+4. **Provide shell command for external diff:**
    After showing your inline diff, provide this command for users who want to see it in another terminal:
    ```bash
    diff -u "[previous_file]" "[current_file]" | colordiff
@@ -489,7 +498,7 @@ date +%s
 ```
 ✅ Revision complete!
 
-Saved to: [Document Title]_[timestamp].md
+Saved to: [Full Path]/[Document Title]_[timestamp].md
 
 ## Changes Made:
 
