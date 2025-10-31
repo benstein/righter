@@ -31,3 +31,5 @@ credentials.json
 token.json
 .mcp.json
 output_*.md
+revision_*.md
+*_[0-9]*.md

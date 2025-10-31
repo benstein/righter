@@ -400,7 +400,7 @@ After presenting each iteration to the user:
    ```
    ✅ Changes applied!
 
-   Saved to: output_[timestamp].md
+   Saved to: [Document Title]_[timestamp].md
 
    Would you like to:
    (a) Continue iterating with more feedback
@@ -427,20 +427,39 @@ When user indicates they're done:
 
 ### File Naming Convention
 
-Use this format: `output_[unix_timestamp].md`
+**For Google Docs:**
+Use the document title as prefix: `[Document Title]_[unix_timestamp].md`
 
-Example: `output_1730390400.md`
+Example: `Teammates - Strategic Acquisition Opportunity_1730390400.md`
+
+**For local files:**
+Use the original filename as prefix: `[Original Filename]_[unix_timestamp].md`
+
+Example: `draft_memo_1730390400.md`
+
+**For pasted content:**
+Use generic prefix: `revision_[unix_timestamp].md`
+
+Example: `revision_1730390400.md`
 
 To generate unix timestamp:
 ```bash
 date +%s
 ```
 
+**Important:** Sanitize filenames by:
+- Replacing spaces with underscores OR keeping spaces (both work)
+- Removing special characters that might cause filesystem issues: `/`, `\`, `:`, `*`, `?`, `"`, `<`, `>`, `|`
+- Keeping hyphens and underscores
+
 ### After Each Complete Iteration
 
 1. **Save the revised content:**
    - Use the Write tool to create a new markdown file
-   - Filename format: `output_[unix_timestamp].md`
+   - Filename format:
+     - Google Docs: `[Document Title]_[timestamp].md`
+     - Local files: `[Original Filename]_[timestamp].md`
+     - Pasted content: `revision_[timestamp].md`
    - Content: Clean markdown with proper formatting
      - Use # for H1, ## for H2, ### for H3
      - Use **bold** and *italic* as needed
@@ -456,19 +475,21 @@ date +%s
 3. **Provide shell command for external diff:**
    After showing your inline diff, provide this command for users who want to see it in another terminal:
    ```bash
-   diff -u output_[previous_timestamp].md output_[current_timestamp].md | colordiff
+   diff -u "[previous_file]" "[current_file]" | colordiff
    ```
    Or if colordiff is not available:
    ```bash
-   diff -u output_[previous_timestamp].md output_[current_timestamp].md
+   diff -u "[previous_file]" "[current_file]"
    ```
+
+   Use the actual filenames with document title prefixes.
 
 ### Presentation Format
 
 ```
 ✅ Revision complete!
 
-Saved to: output_[timestamp].md
+Saved to: [Document Title]_[timestamp].md
 
 ## Changes Made:
 
@@ -491,7 +512,7 @@ Saved to: output_[timestamp].md
 ---
 
 To view full diff in another terminal:
-`diff -u output_[previous].md output_[current].md | colordiff`
+`diff -u "[Previous File]" "[Current File]" | colordiff`
 
 ---
 
@@ -529,9 +550,9 @@ When presenting changes, use this format for clarity:
 Always organize diffs by section/location and include context so user knows where changes were made.
 
 **Shell command for full diff:**
-Always provide this at the end of your presentation:
+Always provide this at the end of your presentation (use actual filenames):
 ```bash
-diff -u output_[previous_timestamp].md output_[current_timestamp].md | colordiff
+diff -u "[Previous File]" "[Current File]" | colordiff
 ```
 
 # Critical Quality Standards

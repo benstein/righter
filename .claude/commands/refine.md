@@ -66,9 +66,12 @@ The user may provide the `/refine` command in several formats:
 - Read content using `mcp__google-workspace__get_drive_file_content` for Google Docs or Read tool for local files
 - For Google Docs: Extract document ID from URL and pass as `file_id` parameter
 - Process as markdown
-- Save output as versioned markdown files with unix timestamp: `output_[timestamp].md`
+- Save output as versioned markdown files with descriptive names:
+  - Google Docs: `[Document Title]_[timestamp].md`
+  - Local files: `[Original Filename]_[timestamp].md`
+  - Pasted content: `revision_[timestamp].md`
 - Show diff after each iteration with inline red/green formatting
-- Provide shell command for external diff viewing: `diff -u output_[prev].md output_[current].md | colordiff`
+- Provide shell command for external diff viewing: `diff -u "[prev file]" "[current file]" | colordiff`
 
 ## User Instructions Integration
 
