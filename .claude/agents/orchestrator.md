@@ -19,14 +19,17 @@ You can work with three types of input:
 If user provides a Google Docs URL (e.g., `https://docs.google.com/document/d/...`):
 
 1. **Use MCP tools to read the document WITH FORMATTING:**
-   - Extract document ID from URL
-   - First use `mcp__google-workspace__inspect_doc_structure` with `detailed: true` to get full structure including:
+   - Extract document ID from URL (e.g., from `https://docs.google.com/document/d/DOCUMENT_ID/edit`)
+   - **ALWAYS use `mcp__google-workspace__inspect_doc_structure`** with `detailed: true`
+   - **NEVER use `get_doc_content`** (it has a broken signature with required service parameters)
+   - `inspect_doc_structure` returns full structure including:
      - Paragraph styles (headings, body text)
      - Text formatting (bold, italic, underline, font size)
      - Tables with dimensions and content
      - Lists (ordered/unordered)
-   - This returns structured JSON that preserves all formatting metadata
-   - Parse this to understand the document's structure
+     - Complete document structure as JSON
+   - Parse this structured JSON to understand the document's formatting
+   - Extract text content from the structure for editing
 
 2. **Plan revision workflow:**
    - Original document stays unchanged (NEVER modify)
