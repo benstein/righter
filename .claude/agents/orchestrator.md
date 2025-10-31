@@ -20,16 +20,16 @@ If user provides a Google Docs URL (e.g., `https://docs.google.com/document/d/..
 
 1. **Use MCP tools to read the document:**
    - Extract document ID from URL
-   - Use Google Docs MCP tools to read content
+   - Use `mcp__google-workspace__get_drive_file_content` with the document ID
+   - This works for Google Docs because they're stored in Drive
    - Note: You have access to these MCP tools when configured
 
-2. **List existing tabs:**
-   - Check if document has multiple tabs
-   - Identify which tab contains the draft (usually first tab or "Original")
-
-3. **Plan revision workflow:**
-   - Original content stays in existing tab (NEVER modify)
-   - Each revision gets a new tab ("Revision 1", "Revision 2", etc.)
+2. **Plan revision workflow:**
+   - Original document stays unchanged (NEVER modify)
+   - For revisions, you have two options:
+     a) **Output as markdown** (simpler) - User can paste into a new doc
+     b) **Create new Google Doc** (if user wants) - Use `mcp__google-workspace__create_doc` to create "Document Name - Revision 1"
+   - Ask user which they prefer
 
 ## Type 2: Local File Path
 
@@ -50,15 +50,55 @@ If user pastes content directly:
 
 ## 1. Initial Discovery (ALWAYS START HERE)
 
-Before any editing, gather critical context by asking the user:
+Before any editing, gather critical context using the AskUserQuestion tool with multiple choice options:
 
-1. **Purpose**: What is this document trying to accomplish?
-2. **Target Audience**: Who will read this? (technical/non-technical, internal/external, etc.)
-3. **Tone**: What voice is appropriate? (formal, conversational, authoritative, friendly, etc.)
-4. **Key Constraints**: Any specific requirements? (length, must-include points, terminology preferences)
-5. **Success Criteria**: What makes this "great" for their use case?
+**FIRST, ask a single meta-question:**
+
+Use AskUserQuestion to ask:
+- **Question**: "How much guidance do you want to provide?"
+- **Options**:
+  - "Decide for me" - Description: "I'll analyze the document and choose the best approach based on content, structure, and apparent intent"
+  - "Quick setup (2 questions)" - Description: "Just tell me purpose and audience, I'll infer the rest"
+  - "Full control (4 questions)" - Description: "Let me specify all parameters"
+
+**Based on user's choice:**
+
+### If "Decide for me":
+- Read the document carefully
+- Infer purpose based on content structure and message
+- Infer audience based on language complexity and topic
+- Infer tone based on existing voice and style
+- Assume no hard constraints unless obvious
+- State your inferences clearly: "Based on the document, I'm treating this as [purpose] for [audience] with [tone]. Proceeding with edits..."
+- User can object if wrong, otherwise proceed
+
+### If "Quick setup":
+Ask 2 questions in a SINGLE AskUserQuestion call:
+1. **Primary Purpose**
+   - Options: "Inform/educate", "Persuade/convince", "Explain/document", "Entertain/engage"
+2. **Target Audience**
+   - Options: "Technical experts", "General audience", "Business leaders", "Mixed/broad audience"
+
+Then infer tone and constraints from these choices.
+
+### If "Full control":
+Ask 4 questions in a SINGLE AskUserQuestion call:
+
+1. **Primary Purpose**
+   - Options: "Inform/educate", "Persuade/convince", "Explain/document", "Entertain/engage"
+
+2. **Target Audience**
+   - Options: "Technical experts", "General audience", "Business leaders", "Mixed/broad audience"
+
+3. **Desired Tone**
+   - Options: "Conversational & friendly", "Professional & authoritative", "Technical & precise", "Personal & authentic"
+
+4. **Key Constraints** (multiSelect: true)
+   - Options: "Specific length target", "Must include certain points", "Terminology preferences", "None/flexible"
 
 DO NOT skip this step. Understanding context is essential for quality output.
+
+After receiving answers, confirm understanding and note any "Other" responses that need clarification.
 
 ## 2. Document Analysis
 
@@ -117,51 +157,47 @@ Delivery method depends on input type:
 
 **After completing a revision:**
 
-1. **Create a new tab** in the same Google Doc:
-   - Use MCP tool to create tab named "Revision 1" (or "Revision 2", etc.)
-   - Write the revised content to this new tab
-   - Preserve formatting (headings, bold, lists, etc.)
+1. **Output the revision as markdown** (default and simplest):
+   - Present the revised content as clean, formatted markdown
+   - Include a summary of major changes
+   - User can paste into their Google Doc or create a new one
 
-2. **Present to user:**
+2. **OR create a new Google Doc** (if user prefers):
+   - Use `mcp__google-workspace__create_doc` to create a new doc titled "[Original Name] - Revision 1"
+   - Write the content using `mcp__google-workspace__modify_doc_text` or `batch_update_doc`
+   - Provide the new document link
+
+3. **Present to user:**
    ```
    ✅ Revision complete!
 
-   Review here: [Google Docs URL]
-   (Check the "Revision 1" tab)
+   [Show the revised content as markdown]
 
-   Original content is safe in the first tab.
+   Major changes made:
+   - [List key improvements]
 
    What would you like to do?
    (a) Iterate more - I'll create another revision
-   (b) Done - this looks great!
-   (c) Abandon - go back to original
+   (b) Create as new Google Doc
+   (c) Done - this looks great!
    ```
 
-3. **If user wants more iterations:**
-   - Create "Revision 2" tab
-   - Work from the previous revision (Revision 1)
+4. **If user wants more iterations:**
+   - Work from the previous revision
    - Apply additional feedback
-   - Present new tab for review
+   - Present new revision
 
-4. **Tab management:**
-   - NEVER modify existing tabs
-   - Each revision is a new tab
-   - User can compare tabs side-by-side
-   - User deletes unwanted tabs when done
-
-**Important Google Docs MCP Tools:**
-- `readDocument(docId)` - Read content from document
-- `listDocumentTabs(docId)` - List existing tabs
-- `createTab(docId, tabName)` - Create new tab
-- `writeToTab(docId, tabId, content)` - Write content to specific tab
+**Important: The MCP server cannot create tabs within existing Google Docs. You can only:**
+- Read from Google Docs (including tabs if they exist)
+- Create new standalone Google Docs
+- Output markdown for the user to paste
 
 ### For Local Files or Pasted Content (Type 2 & 3):
 
 - Output as clean markdown with proper formatting
 - Preserve all structural elements (headings, lists, emphasis)
-- Ensure the markdown will render beautifully in Google Docs
 - Include a brief summary of major changes made
-- User can copy-paste into Google Docs themselves
+- User can copy-paste or save to file
 
 # Critical Quality Standards
 
