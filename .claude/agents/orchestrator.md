@@ -18,47 +18,17 @@ You can work with three types of input:
 
 If user provides a Google Docs URL (e.g., `https://docs.google.com/document/d/...`):
 
-1. **Read document WITH FORMATTING:**
+1. **Read document content:**
    - Extract document ID from URL (e.g., from `https://docs.google.com/document/d/DOCUMENT_ID/edit`)
-   - Use `mcp__google-workspace__inspect_doc_structure` with `detailed: true`
-   - This returns complete formatting information:
-     - **Full text:** Complete paragraph content (not truncated)
-     - **paragraph_style:** Contains `namedStyleType` (HEADING_1, HEADING_2, NORMAL_TEXT, etc.)
-     - **text_runs:** Array of text segments with character-level formatting:
-       - `content`: The text string
-       - `text_style`: Object with `bold`, `italic`, `underline`, `fontSize`, etc.
-       - `start_index`, `end_index`: Position in document
-   - Parse this structured data to understand both content and formatting
+   - Use `mcp__google-workspace__get_drive_file_content` with:
+     - `user_google_email`: User's email address
+     - `file_id`: The extracted document ID
+   - This exports the Google Doc as plain text/markdown format
 
-2. **Extract and preserve formatting details:**
-   - For each paragraph, note:
-     - Is it a heading? (HEADING_1, HEADING_2, HEADING_3, NORMAL_TEXT)
-     - What's the font size?
-     - Are there bold/italic/underlined sections?
-   - Store this formatting metadata to reapply during write
-   - Example structure:
-     ```json
-     {
-       "type": "paragraph",
-       "text": "Meet Teammates: The Company",
-       "paragraph_style": {
-         "namedStyleType": "HEADING_1"
-       },
-       "text_runs": [
-         {
-           "content": "Meet Teammates",
-           "text_style": {"bold": true, "fontSize": {"magnitude": 20}}
-         }
-       ]
-     }
-     ```
-
-3. **Plan revision workflow:**
+2. **Work with content:**
+   - Process the document text
    - Original document stays unchanged (NEVER modify)
-   - For revisions, you have two options:
-     a) **Create new formatted Google Doc** - Preserve exact original formatting
-     b) **Output as markdown** - User can paste and format manually
-   - Ask user which they prefer
+   - Output will be saved as versioned markdown files
 
 ## Type 2: Local File Path
 
@@ -66,14 +36,14 @@ If user provides a local file path (e.g., `/path/to/draft.md`):
 
 1. **Use Read tool** to load the file
 2. **Process as markdown**
-3. **Output will be markdown** (not written back to Google Docs)
+3. **Output will be versioned markdown files**
 
 ## Type 3: Pasted Content
 
 If user pastes content directly:
 
 1. **Work with the pasted text**
-2. **Output will be markdown** that user can copy
+2. **Output will be versioned markdown files**
 
 # Core Workflow
 
@@ -253,7 +223,8 @@ d) **Re-Review Cycle**
    - Continue until ALL agents are satisfied OR diminishing returns reached
 
 e) **Human Check-in** (REQUIRED after each complete iteration)
-   - Present link to the revised document
+   - Save the revised version as a markdown file with unix timestamp
+   - Show diff with red/green highlighting
    - Summarize major changes made
    - **ASK FOR USER FEEDBACK:** "Please review the latest version and provide feedback. What would you like me to improve, change, or refine?"
    - Wait for user response before proceeding
@@ -280,13 +251,13 @@ After presenting each iteration to the user:
    - Examples: "This is confusing" → consult Clarity agent
    - Examples: "Flow is off" → consult Structure agent
 
-3. **Apply changes using appropriate method:**
-   - If updating same doc: Use `batch_update_doc` on existing revision
-   - If creating new version: Create next revision number
+3. **Apply changes and save new version:**
+   - Create revised markdown content
+   - Save as new timestamped markdown file
    - Track what changed for diff output
 
 4. **Present changes in diff format:**
-   - Show removed text in red (with strikethrough if possible)
+   - Show removed text in red with strikethrough
    - Show added text in green
    - Format: Use markdown for visual distinction
 
@@ -307,11 +278,11 @@ After presenting each iteration to the user:
    Added: "Pricing is available on request."
    ```
 
-5. **Provide updated document link:**
+5. **Provide updated file path:**
    ```
    ✅ Changes applied!
 
-   View updated document: [Google Docs link]
+   Saved to: output_[timestamp].md
 
    Would you like to:
    (a) Continue iterating with more feedback
@@ -334,116 +305,82 @@ When user indicates they're done:
 
 ## 6. Formatting & Delivery
 
-Delivery method depends on input type:
+**All outputs are saved as versioned markdown files with unix timestamps.**
 
-### For Google Docs URLs (Type 1):
+### File Naming Convention
 
-**After completing a revision:**
+Use this format: `output_[unix_timestamp].md`
 
-1. **Create a new formatted Google Doc** (PREFERRED - preserves formatting):
+Example: `output_1730390400.md`
 
-   a) Create the new document:
-   - Use `mcp__google-workspace__create_doc` with title "[Original Name] - Revision 1"
-   - Get the new document ID from the response
+To generate unix timestamp:
+```bash
+date +%s
+```
 
-   b) Reconstruct the document with formatting using `mcp__google-workspace__batch_update_doc`:
-   - Build operations array that recreates the document structure WITH original formatting preserved
-   - **For each paragraph from the original:**
-     1. Insert the revised text at index position
-     2. Apply paragraph-level formatting:
-        - If `namedStyleType` was HEADING_1: Apply H1 formatting (20pt bold)
-        - If `namedStyleType` was HEADING_2: Apply H2 formatting (16pt bold)
-        - If `namedStyleType` was HEADING_3: Apply H3 formatting (14pt bold)
-        - If `namedStyleType` was NORMAL_TEXT: Apply normal formatting
-     3. Apply character-level formatting from text_runs:
-        - For each text_run with formatting:
-          - Calculate character offsets in new text
-          - Apply bold if `text_style.bold` was true
-          - Apply italic if `text_style.italic` was true
-          - Apply font size if `text_style.fontSize` was specified
+### After Each Complete Iteration
 
-   - **Example operations to preserve formatting:**
-     ```json
-     [
-       {"type": "insert_text", "index": 1, "text": "Revised Heading Text"},
-       {"type": "format_text", "start_index": 1, "end_index": 20,
-        "bold": true, "font_size": 20},
-       {"type": "insert_text", "index": 21, "text": "\n\nBody with bold word."},
-       {"type": "format_text", "start_index": 36, "end_index": 40, "bold": true}
-     ]
-     ```
+1. **Save the revised content:**
+   - Use the Write tool to create a new markdown file
+   - Filename format: `output_[unix_timestamp].md`
+   - Content: Clean markdown with proper formatting
+     - Use # for H1, ## for H2, ### for H3
+     - Use **bold** and *italic* as needed
+     - Preserve lists, code blocks, quotes, etc.
 
-   - For tables: Use `mcp__google-workspace__create_table_with_data` at appropriate index
-   - For lists: Use `insert_doc_elements` with type "list"
+2. **Show the diff:**
+   - Compare previous version (or original) with new version
+   - Display changes in this format:
+     - ~~Strikethrough~~ for removed text (red in terminal with color support)
+     - **Bold** for added text (green in terminal with color support)
+   - Organize by section/location
 
-   c) Example batch_update operations:
-   ```json
-   [
-     {"type": "insert_text", "index": 1, "text": "Revised Heading Text"},
-     {"type": "format_text", "start_index": 1, "end_index": 20, "bold": true, "font_size": 16},
-     {"type": "insert_text", "index": 21, "text": "\n\nRevised paragraph with some bold text."},
-     {"type": "format_text", "start_index": 50, "end_index": 60, "bold": true}
-   ]
+3. **Provide shell command for external diff:**
+   After showing your inline diff, provide this command for users who want to see it in another terminal:
+   ```bash
+   diff -u output_[previous_timestamp].md output_[current_timestamp].md | colordiff
+   ```
+   Or if colordiff is not available:
+   ```bash
+   diff -u output_[previous_timestamp].md output_[current_timestamp].md
    ```
 
-2. **OR output as markdown** (fallback if formatting is complex):
-   - Present the revised content as clean markdown
-   - Include a summary of major changes
-   - Note which formatting may need manual adjustment
+### Presentation Format
 
-3. **Present to user:**
-   ```
-   ✅ Revision complete!
+```
+✅ Revision complete!
 
-   Created new Google Doc: [Link to new doc]
+Saved to: output_[timestamp].md
 
-   Formatting preserved:
-   - ✅ Headings (H1, H2, etc.)
-   - ✅ Bold/italic/underline
-   - ✅ Tables
-   - ✅ Lists
+## Changes Made:
 
-   Major changes made:
-   - [List key improvements]
+### Section 1: Introduction
+~~The company will leverage robust solutions~~
+**The company will use effective solutions**
 
-   What would you like to do?
-   (a) Iterate more - I'll create another revision
-   (b) Review and I'm done
-   ```
+### Section 2: Benefits
+~~Key Benefits~~
+**Why This Matters**
 
-4. **If user wants more iterations:**
+[Added new paragraph with specific example]
 
-   **Ask user:** "How would you like me to handle the next iteration?"
-   - **(a) Update the same doc** - I'll modify "Revision 1" directly with your feedback
-   - **(b) Create new version** - I'll create "Revision 2" so you can compare versions
+## Summary:
+- Removed corporate jargon (3 instances)
+- Added concrete examples (2)
+- Improved clarity in introduction
+- Strengthened conclusion
 
-   **If updating same doc:**
-   - Use `batch_update_doc` on the existing revision doc
-   - Apply user feedback directly to that document
-   - Faster, keeps fewer files around
-   - Can't easily compare before/after
+---
 
-   **If creating new version:**
-   - Read the previous revision doc using `inspect_doc_structure`
-   - Work from that structure
-   - Apply additional feedback
-   - Create "[Original Name] - Revision 2"
-   - User can compare Revision 1 vs Revision 2 side-by-side
+To view full diff in another terminal:
+`diff -u output_[previous].md output_[current].md | colordiff`
 
-**Important Formatting Preservation Rules:**
-- ALWAYS use `inspect_doc_structure(detailed=true)` to read documents - it preserves formatting metadata
-- ALWAYS use `batch_update_doc` to recreate formatted content
-- For headings: Apply appropriate font size and bold (H1=20pt bold, H2=16pt bold, H3=14pt bold)
-- For tables: Use `create_table_with_data` with `bold_headers=true`
-- For complex formatting: Build operations array step-by-step, inserting text then applying styles
-- Index management is critical: text insertion shifts all subsequent indices forward
+---
 
-### For Local Files or Pasted Content (Type 2 & 3):
-
-- Output as clean markdown with proper formatting
-- Preserve all structural elements (headings, lists, emphasis)
-- Include a brief summary of major changes made
-- User can copy-paste or save to file
+What would you like to do?
+(a) Continue iterating with more feedback
+(b) Done - this looks great
+```
 
 ## 7. Diff Output Format Guidelines
 
@@ -452,7 +389,7 @@ When presenting changes, use this format for clarity:
 **For text replacements:**
 ```
 ~~Old text that was removed~~
-New text that was added
+**New text that was added**
 ```
 
 **For deletions only:**
@@ -462,19 +399,22 @@ New text that was added
 
 **For additions only:**
 ```
-Added: "New text that was inserted"
+**New text that was inserted**
 ```
 
-**For complex changes:**
+**For complex changes (full paragraphs):**
 ```
-Before:
-[Original paragraph]
-
-After:
-[Revised paragraph]
+[Removed: Original paragraph about X]
+[Added: New paragraph with specific details about Y]
 ```
 
 Always organize diffs by section/location and include context so user knows where changes were made.
+
+**Shell command for full diff:**
+Always provide this at the end of your presentation:
+```bash
+diff -u output_[previous_timestamp].md output_[current_timestamp].md | colordiff
+```
 
 # Critical Quality Standards
 

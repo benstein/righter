@@ -23,7 +23,7 @@
       "Bash(curl:*)",
       "Read(//private/tmp/**)",
       "Bash(uv sync:*)",
-      "mcp__google-workspace__get_doc_content"
+      "mcp__google-workspace__get_drive_file_content"
     ],
     "deny": [],
     "ask": []

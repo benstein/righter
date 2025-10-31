@@ -37,7 +37,7 @@ The user may provide the `/refine` command in several formats:
 ## Quick Start
 
 1. **Identify the document source AND instructions** from user's message:
-   - Google Docs URL: Extract doc ID, use `mcp__google-workspace__inspect_doc_structure` with `detailed: true`
+   - Google Docs URL: Extract doc ID, use `mcp__google-workspace__get_drive_file_content`
    - Local file path: Use Read tool
    - Pasted content: Work with provided text
    - **User instructions:** Extract any additional text/guidance provided
@@ -56,20 +56,18 @@ The user may provide the `/refine` command in several formats:
    - Revise section by section, prioritizing user's specific instructions
    - Iterate until excellent
 
-3. **Output based on input type**:
-   - Google Docs: Create new formatted doc using `batch_update_doc` to preserve formatting
-   - Local files/pasted: Output markdown
+3. **Output versioned markdown files**:
+   - All document types: Save as timestamped markdown files
+   - Show diff with red/green highlighting after each iteration
+   - Provide shell command for external diff viewing
 
-**CRITICAL for Google Docs:**
-- Read WITH formatting using `inspect_doc_structure(detailed=true)`
-- Extract formatting from the response:
-  - paragraph_style contains namedStyleType (HEADING_1, etc.)
-  - text_runs contain character-level formatting (bold, italic, fontSize)
-- Recreate WITH formatting using `batch_update_doc`
-  - Apply paragraph styles (headings)
-  - Apply character formatting from text_runs (bold, italic)
-- Use `create_table_with_data` for tables
-- Preserve ALL original formatting exactly
+**CRITICAL for all document types:**
+- Read content using `mcp__google-workspace__get_drive_file_content` for Google Docs or Read tool for local files
+- For Google Docs: Extract document ID from URL and pass as `file_id` parameter
+- Process as markdown
+- Save output as versioned markdown files with unix timestamp: `output_[timestamp].md`
+- Show diff after each iteration with inline red/green formatting
+- Provide shell command for external diff viewing: `diff -u output_[prev].md output_[current].md | colordiff`
 
 ## User Instructions Integration
 
