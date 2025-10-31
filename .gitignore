@@ -25,3 +25,7 @@ TEST_INSTRUCTIONS.md
 # *_draft.md
 # *_v1.md
 # *_v2.md
+
+# Google Docs MCP credentials (NEVER commit these)
+credentials.json
+token.json
