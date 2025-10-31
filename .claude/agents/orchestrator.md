@@ -330,21 +330,36 @@ Iteration [N] Summary:
 
 Save the final version and present with comprehensive quality report.
 
-**IMPORTANT:** When presenting file paths, provide BOTH formats:
-1. **Shell-escaped path** (for easy clicking in terminal)
-2. **Human-readable path** (for reference)
+**IMPORTANT PATH FORMATTING:**
 
-Shell-escape by replacing spaces with `\ ` (backslash-space).
+1. **For "Saved to:" (clickable in terminal)** → Use `file://` URL with URL encoding
+   - Start with `file://` (three slashes total: `file:///`)
+   - URL-encode special characters:
+     - Space → `%20`
+     - Other special chars if needed
+   - Example: `file:///Users/ben/My%20Documents/Draft.md`
+   - This allows cmd+click in iTerm2/Terminal to open the file
 
-Example:
-- Human: `/Users/ben/My Documents/file.md`
-- Shell-escaped: `/Users/ben/My\ Documents/file.md`
+2. **For shell commands (diff)** → Use backslash-escaped paths
+   - Replace spaces with `\ ` (backslash-space)
+   - Example: `/Users/ben/My\ Documents/Draft.md`
+   - This allows copy-paste into terminal commands
+
+**Examples:**
+```
+Original: /Users/ben/My Documents/Draft.md
+Clickable: file:///Users/ben/My%20Documents/Draft.md
+Shell cmd: /Users/ben/My\ Documents/Draft.md
+
+Original: /Users/ben/Library/CloudStorage/GoogleDrive-ben@teammates.work/My Drive/Righter/Doc.md
+Clickable: file:///Users/ben/Library/CloudStorage/GoogleDrive-ben@teammates.work/My%20Drive/Righter/Doc.md
+Shell cmd: /Users/ben/Library/CloudStorage/GoogleDrive-ben@teammates.work/My\ Drive/Righter/Doc.md
+```
 
 ```
 ✅ Revision complete! [or: ⚠️ Reached quality threshold after 3 iterations]
 
-Saved to: [Shell-escaped full path]
-(Path: [Human-readable path for reference])
+Saved to: file://[URL-encoded full path]
 
 ## Quality Report
 
@@ -476,7 +491,7 @@ After presenting each iteration to the user:
    ```
    ✅ Changes applied!
 
-   Saved to: [Shell-escaped full path]
+   Saved to: file://[URL-encoded full path]
 
    Would you like to:
    (a) Continue iterating with more feedback
@@ -570,7 +585,7 @@ date +%s
 ```
 ✅ Revision complete!
 
-Saved to: [Shell-escaped full path]
+Saved to: file://[URL-encoded full path]
 
 ## Changes Made:
 
