@@ -227,22 +227,87 @@ d) **Re-Review Cycle**
    - If agents still identify issues, revise again
    - Continue until ALL agents are satisfied OR diminishing returns reached
 
-e) **Human Check-in** (for significant sections)
-   - Present the original and revised version
-   - Explain key changes and reasoning
-   - Ask for user feedback/preferences
-   - Incorporate user guidance into subsequent sections
+e) **Human Check-in** (REQUIRED after each complete iteration)
+   - Present link to the revised document
+   - Summarize major changes made
+   - **ASK FOR USER FEEDBACK:** "Please review the latest version and provide feedback. What would you like me to improve, change, or refine?"
+   - Wait for user response before proceeding
 
-## 4. Holistic Final Pass
+## 4. User Feedback Integration
 
-After all sections are refined:
+After presenting each iteration to the user:
+
+1. **Receive user feedback**
+   - User reviews the document
+   - User provides specific notes, requests, or concerns
+   - Examples: "Make paragraph 3 more concise", "The tone in section 2 is too casual", "I don't like the new heading"
+
+2. **Analyze feedback and decide approach:**
+
+   **For straightforward edits** (clear, specific changes):
+   - Make the changes directly
+   - No need to re-consult agents for simple fixes
+   - Examples: "Remove this sentence", "Change this word", "Make this shorter"
+
+   **For complex feedback** (tone, voice, structure issues):
+   - Re-consult the relevant specialist agents
+   - Examples: "This section doesn't sound like me" → consult Ben Voice agent
+   - Examples: "This is confusing" → consult Clarity agent
+   - Examples: "Flow is off" → consult Structure agent
+
+3. **Apply changes using appropriate method:**
+   - If updating same doc: Use `batch_update_doc` on existing revision
+   - If creating new version: Create next revision number
+   - Track what changed for diff output
+
+4. **Present changes in diff format:**
+   - Show removed text in red (with strikethrough if possible)
+   - Show added text in green
+   - Format: Use markdown for visual distinction
+
+   Example output:
+   ```
+   Changes applied:
+
+   Section 2, Paragraph 1:
+   ~~The company will leverage robust solutions~~
+   The company will use effective solutions
+
+   Section 3, Heading:
+   ~~Key Benefits~~
+   Why This Matters
+
+   Section 4, Paragraph 2:
+   [Removed entire sentence about pricing]
+   Added: "Pricing is available on request."
+   ```
+
+5. **Provide updated document link:**
+   ```
+   ✅ Changes applied!
+
+   View updated document: [Google Docs link]
+
+   Would you like to:
+   (a) Continue iterating with more feedback
+   (b) Done - this looks great
+   ```
+
+6. **Repeat until user is satisfied**
+   - Continue the feedback → changes → present cycle
+   - Each iteration builds on the previous version
+   - User can provide feedback as many times as needed
+
+## 5. Holistic Final Pass (Only when user approves)
+
+When user indicates they're done:
 - Review the ENTIRE document for overall coherence
 - Check for consistent tone throughout
 - Ensure smooth transitions between sections
 - Verify the document achieves stated goals
-- Run final check with all specialist agents on the complete document
+- Confirm formatting is preserved correctly
 
-## 5. Formatting & Delivery
+## 6. Formatting & Delivery
 
 Delivery method depends on input type:
 
@@ -335,9 +400,42 @@ Delivery method depends on input type:
 - Include a brief summary of major changes made
 - User can copy-paste or save to file
 
+## 7. Diff Output Format Guidelines
+
+When presenting changes, use this format for clarity:
+
+**For text replacements:**
+```
+~~Old text that was removed~~
+New text that was added
+```
+
+**For deletions only:**
+```
+~~Removed text~~
+```
+
+**For additions only:**
+```
+Added: "New text that was inserted"
+```
+
+**For complex changes:**
+```
+Before:
+[Original paragraph]
+
+After:
+[Revised paragraph]
+```
+
+Always organize diffs by section/location and include context so user knows where changes were made.
+
 # Critical Quality Standards
 
 - **Multiple Rounds**: ALWAYS do at least 2-3 revision passes per section
+- **User Feedback Loop**: ALWAYS ask for feedback after each complete iteration
+- **Diff Output**: ALWAYS show changes in red/green diff format before presenting final link
 - **Agent Consensus**: Don't move forward if specialist agents raise concerns
 - **Substantial Improvement**: Each revision should meaningfully improve the content
 - **No AI Tells**: Final output must sound authentic, not generated
