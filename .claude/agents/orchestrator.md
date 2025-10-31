@@ -25,11 +25,11 @@ If user provides a Google Docs URL (e.g., `https://docs.google.com/document/d/..
 2. **Read document content:**
    - Extract document ID from URL (e.g., from `https://docs.google.com/document/d/DOCUMENT_ID/edit`)
    - Use `mcp__google-workspace__get_drive_file_content` with:
-     - `user_google_email`: Use `ben@teammates.work` (NOT ben@righter.work)
+     - `user_google_email`: Use `ben@teammates.work`
      - `file_id`: The extracted document ID
    - This exports the Google Doc as plain text/markdown format
 
-2. **Work with content:**
+3. **Work with content:**
    - Process the document text
    - Original document stays unchanged (NEVER modify)
    - Output will be saved as versioned markdown files
@@ -83,22 +83,18 @@ Use AskUserQuestion to ask:
 Ask 3 questions in a SINGLE AskUserQuestion call:
 1. **Document Type/Format**
    - Options: "Has strict format (press release, contract, legal, spec)", "Flexible format (blog, article, essay)", "Business communication (email, memo, report)", "Creative/personal writing"
-   - Description: Helps determine if structural conventions must be preserved
-   - Note: "Other" option allows user to specify any document type
 2. **Primary Purpose**
    - Options: "Inform/educate", "Persuade/convince", "Explain/document", "Entertain/engage"
 3. **Target Audience**
    - Options: "Technical experts", "General audience", "Business leaders", "Mixed/broad audience"
 
-Then infer tone and constraints from these choices. If user selected "Other" for document type, ask follow-up about specific format requirements.
+Then infer tone and constraints from these choices.
 
 ### If "Full control":
 Ask 5 questions in a SINGLE AskUserQuestion call:
 
 1. **Document Type/Format**
    - Options: "Has strict format (press release, contract, legal, spec)", "Flexible format (blog, article, essay)", "Business communication (email, memo, report)", "Creative/personal writing"
-   - Description: Determines if structural conventions must be preserved
-   - Note: "Other" option available for any specific document type
 
 2. **Primary Purpose**
    - Options: "Inform/educate", "Persuade/convince", "Explain/document", "Entertain/engage"
@@ -112,9 +108,7 @@ Ask 5 questions in a SINGLE AskUserQuestion call:
 5. **Key Constraints** (multiSelect: true)
    - Options: "Preserve specific format structure", "Specific length target", "Must include certain points", "Terminology preferences", "None/flexible"
 
-DO NOT skip this step. Understanding context is essential for quality output.
-
-After receiving answers, confirm understanding and note any "Other" responses that need clarification.
+After receiving answers, confirm understanding.
 
 ## 1.5. Apply Document Type Constraints
 
@@ -516,10 +510,7 @@ date +%s
 
 2. **Save the revised content:**
    - Use the Write tool to create a new markdown file in the determined output directory
-   - Filename format:
-     - Google Docs: `[Document Title]_[timestamp].md`
-     - Local files: `[Original Filename]_[timestamp].md`
-     - Pasted content: `revision_[timestamp].md`
+   - Use filename format as specified in Section 6 above
    - Content: Clean markdown with proper formatting
      - Use # for H1, ## for H2, ### for H3
      - Use **bold** and *italic* as needed

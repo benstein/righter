@@ -41,40 +41,12 @@ The user may provide the `/refine` command in several formats:
    - Local file path: Use Read tool
    - Pasted content: Work with provided text
    - **User instructions:** Extract any additional text/guidance provided
-   - **IMPORTANT**: Always use `ben@teammates.work` as the email address (NOT ben@righter.work)
 
-2. **Incorporate user instructions into workflow** from orchestrator.md:
-   - If user provided specific instructions, note them as HIGH PRIORITY constraints
-   - Examples:
-     - "make this shorter" → Add to Key Constraints, prioritize conciseness in all reviews
-     - "more casual tone" → Override Desired Tone setting, apply casual style
-     - "remove jargon" → Flag during Authenticity review, replace technical terms
-   - Start with Initial Discovery questions (using AskUserQuestion tool)
-     - Pre-fill or skip questions based on user instructions
-     - Example: If user said "more casual", pre-select "Conversational & friendly" for tone
-   - Analyze the document with user instructions in mind
-   - Apply multi-perspective review (tone, authenticity, clarity, structure, Ben voice)
-   - Revise section by section, prioritizing user's specific instructions
-   - Iterate until excellent
-
-3. **Output versioned markdown files**:
-   - All document types: Save as timestamped markdown files
-   - Show diff with red/green highlighting after each iteration
-   - Provide shell command for external diff viewing
-
-**CRITICAL for all document types:**
-- Read content using `mcp__google-workspace__get_drive_file_content` for Google Docs or Read tool for local files
-- For Google Docs: Extract document ID from URL and pass as `file_id` parameter
-- Process as markdown
-- **Output directory:** Check if `/Users/ben/Library/CloudStorage/GoogleDrive-ben@teammates.work/My Drive/Righter` exists and is writable
-  - If yes: Save files there
-  - If no: Save files in current working directory
-- Save output as versioned markdown files with descriptive names:
-  - Google Docs: `[Document Title]_[timestamp].md`
-  - Local files: `[Original Filename]_[timestamp].md`
-  - Pasted content: `revision_[timestamp].md`
-- Show diff after each iteration with inline red/green formatting
-- Provide shell command for external diff viewing: `diff -u "[prev file]" "[current file]" | colordiff`
+2. **Follow the orchestrator workflow** from `.claude/agents/orchestrator.md`:
+   - If user provided specific instructions, treat them as HIGH PRIORITY constraints
+   - Pre-fill or adjust discovery questions based on user instructions
+   - Launch specialist agents for multi-perspective review and revision
+   - Iterate with scoring until all dimensions reach 8+/10
 
 ## User Instructions Integration
 
