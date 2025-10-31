@@ -18,24 +18,34 @@ You can work with three types of input:
 
 If user provides a Google Docs URL (e.g., `https://docs.google.com/document/d/...`):
 
-1. **Use MCP tools to read the document WITH FORMATTING:**
+1. **Read document content (KNOWN LIMITATION - formatting will be lost):**
    - Extract document ID from URL (e.g., from `https://docs.google.com/document/d/DOCUMENT_ID/edit`)
-   - **ALWAYS use `mcp__google-workspace__inspect_doc_structure`** with `detailed: true`
-   - **NEVER use `get_doc_content`** (it has a broken signature with required service parameters)
-   - `inspect_doc_structure` returns full structure including:
-     - Paragraph styles (headings, body text)
-     - Text formatting (bold, italic, underline, font size)
-     - Tables with dimensions and content
-     - Lists (ordered/unordered)
-     - Complete document structure as JSON
-   - Parse this structured JSON to understand the document's formatting
-   - Extract text content from the structure for editing
+   - Use `mcp__google-workspace__get_drive_file_content` with the document ID to get plain text
+   - **CURRENT LIMITATION:** The MCP server tools cannot read formatting metadata:
+     - `get_doc_content` has broken signature (requires internal service parameters)
+     - `inspect_doc_structure` returns structure but not formatting details (no bold, italic, heading styles)
+     - `get_drive_file_content` exports plain text only
 
-2. **Plan revision workflow:**
+2. **Infer formatting from content patterns** (best effort workaround):
+   - Look for content patterns that indicate formatting:
+     - ALL CAPS or short lines at top → likely headings
+     - Separator lines (____) → section breaks
+     - Short bold-looking phrases → likely subheadings
+     - Quote-like passages → may have been quoted/indented
+   - For press releases specifically, apply standard formatting:
+     - First line: H1 (headline)
+     - Date line: Normal text
+     - First paragraph: Normal text (bold optional)
+     - Quoted text: Normal with attribution
+     - "About Company": H2 or bold
+     - Contact info: Normal or smaller
+
+3. **Plan revision workflow and set expectations:**
    - Original document stays unchanged (NEVER modify)
+   - **Inform user about formatting limitation:** "Note: Due to MCP server limitations, I'll need to infer formatting from content patterns. The revision will have standard formatting applied based on document type (e.g., press release, blog post), but may not match the exact original formatting."
    - For revisions, you have two options:
-     a) **Create new formatted Google Doc** (PREFERRED for preserving formatting)
-     b) **Output as markdown** (fallback if user prefers)
+     a) **Create new formatted Google Doc** - Apply standard formatting for document type
+     b) **Output as markdown** - User can paste and format manually
    - Ask user which they prefer
 
 ## Type 2: Local File Path
@@ -326,13 +336,32 @@ Delivery method depends on input type:
 
    b) Reconstruct the document with formatting using `mcp__google-workspace__batch_update_doc`:
    - Build operations array that recreates the document structure
-   - For each paragraph from the original:
-     - Insert the revised text at the correct index
-     - If it was a heading, apply heading style
-     - If it had bold/italic, apply those styles to the text ranges
-   - For each table from the original:
-     - Use `mcp__google-workspace__create_table_with_data` at the correct index
-   - For lists, use `insert_doc_elements` with type "list"
+   - **Apply standard formatting based on document type:**
+
+     **Press Release formatting:**
+     - Line 1: Headline → H1 (20pt, bold)
+     - Line 2: Subheadline → H2 (16pt, bold) if present
+     - Date/Location line → Normal
+     - Body paragraphs → Normal (11pt)
+     - Quoted sections → Normal with quotation marks
+     - "About [Company]" section → H2 (16pt, bold) or bold normal text
+     - Contact info → Normal
+
+     **Blog Post/Article formatting:**
+     - Title → H1 (20pt, bold)
+     - Section headings → H2 (16pt, bold)
+     - Subsections → H3 (14pt, bold)
+     - Body text → Normal (11pt)
+     - Emphasized phrases → Bold or italic based on context
+
+     **Business Document formatting:**
+     - Title → H1 (20pt, bold)
+     - Main sections → H2 (16pt, bold)
+     - Subsections → H3 (14pt, bold)
+     - Body text → Normal (11pt)
+
+   - For tables: Use `mcp__google-workspace__create_table_with_data` at appropriate index
+   - For lists: Use `insert_doc_elements` with type "list"
 
    c) Example batch_update operations:
    ```json
