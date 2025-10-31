@@ -18,17 +18,21 @@ You can work with three types of input:
 
 If user provides a Google Docs URL (e.g., `https://docs.google.com/document/d/...`):
 
-1. **Use MCP tools to read the document:**
+1. **Use MCP tools to read the document WITH FORMATTING:**
    - Extract document ID from URL
-   - Use `mcp__google-workspace__get_drive_file_content` with the document ID
-   - This works for Google Docs because they're stored in Drive
-   - Note: You have access to these MCP tools when configured
+   - First use `mcp__google-workspace__inspect_doc_structure` with `detailed: true` to get full structure including:
+     - Paragraph styles (headings, body text)
+     - Text formatting (bold, italic, underline, font size)
+     - Tables with dimensions and content
+     - Lists (ordered/unordered)
+   - This returns structured JSON that preserves all formatting metadata
+   - Parse this to understand the document's structure
 
 2. **Plan revision workflow:**
    - Original document stays unchanged (NEVER modify)
    - For revisions, you have two options:
-     a) **Output as markdown** (simpler) - User can paste into a new doc
-     b) **Create new Google Doc** (if user wants) - Use `mcp__google-workspace__create_doc` to create "Document Name - Revision 1"
+     a) **Create new formatted Google Doc** (PREFERRED for preserving formatting)
+     b) **Output as markdown** (fallback if user prefers)
    - Ask user which they prefer
 
 ## Type 2: Local File Path
@@ -157,40 +161,70 @@ Delivery method depends on input type:
 
 **After completing a revision:**
 
-1. **Output the revision as markdown** (default and simplest):
-   - Present the revised content as clean, formatted markdown
-   - Include a summary of major changes
-   - User can paste into their Google Doc or create a new one
+1. **Create a new formatted Google Doc** (PREFERRED - preserves formatting):
 
-2. **OR create a new Google Doc** (if user prefers):
-   - Use `mcp__google-workspace__create_doc` to create a new doc titled "[Original Name] - Revision 1"
-   - Write the content using `mcp__google-workspace__modify_doc_text` or `batch_update_doc`
-   - Provide the new document link
+   a) Create the new document:
+   - Use `mcp__google-workspace__create_doc` with title "[Original Name] - Revision 1"
+   - Get the new document ID from the response
+
+   b) Reconstruct the document with formatting using `mcp__google-workspace__batch_update_doc`:
+   - Build operations array that recreates the document structure
+   - For each paragraph from the original:
+     - Insert the revised text at the correct index
+     - If it was a heading, apply heading style
+     - If it had bold/italic, apply those styles to the text ranges
+   - For each table from the original:
+     - Use `mcp__google-workspace__create_table_with_data` at the correct index
+   - For lists, use `insert_doc_elements` with type "list"
+
+   c) Example batch_update operations:
+   ```json
+   [
+     {"type": "insert_text", "index": 1, "text": "Revised Heading Text"},
+     {"type": "format_text", "start_index": 1, "end_index": 20, "bold": true, "font_size": 16},
+     {"type": "insert_text", "index": 21, "text": "\n\nRevised paragraph with some bold text."},
+     {"type": "format_text", "start_index": 50, "end_index": 60, "bold": true}
+   ]
+   ```
+
+2. **OR output as markdown** (fallback if formatting is complex):
+   - Present the revised content as clean markdown
+   - Include a summary of major changes
+   - Note which formatting may need manual adjustment
 
 3. **Present to user:**
    ```
    ✅ Revision complete!
 
-   [Show the revised content as markdown]
+   Created new Google Doc: [Link to new doc]
+
+   Formatting preserved:
+   - ✅ Headings (H1, H2, etc.)
+   - ✅ Bold/italic/underline
+   - ✅ Tables
+   - ✅ Lists
 
    Major changes made:
    - [List key improvements]
 
    What would you like to do?
    (a) Iterate more - I'll create another revision
-   (b) Create as new Google Doc
-   (c) Done - this looks great!
+   (b) Review and I'm done
    ```
 
 4. **If user wants more iterations:**
-   - Work from the previous revision
+   - Read the previous revision doc using `inspect_doc_structure`
+   - Work from that structure
    - Apply additional feedback
-   - Present new revision
+   - Create "[Original Name] - Revision 2"
 
-**Important: The MCP server cannot create tabs within existing Google Docs. You can only:**
-- Read from Google Docs (including tabs if they exist)
-- Create new standalone Google Docs
-- Output markdown for the user to paste
+**Important Formatting Preservation Rules:**
+- ALWAYS use `inspect_doc_structure(detailed=true)` to read documents - it preserves formatting metadata
+- ALWAYS use `batch_update_doc` to recreate formatted content
+- For headings: Apply appropriate font size and bold (H1=20pt bold, H2=16pt bold, H3=14pt bold)
+- For tables: Use `create_table_with_data` with `bold_headers=true`
+- For complex formatting: Build operations array step-by-step, inserting text then applying styles
+- Index management is critical: text insertion shifts all subsequent indices forward
 
 ### For Local Files or Pasted Content (Type 2 & 3):
 

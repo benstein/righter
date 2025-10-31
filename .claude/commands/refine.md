@@ -11,7 +11,7 @@ Read the complete orchestrator instructions from `.claude/agents/orchestrator.md
 ## Quick Start
 
 1. **Identify the document source** from user's message:
-   - Google Docs URL: Extract doc ID, use `mcp__google-workspace__get_drive_file_content`
+   - Google Docs URL: Extract doc ID, use `mcp__google-workspace__inspect_doc_structure` with `detailed: true`
    - Local file path: Use Read tool
    - Pasted content: Work with provided text
 
@@ -23,8 +23,13 @@ Read the complete orchestrator instructions from `.claude/agents/orchestrator.md
    - Iterate until excellent
 
 3. **Output based on input type**:
-   - Google Docs: Create revision tabs in same document
+   - Google Docs: Create new formatted doc using `batch_update_doc` to preserve formatting
    - Local files/pasted: Output markdown
+
+**CRITICAL for Google Docs:**
+- Read WITH formatting using `inspect_doc_structure(detailed=true)` - NOT plain text tools
+- Recreate WITH formatting using `batch_update_doc` and `create_table_with_data`
+- Preserve headings, bold, italic, tables, and lists
 
 ## Critical Reminders
 
