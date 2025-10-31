@@ -69,36 +69,37 @@ Use AskUserQuestion to ask:
 
 ### If "Decide for me":
 - Read the document carefully
-- Infer document type/format based on structure:
-  - Press release: Has dateline, boilerplate, formal quotes, contact info
-  - Blog post/article: Conversational, personal voice, narrative structure
-  - Business document: Formal, structured sections, professional tone
-  - Personal writing: First-person, informal, expressive
+- Infer document type/format based on structure and conventions:
+  - Look for format-specific markers (dateline, legal sections, contract terms, etc.)
+  - Identify if format has structural requirements that must be preserved
+  - Note if it's a standard format (press release, contract, spec) vs. flexible format (blog, article)
 - Infer purpose based on content structure and message
 - Infer audience based on language complexity and topic
 - Infer tone based on existing voice and style
 - Assume no hard constraints unless obvious
-- State your inferences clearly: "Based on the document structure, I'm treating this as a [type] with [purpose] for [audience] with [tone]. Proceeding with edits..."
+- State your inferences clearly: "Based on the document structure, I'm treating this as a [type] (e.g., press release, blog post, contract) with [purpose] for [audience] with [tone]. Proceeding with edits..."
 - User can object if wrong, otherwise proceed
 
 ### If "Quick setup":
 Ask 3 questions in a SINGLE AskUserQuestion call:
 1. **Document Type/Format**
-   - Options: "Press release", "Blog post/article", "Business document", "Personal writing"
-   - Description for each format's structural requirements
+   - Options: "Has strict format (press release, contract, legal, spec)", "Flexible format (blog, article, essay)", "Business communication (email, memo, report)", "Creative/personal writing"
+   - Description: Helps determine if structural conventions must be preserved
+   - Note: "Other" option allows user to specify any document type
 2. **Primary Purpose**
    - Options: "Inform/educate", "Persuade/convince", "Explain/document", "Entertain/engage"
 3. **Target Audience**
    - Options: "Technical experts", "General audience", "Business leaders", "Mixed/broad audience"
 
-Then infer tone and constraints from these choices.
+Then infer tone and constraints from these choices. If user selected "Other" for document type, ask follow-up about specific format requirements.
 
 ### If "Full control":
 Ask 5 questions in a SINGLE AskUserQuestion call:
 
 1. **Document Type/Format**
-   - Options: "Press release", "Blog post/article", "Business document", "Personal writing"
-   - Each with description of structural requirements
+   - Options: "Has strict format (press release, contract, legal, spec)", "Flexible format (blog, article, essay)", "Business communication (email, memo, report)", "Creative/personal writing"
+   - Description: Determines if structural conventions must be preserved
+   - Note: "Other" option available for any specific document type
 
 2. **Primary Purpose**
    - Options: "Inform/educate", "Persuade/convince", "Explain/document", "Entertain/engage"
@@ -110,7 +111,7 @@ Ask 5 questions in a SINGLE AskUserQuestion call:
    - Options: "Conversational & friendly", "Professional & authoritative", "Technical & precise", "Personal & authentic"
 
 5. **Key Constraints** (multiSelect: true)
-   - Options: "Specific length target", "Must include certain points", "Terminology preferences", "None/flexible"
+   - Options: "Preserve specific format structure", "Specific length target", "Must include certain points", "Terminology preferences", "None/flexible"
 
 DO NOT skip this step. Understanding context is essential for quality output.
 
@@ -118,52 +119,52 @@ After receiving answers, confirm understanding and note any "Other" responses th
 
 ## 1.5. Apply Document Type Constraints
 
-Based on the document type, preserve these structural requirements:
+Based on the document type/format category, apply appropriate structural rules:
 
-### Press Release Format
-**MUST preserve these elements:**
-- Dateline (City, State - Date)
-- Headline and subheadline
-- Opening paragraph with who/what/when/where/why
-- Quote from company spokesperson
-- Additional context paragraphs
-- Boilerplate "About [Company]" section
-- Contact information at end
+### Strict Format Documents (MUST preserve structure)
+**Examples:** Press releases, legal documents, contracts, product specs, academic papers, grant proposals
 
-**Editing constraints:**
-- Keep formal, third-person perspective
-- Maintain newsworthy tone (not promotional/salesy)
-- Preserve quote attributions exactly
-- Keep standard press release structure intact
-- DO NOT convert to conversational blog style
+**Preservation rules:**
+- Identify and preserve all format-specific sections (e.g., dateline in press release, "WHEREAS" clauses in contracts, "Requirements" sections in specs)
+- Maintain required structural elements in their standard positions
+- Keep formal language conventions appropriate to the format
+- Preserve numbering, section hierarchies, and standard headings
+- DO NOT restructure or merge sections that have conventional purposes
+- DO NOT change third-person to first-person if format requires third-person
+- DO NOT casualize tone if format requires formality
 
-### Blog Post/Article Format
-**Typical elements:**
-- Engaging, personal opening
-- Conversational first or second person
-- Section headings as needed
-- Narrative flow and storytelling
-- Personal anecdotes or examples
-- Casual transitions
+**When user selects "Other" for document type:**
+- Ask: "What specific format requirements or structural conventions should I preserve?"
+- Note their answer and treat as hard constraints during editing
+
+### Flexible Format Documents (Can adapt structure)
+**Examples:** Blog posts, articles, essays, opinion pieces, narratives, creative writing
 
 **Editing freedom:**
-- Can adjust structure for better flow
+- Can reorganize sections for better flow
+- Can adjust tone significantly
 - Can add/remove sections as needed
-- Tone can be adapted significantly
+- Can vary paragraph lengths and structures
+- Can adapt voice and perspective if it improves the piece
 
-### Business Document Format
-**MUST preserve:**
-- Formal section structure (Executive Summary, etc.)
-- Professional third-person tone
-- Data/metrics presentation
-- Formal language and terminology
+### Business Communications (Semi-flexible)
+**Examples:** Emails, memos, reports, proposals, presentations
 
-### Personal Writing Format
-**Typical elements:**
-- First-person perspective
-- Personal voice and style
-- Emotional authenticity
-- Individual quirks and expressions
+**Balanced approach:**
+- Preserve professional tone and conventions
+- Can improve clarity and conciseness
+- Maintain appropriate formality level
+- Can reorganize for better logic
+- Keep standard sections (e.g., Executive Summary) but can refine
+
+### Creative/Personal Writing (Maximum flexibility)
+**Examples:** Personal essays, blog posts, stories, reflections
+
+**Editing approach:**
+- Preserve authentic voice above all
+- Respect individual style choices
+- Can suggest improvements but don't force standard structures
+- Prioritize emotional authenticity over conventions
 
 ## 2. Document Analysis
 
