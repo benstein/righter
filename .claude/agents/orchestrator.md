@@ -328,12 +328,23 @@ Iteration [N] Summary:
 
 #### Step 6: Present to User
 
-Save the final version and present with comprehensive quality report:
+Save the final version and present with comprehensive quality report.
+
+**IMPORTANT:** When presenting file paths, provide BOTH formats:
+1. **Shell-escaped path** (for easy clicking in terminal)
+2. **Human-readable path** (for reference)
+
+Shell-escape by replacing spaces with `\ ` (backslash-space).
+
+Example:
+- Human: `/Users/ben/My Documents/file.md`
+- Shell-escaped: `/Users/ben/My\ Documents/file.md`
 
 ```
 ✅ Revision complete! [or: ⚠️ Reached quality threshold after 3 iterations]
 
-Saved to: [Full Path]/[Document Title]_[timestamp].md
+Saved to: [Shell-escaped full path]
+(Path: [Human-readable path for reference])
 
 ## Quality Report
 
@@ -378,7 +389,9 @@ Iterations completed: [N]/3
 ---
 
 To view full diff in another terminal:
-`diff -u "[Original]" "[Final]" | colordiff`
+```bash
+diff -u [Shell-escaped original path] [Shell-escaped current path] | colordiff
+```
 
 ---
 
@@ -463,7 +476,7 @@ After presenting each iteration to the user:
    ```
    ✅ Changes applied!
 
-   Saved to: [Document Title]_[timestamp].md
+   Saved to: [Shell-escaped full path]
 
    Would you like to:
    (a) Continue iterating with more feedback
@@ -539,23 +552,25 @@ date +%s
    - Organize by section/location
 
 4. **Provide shell command for external diff:**
-   After showing your inline diff, provide this command for users who want to see it in another terminal:
+   After showing your inline diff, provide this command for users who want to see it in another terminal.
+
+   **IMPORTANT:** Use shell-escaped paths (replace spaces with `\ `) so users can click the command.
+
    ```bash
-   diff -u "[previous_file]" "[current_file]" | colordiff
-   ```
-   Or if colordiff is not available:
-   ```bash
-   diff -u "[previous_file]" "[current_file]"
+   diff -u [shell-escaped previous file path] [shell-escaped current file path] | colordiff
    ```
 
-   Use the actual filenames with document title prefixes.
+   Example with spaces:
+   ```bash
+   diff -u /Users/ben/My\ Documents/Draft_1234.md /Users/ben/My\ Documents/Draft_5678.md | colordiff
+   ```
 
 ### Presentation Format
 
 ```
 ✅ Revision complete!
 
-Saved to: [Full Path]/[Document Title]_[timestamp].md
+Saved to: [Shell-escaped full path]
 
 ## Changes Made:
 
@@ -578,7 +593,9 @@ Saved to: [Full Path]/[Document Title]_[timestamp].md
 ---
 
 To view full diff in another terminal:
-`diff -u "[Previous File]" "[Current File]" | colordiff`
+```bash
+diff -u [shell-escaped previous path] [shell-escaped current path] | colordiff
+```
 
 ---
 
@@ -616,9 +633,9 @@ When presenting changes, use this format for clarity:
 Always organize diffs by section/location and include context so user knows where changes were made.
 
 **Shell command for full diff:**
-Always provide this at the end of your presentation (use actual filenames):
+Always provide this at the end of your presentation using shell-escaped paths:
 ```bash
-diff -u "[Previous File]" "[Current File]" | colordiff
+diff -u [shell-escaped previous path] [shell-escaped current path] | colordiff
 ```
 
 # Critical Quality Standards
