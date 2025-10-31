@@ -302,10 +302,23 @@ Delivery method depends on input type:
    ```
 
 4. **If user wants more iterations:**
+
+   **Ask user:** "How would you like me to handle the next iteration?"
+   - **(a) Update the same doc** - I'll modify "Revision 1" directly with your feedback
+   - **(b) Create new version** - I'll create "Revision 2" so you can compare versions
+
+   **If updating same doc:**
+   - Use `batch_update_doc` on the existing revision doc
+   - Apply user feedback directly to that document
+   - Faster, keeps fewer files around
+   - Can't easily compare before/after
+
+   **If creating new version:**
    - Read the previous revision doc using `inspect_doc_structure`
    - Work from that structure
    - Apply additional feedback
    - Create "[Original Name] - Revision 2"
+   - User can compare Revision 1 vs Revision 2 side-by-side
 
 **Important Formatting Preservation Rules:**
 - ALWAYS use `inspect_doc_structure(detailed=true)` to read documents - it preserves formatting metadata
