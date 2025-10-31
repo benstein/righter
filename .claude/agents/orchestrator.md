@@ -18,33 +18,45 @@ You can work with three types of input:
 
 If user provides a Google Docs URL (e.g., `https://docs.google.com/document/d/...`):
 
-1. **Read document content (KNOWN LIMITATION - formatting will be lost):**
+1. **Read document WITH FORMATTING:**
    - Extract document ID from URL (e.g., from `https://docs.google.com/document/d/DOCUMENT_ID/edit`)
-   - Use `mcp__google-workspace__get_drive_file_content` with the document ID to get plain text
-   - **CURRENT LIMITATION:** The MCP server tools cannot read formatting metadata:
-     - `get_doc_content` has broken signature (requires internal service parameters)
-     - `inspect_doc_structure` returns structure but not formatting details (no bold, italic, heading styles)
-     - `get_drive_file_content` exports plain text only
+   - Use `mcp__google-workspace__inspect_doc_structure` with `detailed: true`
+   - This returns complete formatting information:
+     - **Full text:** Complete paragraph content (not truncated)
+     - **paragraph_style:** Contains `namedStyleType` (HEADING_1, HEADING_2, NORMAL_TEXT, etc.)
+     - **text_runs:** Array of text segments with character-level formatting:
+       - `content`: The text string
+       - `text_style`: Object with `bold`, `italic`, `underline`, `fontSize`, etc.
+       - `start_index`, `end_index`: Position in document
+   - Parse this structured data to understand both content and formatting
 
-2. **Infer formatting from content patterns** (best effort workaround):
-   - Look for content patterns that indicate formatting:
-     - ALL CAPS or short lines at top → likely headings
-     - Separator lines (____) → section breaks
-     - Short bold-looking phrases → likely subheadings
-     - Quote-like passages → may have been quoted/indented
-   - For press releases specifically, apply standard formatting:
-     - First line: H1 (headline)
-     - Date line: Normal text
-     - First paragraph: Normal text (bold optional)
-     - Quoted text: Normal with attribution
-     - "About Company": H2 or bold
-     - Contact info: Normal or smaller
+2. **Extract and preserve formatting details:**
+   - For each paragraph, note:
+     - Is it a heading? (HEADING_1, HEADING_2, HEADING_3, NORMAL_TEXT)
+     - What's the font size?
+     - Are there bold/italic/underlined sections?
+   - Store this formatting metadata to reapply during write
+   - Example structure:
+     ```json
+     {
+       "type": "paragraph",
+       "text": "Meet Teammates: The Company",
+       "paragraph_style": {
+         "namedStyleType": "HEADING_1"
+       },
+       "text_runs": [
+         {
+           "content": "Meet Teammates",
+           "text_style": {"bold": true, "fontSize": {"magnitude": 20}}
+         }
+       ]
+     }
+     ```
 
-3. **Plan revision workflow and set expectations:**
+3. **Plan revision workflow:**
    - Original document stays unchanged (NEVER modify)
-   - **Inform user about formatting limitation:** "Note: Due to MCP server limitations, I'll need to infer formatting from content patterns. The revision will have standard formatting applied based on document type (e.g., press release, blog post), but may not match the exact original formatting."
    - For revisions, you have two options:
-     a) **Create new formatted Google Doc** - Apply standard formatting for document type
+     a) **Create new formatted Google Doc** - Preserve exact original formatting
      b) **Output as markdown** - User can paste and format manually
    - Ask user which they prefer
 
@@ -335,30 +347,31 @@ Delivery method depends on input type:
    - Get the new document ID from the response
 
    b) Reconstruct the document with formatting using `mcp__google-workspace__batch_update_doc`:
-   - Build operations array that recreates the document structure
-   - **Apply standard formatting based on document type:**
+   - Build operations array that recreates the document structure WITH original formatting preserved
+   - **For each paragraph from the original:**
+     1. Insert the revised text at index position
+     2. Apply paragraph-level formatting:
+        - If `namedStyleType` was HEADING_1: Apply H1 formatting (20pt bold)
+        - If `namedStyleType` was HEADING_2: Apply H2 formatting (16pt bold)
+        - If `namedStyleType` was HEADING_3: Apply H3 formatting (14pt bold)
+        - If `namedStyleType` was NORMAL_TEXT: Apply normal formatting
+     3. Apply character-level formatting from text_runs:
+        - For each text_run with formatting:
+          - Calculate character offsets in new text
+          - Apply bold if `text_style.bold` was true
+          - Apply italic if `text_style.italic` was true
+          - Apply font size if `text_style.fontSize` was specified
 
-     **Press Release formatting:**
-     - Line 1: Headline → H1 (20pt, bold)
-     - Line 2: Subheadline → H2 (16pt, bold) if present
-     - Date/Location line → Normal
-     - Body paragraphs → Normal (11pt)
-     - Quoted sections → Normal with quotation marks
-     - "About [Company]" section → H2 (16pt, bold) or bold normal text
-     - Contact info → Normal
-
-     **Blog Post/Article formatting:**
-     - Title → H1 (20pt, bold)
-     - Section headings → H2 (16pt, bold)
-     - Subsections → H3 (14pt, bold)
-     - Body text → Normal (11pt)
-     - Emphasized phrases → Bold or italic based on context
-
-     **Business Document formatting:**
-     - Title → H1 (20pt, bold)
-     - Main sections → H2 (16pt, bold)
-     - Subsections → H3 (14pt, bold)
-     - Body text → Normal (11pt)
+   - **Example operations to preserve formatting:**
+     ```json
+     [
+       {"type": "insert_text", "index": 1, "text": "Revised Heading Text"},
+       {"type": "format_text", "start_index": 1, "end_index": 20,
+        "bold": true, "font_size": 20},
+       {"type": "insert_text", "index": 21, "text": "\n\nBody with bold word."},
+       {"type": "format_text", "start_index": 36, "end_index": 40, "bold": true}
+     ]
+     ```
 
    - For tables: Use `mcp__google-workspace__create_table_with_data` at appropriate index
    - For lists: Use `insert_doc_elements` with type "list"

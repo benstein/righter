@@ -27,10 +27,15 @@ Read the complete orchestrator instructions from `.claude/agents/orchestrator.md
    - Local files/pasted: Output markdown
 
 **CRITICAL for Google Docs:**
-- Read WITH formatting using `inspect_doc_structure(detailed=true)` - NOT plain text tools
-- NEVER use `get_doc_content` (broken signature, use `inspect_doc_structure` instead)
-- Recreate WITH formatting using `batch_update_doc` and `create_table_with_data`
-- Preserve headings, bold, italic, tables, and lists
+- Read WITH formatting using `inspect_doc_structure(detailed=true)`
+- Extract formatting from the response:
+  - paragraph_style contains namedStyleType (HEADING_1, etc.)
+  - text_runs contain character-level formatting (bold, italic, fontSize)
+- Recreate WITH formatting using `batch_update_doc`
+  - Apply paragraph styles (headings)
+  - Apply character formatting from text_runs (bold, italic)
+- Use `create_table_with_data` for tables
+- Preserve ALL original formatting exactly
 
 ## Critical Reminders
 
