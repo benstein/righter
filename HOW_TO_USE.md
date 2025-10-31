@@ -52,7 +52,7 @@ The orchestrator will:
 4. Your original stays safe in the first tab
 5. Review revisions side-by-side in Google Docs
 
-**Setup required:** See [GOOGLE_DOCS_SETUP.md](GOOGLE_DOCS_SETUP.md) for one-time MCP configuration.
+**Setup required:** See [GOOGLE_OAUTH_SETUP.md](GOOGLE_OAUTH_SETUP.md) for one-time OAuth configuration (5 minutes).
 
 #### Option B: With local file
 
@@ -62,7 +62,15 @@ The orchestrator will:
 
 Outputs markdown you can copy.
 
-#### Option C: Just ask for help
+#### Option C: Paste content from Google Docs
+
+1. Copy text from your Google Doc
+2. Paste into Claude Code
+3. Use `/refine` or just say "refine this"
+4. Orchestrator creates improved version
+5. Copy improved markdown back to Google Docs
+
+#### Option D: Just ask for help
 
 ```
 I have a draft blog post that needs improvement. Can you help make it clearer and more engaging?

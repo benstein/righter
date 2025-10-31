@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "google-workspace": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "${HOME}/mcp-servers/google-workspace",
+        "run",
+        "main.py"
+      ],
+      "env": {
+        "GOOGLE_OAUTH_CLIENT_ID": "YOUR_CLIENT_ID_HERE",
+        "GOOGLE_OAUTH_CLIENT_SECRET": "YOUR_CLIENT_SECRET_HERE",
+        "OAUTHLIB_INSECURE_TRANSPORT": "1"
+      },
+      "description": "Google Workspace integration with Desktop OAuth - supports Docs, Drive, Gmail, Calendar, Sheets, Slides"
+    }
+  }
+}

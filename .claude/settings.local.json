@@ -11,9 +11,23 @@
       "Bash(head:*)",
       "Bash(done)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "WebFetch(domain:www.teammates.work)",
+      "WebFetch(domain:github.com)",
+      "Bash(git clone:*)",
+      "Bash(npm install)",
+      "Bash(npm run build:*)",
+      "Bash(npm search:*)",
+      "Bash(curl -I https://github.com/taylorwilsdon/google_workspace_mcp)",
+      "WebFetch(domain:gofastmcp.com)",
+      "Bash(curl:*)",
+      "Read(//private/tmp/**)",
+      "Bash(uv sync:*)",
+      "mcp__google-workspace__get_doc_content"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": []
 }

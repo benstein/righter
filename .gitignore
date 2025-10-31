@@ -29,3 +29,4 @@ TEST_INSTRUCTIONS.md
 # Google Docs MCP credentials (NEVER commit these)
 credentials.json
 token.json
+.mcp.json
