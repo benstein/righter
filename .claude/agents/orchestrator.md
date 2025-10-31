@@ -18,10 +18,14 @@ You can work with three types of input:
 
 If user provides a Google Docs URL (e.g., `https://docs.google.com/document/d/...`):
 
-1. **Read document content:**
+1. **Get user's Google email:**
+   - If user hasn't mentioned their email, use `ben@teammates.work` (default for this project)
+   - If in doubt, ask: "What's your Google email address?"
+
+2. **Read document content:**
    - Extract document ID from URL (e.g., from `https://docs.google.com/document/d/DOCUMENT_ID/edit`)
    - Use `mcp__google-workspace__get_drive_file_content` with:
-     - `user_google_email`: User's email address
+     - `user_google_email`: Use `ben@teammates.work` (NOT ben@righter.work)
      - `file_id`: The extracted document ID
    - This exports the Google Doc as plain text/markdown format
 

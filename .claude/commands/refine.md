@@ -37,10 +37,11 @@ The user may provide the `/refine` command in several formats:
 ## Quick Start
 
 1. **Identify the document source AND instructions** from user's message:
-   - Google Docs URL: Extract doc ID, use `mcp__google-workspace__get_drive_file_content`
+   - Google Docs URL: Extract doc ID, use `mcp__google-workspace__get_drive_file_content` with `user_google_email: "ben@teammates.work"`
    - Local file path: Use Read tool
    - Pasted content: Work with provided text
    - **User instructions:** Extract any additional text/guidance provided
+   - **IMPORTANT**: Always use `ben@teammates.work` as the email address (NOT ben@righter.work)
 
 2. **Incorporate user instructions into workflow** from orchestrator.md:
    - If user provided specific instructions, note them as HIGH PRIORITY constraints
