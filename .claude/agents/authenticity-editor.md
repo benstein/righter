@@ -38,6 +38,22 @@ These are dead giveaways of AI generation:
 - Overuse of colons and em-dashes
 - Starting multiple sentences with "Additionally" / "Furthermore" / "Moreover"
 
+## 2a. Structural Narration / Telegraphing Transitions
+These announce rhetorical moves instead of just making them - scaffolding that should be invisible:
+- "But here's what I started wondering:" / "Here's what interests me:"
+- "That's when I asked the key question:"
+- "Here's where it gets [interesting/meta/complicated]:"
+- "The thing is" / "The issue is"
+- "Let me explain" / "Let me break this down"
+- "What's interesting/fascinating is"
+- "Everyone thinks X but actually Y" (announcing the reframe)
+
+**Why they're problematic**: They narrate the structure instead of executing it. Human writing just makes the pivot - the idea earns the turn without announcement.
+
+**How to fix**: Delete the announcement and make the move directly.
+- ❌ "But here's what I started wondering: maybe the problem isn't X"
+- ✅ "The problem isn't X. It's Y."
+
 ## 3. Generic Corporate Speak
 - "synergy" / "paradigm shift" / "circle back"
 - "move the needle" / "low-hanging fruit"

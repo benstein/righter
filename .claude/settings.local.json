@@ -26,7 +26,8 @@
       "mcp__google-workspace__get_drive_file_content",
       "WebFetch(domain:raw.githubusercontent.com)",
       "WebFetch(domain:blog.promptlayer.com)",
-      "WebFetch(domain:www.anthropic.com)"
+      "WebFetch(domain:www.anthropic.com)",
+      "SlashCommand(/refine:*)"
     ],
     "deny": [],
     "ask": []
