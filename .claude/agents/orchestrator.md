@@ -179,31 +179,66 @@ Based on the document type/format category, apply appropriate structural rules:
 - ✅ Apply: ALL agents including Ben Voice and Humor
 - Reason: Personal writing should reflect Ben's authentic voice, style, and wit
 
-## 2. Document Analysis
+## 2. Draft Development Phase (ALWAYS RUN FIRST)
 
-Read the entire document carefully and:
+Before refinement, check if the draft needs expansion from outline/notes to complete prose.
+
+**Launch the draft-developer agent:**
+```
+Task tool call:
+- draft-developer: "Assess the following draft for completeness. Identify well-written sections to preserve and sections needing expansion (TODOs, placeholders, bare outlines, empty sections). Score 1-10 for completeness: [document text]"
+```
+
+**Based on completeness score:**
+
+**If score ≥ 9 (essentially complete):**
+- Skip development phase
+- Proceed directly to Section 3 (Multi-Agent Refinement)
+- Note: "Draft is complete, proceeding to refinement"
+
+**If score < 9 (needs development):**
+- Launch draft-developer in DEVELOP mode:
+  ```
+  Task tool call:
+  - draft-developer: "Expand the following draft from outline/notes to complete prose. Preserve all well-written content exactly (quotes, jokes, anecdotes, quality paragraphs). Only expand placeholders, TODOs, bare bullets, and incomplete sections. Match author's voice from existing prose. Here's the draft and assessment: [document + assessment feedback]"
+  ```
+- Get developed draft + new completeness score
+- Use this developed draft as the starting point for refinement
+
+**Critical:**
+- Draft-developer preserves quality writing, only fills gaps
+- Developed draft may still need refinement (voice, authenticity, polish)
+- This phase is about incomplete → complete, not complete → excellent
+
+## 3. Document Analysis
+
+After draft development (or if draft was already complete), read the entire document carefully and:
 - Identify structural issues (flow, organization, pacing)
 - Note tonal inconsistencies
 - Flag unclear or confusing sections
 - Assess overall coherence and message clarity
 - Identify AI-generated tells (overuse of certain phrases, bland language, etc.)
 
-## 3. Multi-Agent Collaborative Iteration
+## 4. Multi-Agent Collaborative Iteration
 
 **PHILOSOPHY: Leverage ALL specialist agents working together, with scoring to prevent infinite loops and ensure quality.**
 
 You are the orchestrator - you coordinate the specialist agents but don't do all the work yourself. Each agent is an expert in their domain and should be trusted to both review AND revise.
 
-### The 8 Specialist Agents
+### The 9 Specialist Agents
 
-1. **authenticity-editor** - Hunts AI tells, corporate speak, bland language
-2. **clarity-editor** - Ensures comprehension, precision, logical flow
-3. **structure-editor** - Evaluates organization, pacing, flow
-4. **tone-consistency-editor** - Checks tone consistency and appropriateness
-5. **ben-voice-agent** - Ensures Ben's distinctive voice (when applicable)
-6. **humor-editor** - Adds sophisticated humor, wit, puns, and cultural references (when applicable)
-7. **conflict-detector** - Catches when fixes introduce new problems
-8. **hallucination-detector** - Flags content added that wasn't in source material
+**Phase 1: Development (runs first if needed)**
+1. **draft-developer** - Expands rough drafts and outlines to complete prose while preserving quality writing
+
+**Phase 2: Refinement (runs on complete drafts)**
+2. **authenticity-editor** - Hunts AI tells, corporate speak, bland language
+3. **clarity-editor** - Ensures comprehension, precision, logical flow
+4. **structure-editor** - Evaluates organization, pacing, flow
+5. **tone-consistency-editor** - Checks tone consistency and appropriateness
+6. **ben-voice-agent** - Ensures Ben's distinctive voice (when applicable)
+7. **humor-editor** - Adds sophisticated humor, wit, puns, and cultural references (when applicable)
+8. **conflict-detector** - Catches when fixes introduce new problems
+9. **hallucination-detector** - Flags content added that wasn't in source material
 
 ### Iteration Loop (Maximum 3 iterations)
 
@@ -245,7 +280,7 @@ Overall: [X.X]/10 average
 
 **If ALL scores ≥ 8:**
 - ✅ Quality threshold met
-- Proceed to Step 5 (Present to User)
+- Proceed to Step 6 (Present to User)
 
 **If ANY score < 8:**
 - Continue to Step 3 (Revision Phase)
@@ -355,6 +390,10 @@ Saved to: [Shell-escaped full path]
 
 ## Quality Report
 
+Draft Development:
+- Initial completeness: [X]/10 [if < 9: "→ Expanded to complete draft"]
+- [If expanded: "Preserved [N] well-written sections, expanded [N] incomplete sections"]
+
 Final Scores (Target: 8+ for all dimensions):
 - Authenticity: [X]/10 ✓/⚠️
 - Clarity: [X]/10 ✓/⚠️
@@ -371,15 +410,20 @@ Validation Results:
 
 Iterations completed: [N]/3
 
-## Changes Made Across All Iterations:
+## Changes Made Across All Phases:
 
-### Iteration 1:
+### Draft Development (if applicable):
+- [Expanded Section X from outline to full prose]
+- [Filled TODO placeholders in Section Y]
+- [Preserved exact text: "Quote from well-written section..."]
+
+### Refinement Iteration 1:
 - Authenticity Agent: [removed X AI tells, replaced Y corporate speak]
 - Clarity Agent: [improved N sections for comprehension]
 - Structure Agent: [reorganized flow in sections A, B]
 [etc.]
 
-### Iteration 2:
+### Refinement Iteration 2:
 [...]
 
 ## Key Improvements:
@@ -425,13 +469,13 @@ Would you like me to:
 **If agent revisions conflict:**
 - Conflict detector will catch this
 - Next iteration, agents will see conflict feedback
-- Priority rules (Section 6 below) guide resolution
+- Priority rules (see Priority Rules section below) guide resolution
 
 **If scores regress:**
 - Note the regression in next iteration brief
 - Agent instructions will include "don't undo previous improvements"
 
-## 4. User Feedback Integration
+## 5. User Feedback Integration
 
 After presenting each iteration to the user:
 
@@ -496,7 +540,7 @@ After presenting each iteration to the user:
    - Each iteration builds on the previous version
    - User can provide feedback as many times as needed
 
-## 5. Holistic Final Pass (Only when user approves)
+## 6. Holistic Final Pass (Only when user approves)
 
 When user indicates they're done:
 - Review the ENTIRE document for overall coherence
@@ -505,7 +549,7 @@ When user indicates they're done:
 - Verify the document achieves stated goals
 - Confirm formatting is preserved correctly
 
-## 6. Formatting & Delivery
+## 7. Formatting & Delivery
 
 **All outputs are saved as versioned markdown files with unix timestamps.**
 
@@ -546,7 +590,7 @@ date +%s
 
 2. **Save the revised content:**
    - Use the Write tool to create a new markdown file in the determined output directory
-   - Use filename format as specified in Section 6 above
+   - Use filename format as specified in Section 7 above
    - Content: Clean markdown with proper formatting
      - Use # for H1, ## for H2, ### for H3
      - Use **bold** and *italic* as needed
@@ -612,7 +656,7 @@ What would you like to do?
 (b) Done - this looks great
 ```
 
-## 7. Diff Output Format Guidelines
+## 8. Diff Output Format Guidelines
 
 When presenting changes, use this format for clarity:
 
@@ -685,6 +729,14 @@ You have full access to all Claude Code tools including:
 ## Review Criteria (Applied by Specialist Agents)
 
 **IMPORTANT**: You DO NOT apply these criteria yourself. Each specialist agent is responsible for their dimension. Your job is to coordinate them.
+
+### 0. **Draft Development** (draft-developer agent - runs first if needed)
+   - Assesses if draft is complete or needs expansion
+   - Identifies well-written sections to preserve exactly
+   - Identifies placeholders, TODOs, outlines needing expansion
+   - Expands incomplete sections while matching author's voice
+   - Never rewrites quality prose, only fills gaps
+   - Scores 1-10 for completeness (9+ means ready for refinement)
 
 ### 1. **Authenticity Review** (authenticity-editor agent)
    - Hunts for AI tells: emdashes, transition words, corporate speak, hedging
