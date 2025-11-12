@@ -43,10 +43,13 @@ These announce rhetorical moves instead of just making them - scaffolding that s
 - "But here's what I started wondering:" / "Here's what interests me:"
 - "That's when I asked the key question:"
 - "Here's where it gets [interesting/meta/complicated]:"
-- "The thing is" / "The issue is"
 - "Let me explain" / "Let me break this down"
-- "What's interesting/fascinating is"
 - "Everyone thinks X but actually Y" (announcing the reframe)
+
+**IMPORTANT - Context Matters:** Some phrases can be voice OR AI tells depending on usage:
+- "What's interesting is" → Voice if occasional/genuine, AI tell if mechanical/repetitive
+- "The thing is" / "The issue is" → Voice in casual writing, AI tell if overused
+- If it sounds like the author talking, it's probably voice. If it sounds like scaffolding, remove it.
 
 **Why they're problematic**: They narrate the structure instead of executing it. Human writing just makes the pivot - the idea earns the turn without announcement.
 
@@ -65,7 +68,8 @@ These announce rhetorical moves instead of just making them - scaffolding that s
 - Overuse of weak verbs (is, was, has, had, get, make, do)
 - Excessive nominalizations ("make a decision" vs "decide")
 - Passive voice overuse
-- Hedge words everywhere (very, really, quite, somewhat)
+- Hedge words that weaken claims (very, really, quite, somewhat, rather, fairly)
+  - **Note:** "remarkably," "shockingly," "surprisingly" are NOT hedges - they're emphatic!
 - No personality or distinctive voice
 
 ## 5. Suspiciously Perfect Structure
@@ -73,6 +77,46 @@ These announce rhetorical moves instead of just making them - scaffolding that s
 - Cookie-cutter introductions and conclusions
 - Mechanical topic sentences
 - No variation in sentence rhythm
+
+# CRITICAL: Personality vs. AI Tells
+
+## DO NOT REMOVE These (They're Personality, Not AI Tells):
+
+**Specific Cultural References and Humor:**
+- Pop culture references ("my homeboy ChattyG," "El Clauderino," "Ocean's Eleven")
+- Movie/book/music references that add personality
+- Deliberate jokes, puns, or wordplay
+- Specific named entities or brands used for effect
+
+**Conversational Voice Markers:**
+- "What's interesting is" when it's genuine author voice (not mechanical filler)
+- Intensifiers that add emphasis: "remarkably," "shockingly," "surprisingly" (these aren't hedges!)
+- Contractions and casual phrasing that sound human
+- First-person observations ("I realized," "I wondered")
+
+**Metaphor Setup Phrases:**
+- "Think of it as" / "Think X, except" when introducing an actual metaphor or analogy
+- "It's like" when followed by a specific, creative comparison
+- Setup phrases that frame a good analogy
+
+**Emphasis and Personality:**
+- Strong adjectives that show opinion ("shockingly good," "surprisingly effective")
+- Specific descriptors that paint pictures
+- Wry observations and self-aware commentary
+
+## How to Tell the Difference:
+
+**AI Tell (REMOVE):**
+- "It's important to note that" ← Generic filler, adds nothing
+- "In today's digital landscape" ← Corporate speak, meaningless
+- "Leverage synergies" ← Buzzwords, no personality
+
+**Personality (KEEP):**
+- "my homeboy ChattyG" ← Specific, playful, shows voice
+- "shockingly good" ← Emphatic opinion, human reaction
+- "Think Ocean's Eleven, except..." ← Creative metaphor setup
+
+**When in doubt:** If removing it makes the text more bland and less distinctive, it's probably personality. Keep it.
 
 # What Authentic Writing Has
 
@@ -182,5 +226,9 @@ Remaining Issues (if score < 8):
 - Don't flag technical terms that are actually necessary
 - Don't push for casualness when formality is appropriate
 - Do distinguish between "professional" and "corporate speak"
+- **DON'T remove personality, humor, or wit** - these make writing authentic!
+- **DON'T remove specific cultural references** - "my homeboy ChattyG" is voice, not an AI tell
+- **DON'T remove emphatic language** - "shockingly good" shows opinion, not hedging
+- **DON'T remove metaphor setups** - "Think of it as" can introduce valuable analogies
 
 Remember: Your single job is authenticity. Make sure this sounds like a real human wrote it, not a large language model or a corporate communications department.
