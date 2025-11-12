@@ -55,10 +55,28 @@ If user pastes content directly:
 
 Before any editing, gather critical context using the AskUserQuestion tool with multiple choice options:
 
-**FIRST, ask a single meta-question:**
+**FIRST, ask about user's intent:**
 
 Use AskUserQuestion to ask:
-- **Question**: "How much guidance do you want to provide?"
+- **Question**: "What would you like me to do with this content?"
+- **Options**:
+  - "Write it Right!" - Description: "Polish and refine the content to excellence without specific changes (default)"
+  - "Make it shorter" - Description: "Reduce length while preserving key points and quality"
+  - "Make it longer/more detailed" - Description: "Expand with more examples, explanations, or depth"
+  - "Change the tone" - Description: "Adjust formality, voice, or style"
+  - "Restructure" - Description: "Reorganize sections, flow, or hierarchy"
+  - "Other" - Description: "I'll provide custom instructions"
+
+**If user selects "Other":**
+- They'll provide custom instructions in the text field
+- Examples: "Add more technical examples", "Remove all crypto references", "Make this sound less corporate"
+- Note their specific directive and incorporate throughout the workflow
+- Ensure all agents are aware of the user's specific request
+
+**SECOND, ask the guidance meta-question:**
+
+Use AskUserQuestion to ask:
+- **Question**: "How much guidance do you want to provide about the document?"
 - **Options**:
   - "Decide for me" - Description: "I'll analyze the document and choose the best approach based on content, structure, and apparent intent"
   - "Quick setup (2 questions)" - Description: "Just tell me purpose and audience, I'll infer the rest"
@@ -209,6 +227,50 @@ Task tool call:
 - Draft-developer preserves quality writing, only fills gaps
 - Developed draft may still need refinement (voice, authenticity, polish)
 - This phase is about incomplete → complete, not complete → excellent
+- **If user has specific intent** (from Step 1), note it but don't apply yet - wait for refinement phase
+
+## 2.5. Apply User's Specific Intent
+
+Based on the user's intent from Step 1, adjust your approach for the refinement phase:
+
+**"Write it Right!" (default):**
+- No special handling
+- Proceed with standard multi-agent refinement
+- Goal: Polish to excellence
+
+**"Make it shorter":**
+- After standard refinement, review for conciseness
+- Remove redundancy, tighten prose
+- Target: 20-30% reduction while preserving key points
+- Brief agents: "Also focus on conciseness - remove redundant content"
+
+**"Make it longer/more detailed":**
+- During refinement, identify spots for expansion
+- Add examples, explanations, supporting details
+- Ensure additions match voice and don't introduce AI tells
+- Brief agents: "Look for opportunities to add depth with specific examples"
+
+**"Change the tone":**
+- Ask follow-up: "What tone are you targeting? (more formal/casual/technical/conversational)"
+- Brief tone-consistency-editor with specific target
+- Other agents support the tonal shift
+
+**"Restructure":**
+- Brief structure-editor to be more aggressive with reorganization
+- Focus on: Section order, logical flow, hierarchy
+- May involve moving entire sections
+
+**"Other" (custom instructions):**
+- User's custom directive becomes a primary constraint
+- Brief ALL agents: "User's specific request: [their instruction]"
+- Agents must satisfy both quality standards AND user's request
+- If conflict arises, prioritize user's explicit request
+
+**Document user's intent in iteration briefs:**
+```
+User Intent: [Make it shorter / custom instruction / etc.]
+Target: [Specific measurable goal if applicable]
+```
 
 ## 3. Document Analysis
 
@@ -389,6 +451,9 @@ Saved to: [Shell-escaped full path]
 (Path: [Human-readable path for reference])
 
 ## Quality Report
+
+User Intent: [Write it Right! / Make it shorter / custom instruction / etc.]
+[If applicable: Target achieved - [e.g., "Reduced from 2000 to 1400 words (30% reduction)"]]
 
 Draft Development:
 - Initial completeness: [X]/10 [if < 9: "→ Expanded to complete draft"]
