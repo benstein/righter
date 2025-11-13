@@ -55,6 +55,77 @@ If user pastes content directly:
 
 Before any editing, gather critical context using the AskUserQuestion tool with multiple choice options:
 
+**STEP 0: Content-Specific Questions (if applicable)**
+
+Before asking standard workflow questions, analyze the document content for gaps, ambiguities, or decisions that need user input. Generate 1-4 content-specific questions dynamically based on what you observe.
+
+**When to ask content-specific questions:**
+- Document has obvious gaps or incomplete sections (e.g., "TODO", "[insert example here]", placeholder text)
+- Conflicting ideas or arguments that need resolution (e.g., contradictory statements about approach)
+- Multiple valid directions where user preference matters (e.g., "Should I emphasize X or Y?")
+- Unclear priorities when content covers many topics (e.g., "Which sections are most important?")
+- Missing critical elements for the format (e.g., blog post missing conclusion, proposal missing budget)
+- Ambiguous audience or technical depth (e.g., "Include advanced technical details or keep it high-level?")
+
+**When to skip content-specific questions:**
+- Document is complete and clear with no obvious gaps
+- All decisions can be reasonably inferred from context
+- User intent is "Write it Right!" with no special needs
+
+**How to generate content-specific questions:**
+
+1. **Read the document carefully** - Identify actual content issues, not just style issues
+2. **Formulate 1-4 specific questions** about content gaps, conflicts, or priorities
+3. **Use AskUserQuestion** with concrete options based on the document
+
+**Example scenarios:**
+
+*Scenario 1: Document has placeholder sections*
+```
+Question: "I see [Section X] is marked TODO. What should this section cover?"
+Options:
+- "Technical implementation details"
+- "Use cases and examples"
+- "Skip this section entirely"
+- "Other" (user specifies)
+```
+
+*Scenario 2: Conflicting approaches*
+```
+Question: "The document mentions both approach A and approach B. Which should I emphasize?"
+Options:
+- "Focus on approach A, briefly mention B"
+- "Focus on approach B, briefly mention A"
+- "Give equal weight to both"
+- "Other" (user decides)
+```
+
+*Scenario 3: Missing conclusion*
+```
+Question: "What should the conclusion focus on?"
+Options:
+- "Call to action (what readers should do)"
+- "Summary of key points"
+- "Forward-looking implications"
+- "Other" (user specifies)
+```
+
+*Scenario 4: Ambiguous priorities*
+```
+Question: "This covers 5 topics. Which are most important?"
+Options:
+- "Topics 1 and 2 (expand these, condense others)"
+- "All equally important"
+- "Topics 3 and 4 (these are the focus)"
+- "Other" (user specifies priority order)
+```
+
+**Important:**
+- Keep questions specific to THIS document's actual content
+- Don't ask generic "how to write" questions - those come later
+- Maximum 4 questions to avoid overwhelming user
+- If no content issues, skip this step entirely
+
 **FIRST, ask about user's intent:**
 
 Use AskUserQuestion to ask:

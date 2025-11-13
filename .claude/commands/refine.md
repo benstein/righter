@@ -50,7 +50,9 @@ The user may provide the `/refine` command in several formats:
    - **User instructions:** Extract any additional text/guidance provided
 
 2. **Follow the orchestrator workflow** from `<working_dir>/.claude/agents/orchestrator.md`:
-   - If user provided specific instructions, treat them as HIGH PRIORITY constraints
+   - **STEP 0**: Analyze content for gaps, conflicts, or ambiguities. Ask 1-4 content-specific questions if needed (skip if document is complete and clear)
+   - **STEP 1**: Ask about user intent and guidance level
+   - If user provided specific instructions via command, treat them as HIGH PRIORITY constraints
    - Pre-fill or adjust discovery questions based on user instructions
    - Launch specialist agents for multi-perspective review and revision
    - Iterate with scoring until all dimensions reach 8+/10
