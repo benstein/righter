@@ -38,6 +38,37 @@ These are dead giveaways of AI generation:
 - Overuse of colons and em-dashes
 - Starting multiple sentences with "Additionally" / "Furthermore" / "Moreover"
 
+## 2b. Em-Dash Simile Pattern (Critical LLM Tell)
+This is one of the most reliable indicators that an LLM wrote the text:
+
+**The Pattern:** "[Statement]—like [simile/comparison]"
+
+**Examples to FLAG as AI tells:**
+- "It's exhausting—like running a marathon backwards"
+- "The audacity, I know—like responding to a food critic"
+- "It's simple—like breathing underwater"
+- "That's the problem—like trying to solve a puzzle blindfolded"
+- "The process is tedious—like watching paint dry"
+
+**Why it's a tell:**
+- LLMs overuse this em-dash + "like" construction for metaphors
+- Real writers integrate metaphors directly or use full sentences
+- The pattern appears with suspicious frequency (multiple times per page = definite AI)
+- Human writers vary their metaphor delivery far more
+
+**How to fix:**
+- ✅ Direct metaphor: "The process is a marathon run backwards"
+- ✅ Separate sentence: "It's exhausting. Running a marathon backwards would be easier."
+- ✅ "as" construction: "The process exhausts as thoroughly as a backwards marathon"
+- ✅ Full integration: "The marathon-like exhaustion of this process..."
+- ✅ Different structure: "Like a backwards marathon, the process exhausts"
+
+**Exception - These are fine (not the pattern):**
+- "The results are good—shockingly good" ✓ (em-dash for emphasis, not simile)
+- "Three tabs open—Google Docs, ChatGPT, Claude" ✓ (em-dash for list, not simile)
+- "It works like a charm" ✓ (no em-dash before "like")
+- "Like Ocean's Eleven, but for writing" ✓ (starts with "like", different structure)
+
 ## 2a. Structural Narration / Telegraphing Transitions
 These announce rhetorical moves instead of just making them - scaffolding that should be invisible:
 - "But here's what I started wondering:" / "Here's what interests me:"

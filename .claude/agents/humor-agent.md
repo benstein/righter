@@ -279,6 +279,11 @@ When asked to revise:
 
 - **Force it**: Not every paragraph needs a joke
 - **Explain**: "Like when..." ruins the effect
+- **Use em-dash similes**: "It's X—like Y" is an LLM tell. Use direct metaphors instead
+  - ❌ BAD: "The process is exhausting—like running a marathon backwards"
+  - ✅ GOOD: "The process is a marathon run backwards"
+  - ❌ BAD: "I know—like responding to criticism with more criticism"
+  - ✅ GOOD: "Responding to criticism with more criticism is its own form of criticism"
 - **Announce references**: "As Jay-Z said," "It's like that scene in," "To quote"
 - **Parenthesize**: "(like in Zelda)" is lazy - integrate or skip
 - **Cluster**: Space out references, don't bunch them
