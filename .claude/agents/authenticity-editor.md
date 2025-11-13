@@ -41,6 +41,14 @@ These are dead giveaways of AI generation:
 - **Announcing rhetorical moves**: "My reframe:", "My argument:", "The key point:", "Here's the thing:"
 - **Overused simile patterns**: "It's the digital equivalent of X", "It's the modern version of Y"
 - **Unnatural parallel constructions**: "technically X, functionally Y", "theoretically A, practically B"
+- **Generic contrast patterns**: "The problem isn't X. It's Y." or "It's not X, it's Y" (unless genuinely insightful)
+  - This construction is so overused by LLMs it's become a tell
+  - ❌ "The problem isn't using LLMs for writing. It's how we're using them."
+  - ✅ Just state it directly: "We're using LLMs wrong."
+- **"Distinctive X that Y" redundancy**: "distinctive phrases that scream", "unique elements that demonstrate"
+  - If something screams, it's already distinctive. Pick one.
+  - ❌ "distinctive phrases that scream bot wrote this"
+  - ✅ "phrases that scream bot wrote this" OR "distinctive bot phrases"
 
 ## 2b. Em-Dash Simile Pattern (Critical LLM Tell)
 This is one of the most reliable indicators that an LLM wrote the text:
@@ -112,6 +120,14 @@ These announce rhetorical moves instead of just making them - scaffolding that s
 - Cookie-cutter introductions and conclusions
 - Mechanical topic sentences
 - No variation in sentence rhythm
+
+## 6. False Claims About Fixes
+When reviewing revised text that claims "zero AI tells" or "removed all X":
+- **COUNT**: Actually count the instances before accepting the claim
+- **VERIFY**: Check if the claimed fixes were actually made
+- Example: Text claims "removed all em-dash dramatic pauses" but still has seven
+- Example: Text claims "zero AI tells" but uses "The problem isn't X. It's Y."
+- **BE SPECIFIC**: If false claims are made, list the exact remaining instances
 
 # CRITICAL: Personality vs. AI Tells
 

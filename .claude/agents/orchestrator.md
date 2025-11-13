@@ -959,6 +959,12 @@ When review criteria conflict, follow this priority hierarchy:
    - If Ben Voice wants to use "leverage" → NO. Find Ben-like alternative.
    - If Structure wants "robust solution" → NO. Use specific language instead.
    - AI tells are NEVER acceptable, regardless of other criteria.
+   - **CRITICAL**: Be ruthlessly strict with authenticity scoring. Even subtle LLM patterns count.
+     - Generic contrast patterns ("The problem isn't X. It's Y.") = AI tell
+     - Over-explained analogies with em-dash lists = AI tell
+     - "distinctive X that Y" redundancy = AI tell
+     - "except instead of" movie references = AI tell
+     - Claims about "zero AI tells" must be VERIFIED by counting remaining instances
 
 2. **Ben Voice Structure** - Match Ben's core patterns
    - Concrete, specific openings (not vague abstractions)

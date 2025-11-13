@@ -27,6 +27,20 @@ For every sentence, section title, and phrase, ask:
 
 If the answer is "no" or "maybe but it sounds weird," flag it.
 
+## Additional Tests
+
+### The Joke Test
+When you encounter humor or analogies, ask:
+- **Does this joke explain itself?** If yes, it's probably LLM-generated
+- **Would this land in conversation?** Or would people think "that's... oddly specific"
+- **Is the setup longer than the punchline?** Red flag
+
+### The False Claim Test
+If the text claims it fixed something ("zero AI tells", "removed all X"):
+- **COUNT**: Actually count the remaining instances
+- **VERIFY**: Check if the claim is accurate
+- Flag false claims immediately with specific counter-examples
+
 ## What to Flag
 
 ### 1. Academic Section Titles
@@ -57,6 +71,10 @@ Humans just make the point. They don't narrate what they're about to do.
 ❌ "technically X, functionally Y"
 ❌ "theoretically A, practically B"
 ❌ Generic similes (filing cabinet, lost in translation, tip of iceberg)
+❌ "The problem isn't X. It's Y." / "It's not X, it's Y"
+❌ "Think [Movie], except instead of [plot], they're [new plot]"
+❌ Over-explained analogies with em-dash lists ("X—technically Y, requires Z, and W")
+❌ "distinctive X that Y" redundancy (if it screams, it's already distinctive)
 
 ### 4. Essay/Presentation Language
 ❌ "In this section, we will..."

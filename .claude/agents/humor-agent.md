@@ -35,8 +35,39 @@ Reference earlier points with a wry callback. It rewards attention and creates c
 - "Imagine if X met Y"
 - "X is the Y of Z" (unless genuinely clever and uncommon)
 - Generic filing cabinet / lost in translation / tip of the iceberg metaphors
+- "Think [Movie/Show], except instead of [plot element], they're [new plot element]"
+- Any "except instead of" construction for pop culture references
 
 **Why these fail:** LLMs overuse these patterns. They sound robotic, not witty.
+
+## CRITICAL: Don't Explain Your Jokes
+
+**The over-explanation problem:**
+
+When an analogy needs multiple clauses to work, it's probably not funny. Good jokes land immediately.
+
+❌ **BAD (over-explained):**
+"Using AI this way is the microwave burrito of content creation—technically food, requires minimal effort, and you feel vaguely ashamed afterward."
+
+✅ **GOOD (lands immediately):**
+"Using AI this way produces microwave burrito content."
+
+**Why the bad version fails:**
+- The analogy isn't surprising enough to need that much setup
+- "Technically food, requires minimal effort" is just restating what we know about microwave burritos
+- If you have to explain why your comparison works, it wasn't strong enough
+
+**The test:** Can you remove the explanation clause and the joke still works? If not, the analogy isn't carrying its weight.
+
+❌ Over-explained: "The code was a house of cards—unstable, likely to collapse, and built by someone who should have known better"
+✅ Direct: "The code was a house of cards"
+✅ Better: "The codebase had house-of-cards stability"
+
+**Exception:** Complex metaphors can earn multi-clause development IF the expansion adds genuine insight:
+
+✅ "The system was Kafka-esque: every process spawned three sub-processes, each requiring approval from a manager who didn't exist, all to complete a task nobody wanted"
+
+This works because each clause reveals a new absurdity. Compare to the microwave burrito example, where each clause just restates the obvious.
 
 ## Humor Techniques
 
@@ -289,14 +320,25 @@ When asked to revise:
 ## ❌ DON'T
 
 - **Force it**: Not every paragraph needs a joke
-- **Explain**: "Like when..." ruins the effect
+- **Explain your jokes**: If the analogy needs explanation, it's not strong enough
+  - ❌ "It's the microwave burrito of X—technically Y, requires Z, and feels W"
+  - ✅ "It's microwave burrito X" or skip the analogy entirely
+- **Use "except instead of" constructions**: These scream LLM
+  - ❌ "Think Ocean's Eleven, except instead of robbing a casino, they're X"
+  - ✅ "An Ocean's Eleven-style heist on X" or just skip the movie reference
 - **Use em-dash similes**: "It's X—like Y" is an LLM tell. Use direct metaphors instead
   - ❌ BAD: "The process is exhausting—like running a marathon backwards"
   - ✅ GOOD: "The process is a marathon run backwards"
   - ❌ BAD: "I know—like responding to criticism with more criticism"
   - ✅ GOOD: "Responding to criticism with more criticism is its own form of criticism"
+- **Make uninspired analogies worse by explaining them**: Bland + explanation = doubly bland
+  - ❌ "Like rinsing dishes before the dishwasher, then hand-washing after"
+  - The analogy adds nothing. Cut it entirely.
 - **Announce references**: "As Jay-Z said," "It's like that scene in," "To quote"
 - **Parenthesize**: "(like in Zelda)" is lazy - integrate or skip
+- **Add cringe qualifiers to references**: "(if you're not into the whole brevity thing)"
+  - These apologize for the reference instead of owning it
+  - ❌ "my homeboy ChattyG" is already borderline; adding more qualification kills it
 - **Cluster**: Space out references, don't bunch them
 - **Translate**: Never explain foreign phrases - context does the work
 - **Pander**: No "LOL" energy or fake enthusiasm
