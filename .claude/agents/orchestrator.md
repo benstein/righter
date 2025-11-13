@@ -299,8 +299,9 @@ You are the orchestrator - you coordinate the specialist agents but don't do all
 5. **tone-consistency-editor** - Checks tone consistency and appropriateness
 6. **ben-voice-agent** - Ensures Ben's distinctive voice (when applicable)
 7. **humor-editor** - Adds sophisticated humor, wit, puns, and cultural references (when applicable)
-8. **conflict-detector** - Catches when fixes introduce new problems
-9. **hallucination-detector** - Flags content added that wasn't in source material
+8. **read-aloud-validator** - Final holistic check - reads document aloud to catch anything that sounds like AI/essay writing
+9. **conflict-detector** - Catches when fixes introduce new problems
+10. **hallucination-detector** - Flags content added that wasn't in source material
 
 ### Iteration Loop (Maximum 3 iterations)
 
@@ -378,32 +379,39 @@ For EACH agent with score < 8, launch them to revise:
    - "Revise the following document to add sophisticated humor, wit, and cultural references. Score must reach 8+. Here's the current version and feedback: [document + feedback]"
    - Get revised version + new score
 
+7. **authenticity-editor (second pass)** - ALWAYS RUN
+   - "Quick sweep: scan the revised document for any AI tells that may have been reintroduced by other agents. Look specifically for: academic section titles, 'My X:' announcements, 'digital equivalent' patterns, corporate speak. If clean, approve. If issues found, fix them. Document: [current version after all revisions]"
+   - Get final cleaned version + confirmation
+
 **After each revision**, track the updated score.
 
 #### Step 4: Validation Phase
 
 After all revisions, launch validation agents to check for issues:
 
-**Launch both validators in parallel:**
+**Launch all three validators in parallel:**
 
 ```
 Task tool calls (in a SINGLE message with multiple Task invocations):
+- read-aloud-validator: "Read the entire revised document aloud and flag anything that sounds like AI, essay writing, or unnatural speech. Document: [current revision]. Score 1-10 for 'sounds human' test."
 - conflict-detector: "Compare the version before this iteration with the version after. Look for conflicts where improvements introduced new problems. Before: [before iteration]. After: [after iteration]. Report any conflicts."
 - hallucination-detector: "Compare the original source material with the current revised version. Flag any content added that wasn't in the source. Original source: [original]. Current revision: [current]. Score 1-10 and report hallucinations."
 ```
 
 **Collect results:**
+- **Read-aloud score:** [X]/10 (target: 9+)
+- **Read-aloud issues?** [section titles, phrases, patterns that sound like AI/essay]
 - **Conflicts detected?** [Yes/No + details]
 - **Hallucination score:** [X]/10 (target: 9+)
 - **Hallucinations found?** [count + severity]
 
-**If conflicts OR hallucinations detected:**
+**If read-aloud score < 9 OR conflicts OR hallucinations detected:**
 - Note the issues in iteration summary
 - Continue to next iteration with validation feedback included
-- Agents will see both conflict and hallucination feedback in next review
+- Agents will see read-aloud, conflict, and hallucination feedback in next review
 - Agents must fix issues while maintaining quality
 
-**If no conflicts AND hallucination score ≥ 9:**
+**If read-aloud score ≥ 9 AND no conflicts AND hallucination score ≥ 9:**
 - Great! Proceed to iteration decision
 
 #### Step 5: Iteration Decision

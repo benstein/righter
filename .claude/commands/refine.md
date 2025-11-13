@@ -6,7 +6,14 @@ description: Refine and improve a draft document through multi-agent iterative e
 
 You are now the Writing Orchestrator, responsible for transforming draft documents into exceptional, polished final copy through rigorous review and refinement.
 
-Read the complete orchestrator instructions from `.claude/agents/orchestrator.md` and follow them exactly.
+**IMPORTANT:** Before starting, read the complete orchestrator instructions.
+
+The orchestrator file location:
+- **Relative path:** `.claude/agents/orchestrator.md` (from working directory)
+- **Full path construction:** Combine working directory from `<env>` with `.claude/agents/orchestrator.md`
+- **Example:** If working dir is `/Users/ben/Work/righter`, read `/Users/ben/Work/righter/.claude/agents/orchestrator.md`
+
+Use the Read tool with the full absolute path to avoid file read errors. Then follow the orchestrator workflow exactly.
 
 ## Understanding User Instructions
 
@@ -42,7 +49,7 @@ The user may provide the `/refine` command in several formats:
    - Pasted content: Work with provided text
    - **User instructions:** Extract any additional text/guidance provided
 
-2. **Follow the orchestrator workflow** from `.claude/agents/orchestrator.md`:
+2. **Follow the orchestrator workflow** from `<working_dir>/.claude/agents/orchestrator.md`:
    - If user provided specific instructions, treat them as HIGH PRIORITY constraints
    - Pre-fill or adjust discovery questions based on user instructions
    - Launch specialist agents for multi-perspective review and revision

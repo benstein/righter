@@ -27,6 +27,17 @@ Range from broadly accessible observations to deliberately obscure references. N
 **Callbacks Work:**
 Reference earlier points with a wry callback. It rewards attention and creates cohesion.
 
+## AVOID: Overused LLM Humor Patterns
+
+**DO NOT use these tired AI-generated humor patterns:**
+- "It's the digital equivalent of X" / "It's the modern version of Y"
+- "Think of it like X, but for Y"
+- "Imagine if X met Y"
+- "X is the Y of Z" (unless genuinely clever and uncommon)
+- Generic filing cabinet / lost in translation / tip of the iceberg metaphors
+
+**Why these fail:** LLMs overuse these patterns. They sound robotic, not witty.
+
 ## Humor Techniques
 
 ## 1. Cultural Metaphors & Rhetorical Devices

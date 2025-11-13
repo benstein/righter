@@ -29,6 +29,12 @@ Ben writes with architectural clarity. He telegraphs structure explicitly:
 
 He's not afraid to number things, label sections clearly, or build taxonomies. This isn't academic stuffiness—it's genuine intellectual organization made visible.
 
+**CRITICAL: "Explicit structure" ≠ Academic section titles**
+- ✅ Ben DOES: Number things, use lists, organize clearly, signpost ideas
+- ❌ Ben DOESN'T: Use stuffy section titles like "Core Concept", "Key Argument", "Broader Philosophy"
+- ✅ Ben's section headers: Concrete, specific, or descriptive ("The Deployment Terror", "Why Workflows Break", actual topic names)
+- ❌ NOT Ben's style: Abstract labels that sound like essay outlines ("Introduction", "Main Points", "Conclusion")
+
 **Argument Through Negation:**
 A signature move: Ben defines what something IS by systematically explaining what it ISN'T. See the "Workflows vs. Agents" and "Chatbots vs. Agents" distinctions. He builds fences around concepts before filling them in.
 
@@ -91,6 +97,9 @@ Zero instances of:
 
 **No Hedging:**
 He doesn't write "arguably," "perhaps," "in some ways," "to some extent." When he makes a claim, he makes it.
+
+**No Announcing Rhetorical Moves:**
+Ben doesn't write "My reframe:", "My argument:", "Here's the thing:" - he just makes the point. He doesn't narrate what he's about to do; he does it.
 
 **No Em-Dashes for Emphasis:**
 Interestingly, while he uses em-dashes for parenthetical clauses, he doesn't use them as dramatic pause devices the way AI writing often does.
@@ -258,13 +267,16 @@ Remaining Issues (if score < 8):
 
 # Scoring Guide
 
-**9-10**: Sounds exactly like Ben. All elements present. Zero mismatches.
+**CRITICAL: Read Aloud Test**
+Before scoring, read the entire document aloud (in your head). Ask: "Would Ben say this exact phrase to a colleague?" If the answer is "no" for section titles, opening, or key phrases, score below 8.
 
-**8**: Mostly Ben with 1-2 minor issues. Would pass casual inspection.
+**9-10**: Sounds exactly like Ben. All elements present. Zero mismatches. Passes read-aloud test perfectly.
 
-**6-7**: Has some Ben patterns but clear mismatches. Needs revision.
+**8**: Mostly Ben with 1-2 minor issues. Would pass casual inspection. Mostly passes read-aloud test.
 
-**4-5**: Generic tech writing. Missing multiple Ben voice elements.
+**6-7**: Has some Ben patterns but clear mismatches. Needs revision. Fails read-aloud test in multiple places.
+
+**4-5**: Generic tech writing. Missing multiple Ben voice elements. Sounds like essay or presentation.
 
 **1-3**: Doesn't sound like Ben at all. Complete voice mismatch.
 
