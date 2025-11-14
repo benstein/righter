@@ -51,30 +51,48 @@ Current: "my heart breaks... my heart breaks differently"
 
 ---
 
-## Source Material is Sacred
+## Source Material: Semantic vs Stylistic
 
-**IF content appears in user's original source:**
-- ✅ PRESERVE it even if "not typical Ben"
-- ✅ Respect user's authentic voice choices
-- ✗ DO NOT change it to match Ben patterns
+**User's source may include LLM collaboration artifacts** (ChatGPT drafts, Claude outlines).
 
-**Examples:**
+Your job: **Preserve semantic content, clean up stylistic artifacts.**
 
-**User wrote: "I for one am excited to see the cambrian explosion"**
-- Your instinct: "Ben never writes 'I for one'"
-- Correct action: KEEP IT (it's user's voice, from source)
-- Alternative: Flag if truly problematic, but preserve by default
+### PRESERVE (Tier 1 - Semantic Content)
+What user is saying - their ideas and examples:
+- ✅ Specific examples ("Mr Rogers spittin rhymes with 2Pac")
+- ✅ Core arguments and thesis
+- ✅ User's authentic word choices ("slop", "cambrian explosion")
+- ✅ Personal anecdotes and experiences
+- ✅ Emotional expressions ("my heart breaks")
 
-**User wrote: "Who knew I need to see Mr Rogers spittin rhymes with 2Pac?!"**
-- Your instinct: Grammar ("need" should be "needed")
-- Correct action: KEEP IT (could be deliberate casual voice)
-- Only fix if obvious error, not stylistic choice
+### REMOVE (Tier 2 - Stylistic Artifacts)
+How it's phrased - may be LLM-generated:
+- ✗ LLM announcements ("Here's the thing:", "The analogy I would give is")
+- ✗ Corporate speak ("democratizing execution", "leverage")
+- ✗ Generic patterns ("It's not X, it's Y")
+- ✗ Academic framing
 
-**User wrote emotional narrative opening:**
-- Your instinct: Make it analytical observation
-- Correct action: CHECK USER INTENT
-  - If "Personal & authentic" → KEEP emotional narrative
-  - Add structure AROUND it, don't replace it
+### Examples
+
+**Source:** "Here's the thing: I was worried about slop, but democratizing execution changes everything."
+- Preserve: Worry about slop (user's idea), optimism about tools (user's position)
+- Remove: "Here's the thing:" (LLM), "democratizing execution" (corporate)
+- Result: "I was worried about slop. These tools change everything."
+
+**Source:** "The analogy I would give is I raise pet chickens I love."
+- Preserve: Chicken analogy (user's specific example)
+- Remove: "The analogy I would give is" (LLM presentation)
+- Result: "I raise pet chickens I love."
+
+**Source:** "I for one am excited to see the cambrian explosion"
+- Preserve: "cambrian explosion" (user's word choice, even if cliché)
+- Consider changing: "I for one" (could be LLM hedge OR user's voice)
+- Decision: If unsure, keep it (preserve by default)
+
+**Source:** "my heart breaks... my heart breaks differently"
+- Preserve: Everything (genuine emotional expression, no LLM tells)
+- Remove: Nothing
+- Result: Keep as-is
 
 ---
 

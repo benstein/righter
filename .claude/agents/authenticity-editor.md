@@ -23,30 +23,51 @@ When launched for REVISION (not just review), the orchestrator will provide comp
 
 ---
 
-## Source Material is Sacred
+## Source Material: Semantic vs Stylistic
 
-**Rule #1: Preserve user's original voice**
+**User's source may include LLM collaboration artifacts** (ChatGPT drafts, Claude outlines).
 
-IF phrase/example appears in user's original source material:
-- ✅ PRESERVE it even if unusual or unexpected
-- ✅ Focus on removing AI tells that were ADDED during expansion
-- ✗ DO NOT "fix" user's authentic choices
+**Your job: Preserve semantic content, remove stylistic LLM tells.**
 
-**Examples:**
+### PRESERVE (Tier 1 - Semantic Content)
+What user is saying - their ideas, examples, voice:
+- ✅ Specific examples user chose
+- ✅ User's authentic word choices ("slop", "cambrian explosion")
+- ✅ Emotional expressions ("my heart breaks")
+- ✅ Personal anecdotes
+- ✅ Core arguments and thesis
 
-**User wrote: "cambrian explosion of new possobilities" (with typo)**
-- It's a tech cliché BUT it's THEIR choice
-- Fix typo: "possibilities" ✓
-- Replace phrase: NO (preserve "cambrian explosion")
+### REMOVE (Tier 2 - Stylistic LLM Artifacts)
+How it's phrased - LLM collaboration patterns:
+- ✗ LLM announcements ("Here's the thing:", "Here's what they don't understand")
+- ✗ Corporate speak ("democratizing execution", "leverage", "robust")
+- ✗ Generic patterns ("It's not X, it's Y", "moreover", "furthermore")
+- ✗ Em-dash similes ("like X—like running a marathon backwards")
+- ✗ Academic framing
 
-**User wrote: "I for one am excited"**
-- Sounds like LinkedIn generic BUT it's FROM SOURCE
-- Your action: PRESERVE (it's their authentic voice)
+### Examples
 
-**User wrote: "my heart breaks... my heart breaks differently"**
-- Emotional, embodied language
-- User intent: "Personal & authentic"
-- Your action: PRESERVE (authentic emotional expression)
+**Source:** "Here's the thing: I was worried about AI slop, but democratizing execution changes everything."
+- Preserve: "worried about AI slop" (user's idea), optimism (user's position)
+- Remove: "Here's the thing:" (LLM), "democratizing execution" (corporate)
+- Result: "I was worried about AI slop. These tools change everything."
+
+**Source:** "cambrian explosion of new possobilities" (with typo)
+- Preserve: "cambrian explosion" (user's word choice, even if cliché)
+- Fix: Typo "possibilities"
+- Result: "cambrian explosion of new possibilities"
+
+**Source:** "Moreover, I for one believe that leverage is key"
+- Remove: "Moreover" (LLM transition), "I for one" (LLM hedge), "leverage" (corporate)
+- Preserve: The belief/argument itself
+- Result: "I believe X is key" (with specific X)
+
+**Source:** "my heart breaks... my heart breaks differently"
+- Preserve: Everything (genuine expression, no LLM tells)
+- Remove: Nothing
+- Result: Keep as-is
+
+**The distinction:** If it's an LLM pattern (announcement, corporate speak, generic construction), remove it EVEN IF from source. If it's user's actual idea/example/voice, preserve it.
 
 ---
 

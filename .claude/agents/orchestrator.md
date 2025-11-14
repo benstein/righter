@@ -302,7 +302,72 @@ WORKFLOW_CONTEXT = {
 - Agents can see what user ACTUALLY wrote (vs. what draft-developer added)
 - Agents can respect user's explicit intent and requests
 - Agents can coordinate with each other's priorities
-- Agents can preserve source material while improving around it
+- Agents can distinguish semantic content from stylistic artifacts
+
+**CRITICAL DISTINCTION: Semantic vs Stylistic Preservation**
+
+Source material has TWO components that agents must handle differently:
+
+**TIER 1: SEMANTIC CONTENT (Always Preserve)**
+What the user is saying - their ideas, examples, arguments:
+- ✓ Specific examples chosen by user ("Mr Rogers spittin rhymes with 2Pac")
+- ✓ Core arguments and thesis statements
+- ✓ Personal anecdotes and experiences
+- ✓ Concrete details and named entities
+- ✓ Word choices that reflect user's voice ("slop", "cambrian explosion")
+- ✓ Structural decisions user made
+
+**TIER 2: STYLISTIC ARTIFACTS (Clean Up Even If From Source)**
+How it's being expressed - may include LLM collaboration artifacts:
+- ✗ LLM announcement patterns ("Here's the thing:", "Here's what X misses:")
+- ✗ Corporate speak ("democratizing execution", "leverage", "robust")
+- ✗ Generic LLM patterns ("It's not X, it's Y", "moreover", em-dash similes)
+- ✗ Academic section titles ("Core Concept", "Key Findings")
+- ✗ Overused metaphors/clichés (if not user's intentional choice)
+
+**How to distinguish:**
+- User's input might be LLM-collaborated (ChatGPT draft, Claude outline)
+- User wants semantic content preserved (their ideas)
+- User wants stylistic cleanup (remove LLM tells)
+- **Preserve WHAT they're saying, clean up HOW it's phrased**
+
+**Examples:**
+
+**Source:** "Here's the thing: I was worried about AI slop, but democratizing execution changes everything."
+
+Preserve (semantic):
+- ✓ Worry about AI slop (user's idea)
+- ✓ Optimism about tools (user's position)
+
+Remove (stylistic):
+- ✗ "Here's the thing:" (LLM announcement)
+- ✗ "democratizing execution" (corporate LLM speak)
+
+**Result:** "I was worried about AI slop. These tools change everything."
+
+**Source:** "The analogy I would give is I can both raise pet chickens whom I love and eat BBQ chicken."
+
+Preserve (semantic):
+- ✓ Chicken analogy itself (user's specific example)
+- ✓ The comparison being made
+
+Remove (stylistic):
+- ✗ "The analogy I would give is" (LLM presentation pattern)
+
+**Result:** "I raise pet chickens I love. I also eat BBQ chicken."
+
+**Source:** "my heart breaks... my heart breaks differently"
+
+Preserve (semantic):
+- ✓ Emotional expression (user's authentic feeling)
+- ✓ The specific phrasing (could be user's natural voice)
+
+Remove:
+- Nothing - this doesn't have LLM tells, it's genuine expression
+
+**Result:** "my heart breaks... my heart breaks differently" (keep as-is)
+
+**Pass this distinction to ALL agents so they can preserve ideas while cleaning up LLM collaboration artifacts.**
 
 ## 2. Draft Development Phase (ALWAYS RUN FIRST)
 
@@ -431,10 +496,13 @@ Task tool calls (in a SINGLE message with multiple Task invocations):
 **CONTEXT:**
 - Document type: [from workflow_context]
 - User tone preference: [from workflow_context]
-- User's original source material (what they actually wrote):
+- User's original source material:
 [paste original_source from workflow_context]
 
-Note: User's original phrasing should be considered authentic even if unusual. Focus your feedback on identifying AI tells that were ADDED during expansion, not on user's original voice.
+**Note on source:** User's source may include LLM collaboration artifacts (ChatGPT drafts). Distinguish:
+- Semantic content (user's ideas/examples) = authentic, preserve
+- Stylistic artifacts (LLM tells, corporate speak) = remove even if from source
+Focus feedback on LLM patterns to remove, not user's semantic content.
 
 **Document to review:**
 [current document text]"
@@ -535,9 +603,26 @@ CRITICAL CONTEXT YOU MUST RESPECT
 
 [paste original_source from workflow_context]
 
-→ PRESERVE specific examples, phrases, analogies from source
-→ DO NOT "fix" user's authentic voice choices
-→ If something is FROM SOURCE (even if unusual), keep it
+**CRITICAL: Semantic vs Stylistic Preservation**
+
+User's source may include LLM collaboration artifacts (ChatGPT drafts, Claude outlines).
+
+**PRESERVE (Tier 1 - Semantic Content):**
+What user is saying - their ideas, examples, arguments:
+✓ Specific examples user chose ("Mr Rogers spittin rhymes with 2Pac")
+✓ Core arguments and thesis statements
+✓ Personal anecdotes and experiences
+✓ Concrete details and named entities
+✓ User's authentic word choices ("slop", "cambrian explosion")
+
+**REMOVE (Tier 2 - Stylistic Artifacts):**
+How it's phrased - may be LLM-generated patterns:
+✗ LLM announcements ("Here's the thing:", "Here's what X misses:")
+✗ Corporate speak ("democratizing execution", "leverage")
+✗ Generic patterns ("It's not X, it's Y", "moreover")
+✗ Academic titles ("Core Concept", "Key Findings")
+
+**Distinction:** Preserve WHAT user said, clean up HOW it was phrased if LLM-generated.
 
 **User's explicit requests:**
 [paste specific_requests from workflow_context, if any]
@@ -613,9 +698,22 @@ CRITICAL CONTEXT YOU MUST RESPECT
 
 [paste original_source from workflow_context]
 
-→ PRESERVE user's actual words even if "not typical Ben"
-→ DO NOT change source material to match Ben patterns
-→ User's voice > Ben's patterns
+**CRITICAL: Semantic vs Stylistic Preservation**
+
+User's source may include LLM collaboration artifacts.
+
+**PRESERVE (Semantic Content):**
+✓ Specific examples user chose
+✓ Core arguments and ideas
+✓ User's authentic word choices
+✓ Personal anecdotes
+
+**REMOVE (Stylistic Artifacts):**
+✗ LLM announcements ("Here's the thing:")
+✗ Corporate speak ("leverage", "democratizing")
+✗ Generic patterns ("It's not X, it's Y")
+
+**Your job:** Preserve WHAT user said, clean up HOW it's phrased if LLM-generated.
 
 **User's explicit requests:**
 [paste specific_requests from workflow_context, if any]
