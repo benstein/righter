@@ -268,6 +268,42 @@ Based on the document type/format category, apply appropriate structural rules:
 - ✅ Apply: ALL agents including Ben Voice and Humor
 - Reason: Personal writing should reflect Ben's authentic voice, style, and wit
 
+## 1.9. Capture Context for Agents (CRITICAL - INTERNAL STATE)
+
+**After completing discovery (Step 1), capture this context bundle to pass to ALL agents:**
+
+```
+WORKFLOW_CONTEXT = {
+  'original_source': [user's original input - from command args or pasted content],
+  'user_intent': {
+    'document_type': [Creative/personal vs Business vs Professional - from discovery],
+    'purpose': [Inform/Persuade/Explain/Entertain - from discovery],
+    'audience': [Technical/General/Business/Mixed - from discovery],
+    'tone': [Conversational/Professional/Technical/Personal - from discovery],
+    'specific_requests': [Any explicit user guidance from Step 0 content questions]
+  },
+  'agent_applicability': {
+    'ben_voice': [True/False based on document type],
+    'humor': [True/False based on document type],
+    'reasoning': [why these agents apply or not apply]
+  }
+}
+```
+
+**Store this context and pass to EVERY agent (review, revision, validation) launched after this point.**
+
+**Critical Rules:**
+- `original_source` = user's EXACT input before any expansion/development
+- If user provided file/URL, `original_source` = the loaded content
+- If user pasted content, `original_source` = the pasted text
+- NEVER modify `original_source` - it's the ground truth for validation
+
+**Purpose:**
+- Agents can see what user ACTUALLY wrote (vs. what draft-developer added)
+- Agents can respect user's explicit intent and requests
+- Agents can coordinate with each other's priorities
+- Agents can preserve source material while improving around it
+
 ## 2. Draft Development Phase (ALWAYS RUN FIRST)
 
 Before refinement, check if the draft needs expansion from outline/notes to complete prose.
@@ -385,16 +421,72 @@ Launch ALL applicable agents in parallel to review the current document version.
 - Provides a score (1-10) for their dimension
 - Provides specific feedback on what needs improvement
 
-**Use Task tool to launch agents in parallel:**
+**Use Task tool to launch agents in parallel WITH CONTEXT:**
 
 ```
 Task tool calls (in a SINGLE message with multiple Task invocations):
-- authenticity-editor: "Review the following document for AI tells, corporate speak, and bland language. Score 1-10 for authenticity. Provide specific feedback: [document text]"
-- clarity-editor: "Review the following document for clarity, precision, and comprehension. Score 1-10 for clarity. Provide specific feedback: [document text]"
-- structure-editor: "Review the following document for organization, flow, and pacing. Score 1-10 for structure. Provide specific feedback: [document text]"
-- tone-consistency-editor: "Review the following document for tone consistency. Score 1-10 for tone. Provide specific feedback: [document text]"
-- ben-voice-agent (if applicable): "Review the following document for Ben's distinctive voice match. Score 1-10 for voice alignment. Provide specific feedback: [document text]"
-- humor-editor (if applicable): "Review the following document for humor, wit, and entertainment value. Score 1-10 for humor quality. Provide specific feedback: [document text]"
+
+- authenticity-editor: "Review the following document for AI tells, corporate speak, and bland language. Score 1-10 for authenticity. Provide specific feedback.
+
+**CONTEXT:**
+- Document type: [from workflow_context]
+- User tone preference: [from workflow_context]
+- User's original source material (what they actually wrote):
+[paste original_source from workflow_context]
+
+Note: User's original phrasing should be considered authentic even if unusual. Focus your feedback on identifying AI tells that were ADDED during expansion, not on user's original voice.
+
+**Document to review:**
+[current document text]"
+
+- clarity-editor: "Review the following document for clarity, precision, and comprehension. Score 1-10 for clarity. Provide specific feedback.
+
+**CONTEXT:**
+- Audience: [from workflow_context]
+- Purpose: [from workflow_context]
+- User's original source: [paste original_source]
+
+**Document to review:**
+[current document text]"
+
+- structure-editor: "Review the following document for organization, flow, and pacing. Score 1-10 for structure. Provide specific feedback.
+
+**CONTEXT:**
+- Document type: [from workflow_context - affects structure expectations]
+- User's original source: [paste original_source]
+
+**Document to review:**
+[current document text]"
+
+- tone-consistency-editor: "Review the following document for tone consistency. Score 1-10 for tone. Provide specific feedback.
+
+**CONTEXT:**
+- Target tone: [from workflow_context]
+- User's original source: [paste original_source]
+
+**Document to review:**
+[current document text]"
+
+- ben-voice-agent (if applicable): "Review the following document for Ben's distinctive voice match. Score 1-10 for voice alignment. Provide specific feedback.
+
+**CONTEXT:**
+- User intent: [document_type, tone, purpose from workflow_context]
+- User's original source: [paste original_source]
+
+Note: If user wants 'Personal & authentic', Ben's voice should preserve emotional language, not transform to analytical.
+
+**Document to review:**
+[current document text]"
+
+- humor-editor (if applicable): "Review the following document for humor, wit, and entertainment value. Score 1-10 for humor quality. Provide specific feedback.
+
+**CONTEXT:**
+- Purpose: [from workflow_context - is 'Entertain/engage' selected?]
+- Topic sensitivity: [assess from content]
+- User's original source: [paste original_source - shows their sense of humor]
+
+**Document to review:**
+[current document text]"
 ```
 
 **Collect all scores and feedback:**
@@ -421,40 +513,439 @@ Overall: [X.X]/10 average
 
 #### Step 3: Multi-Agent Revision Phase
 
-For EACH agent with score < 8, launch them to revise:
+For EACH agent with score < 8, launch them to revise WITH FULL CONTEXT.
 
 **Launch revision agents sequentially** (to prevent conflicts):
 
 **Priority order** (Tier 1 agents first, as they're non-negotiable):
+
+---
+
 1. **authenticity-editor** (if score < 8)
-   - "Revise the following document to eliminate all AI tells, corporate speak, and bland language. Score must reach 8+. Here's the current version and feedback: [document + feedback]"
-   - Get revised version + new score
+
+**Prompt with full context:**
+```
+You are the AUTHENTICITY EDITOR. Your job: eliminate AI tells, corporate speak, and bland language.
+
+═══════════════════════════════════════
+CRITICAL CONTEXT YOU MUST RESPECT
+═══════════════════════════════════════
+
+**1. USER'S ORIGINAL SOURCE MATERIAL**
+
+[paste original_source from workflow_context]
+
+→ PRESERVE specific examples, phrases, analogies from source
+→ DO NOT "fix" user's authentic voice choices
+→ If something is FROM SOURCE (even if unusual), keep it
+
+**User's explicit requests:**
+[paste specific_requests from workflow_context, if any]
+
+**2. USER INTENT & CONSTRAINTS**
+
+Document type: [workflow_context.user_intent.document_type]
+Purpose: [workflow_context.user_intent.purpose]
+Tone: [workflow_context.user_intent.tone]
+Audience: [workflow_context.user_intent.audience]
+
+→ If user selected "Personal & authentic", PRESERVE emotional language
+→ If user selected "Creative/personal writing", DON'T transform to analytical
+→ If user selected "Entertain/engage", KEEP personality
+
+**3. OTHER AGENTS' REVIEW FEEDBACK**
+
+[Paste all review scores and feedback from Step 1]
+
+Understand what everyone cares about so you can coordinate.
+
+**4. YOUR PRIORITY: AUTHENTICITY (Tier 1 - Non-Negotiable)**
+
+Your focus:
+✓ Remove AI tells: announcement patterns, em-dashes, "It's not X it's Y"
+✓ Remove corporate speak: "leverage", "robust", "democratizing"
+✓ Remove bland language: generic claims, vague abstractions
+
+Your constraints:
+✗ DON'T remove emotional language if user wants "Personal & authentic"
+✗ DON'T change source material just because it's unusual
+✗ DON'T make it more professional if user wants personal
+
+**5. PRIORITY HIERARCHY**
+
+1. User intent (HIGHEST)
+2. Source material fidelity
+3. Authenticity (your job)
+4. Clarity, Structure
+5. Tone, Humor
+
+If improving authenticity conflicts with user intent or source → DEFER to them.
+
+**6. CURRENT DOCUMENT**
+
+[paste current document]
+
+**YOUR TASK:**
+
+Revise to eliminate AI tells while respecting all context above. Score must reach 8+.
+
+Provide:
+1. Full revised document
+2. New authenticity score (1-10)
+3. Brief summary: what you removed, what you preserved from source
+```
+
+Get revised version + new score. Update current_document.
+
+---
 
 2. **ben-voice-agent** (if applicable and score < 8)
-   - "Revise the following document to match Ben's distinctive voice. Score must reach 8+. Here's the current version and feedback: [document + feedback]"
-   - Get revised version + new score
+
+**Prompt with full context:**
+```
+You are the BEN VOICE AGENT. Your job: match Ben's distinctive voice and structural patterns.
+
+═══════════════════════════════════════
+CRITICAL CONTEXT YOU MUST RESPECT
+═══════════════════════════════════════
+
+**1. USER'S ORIGINAL SOURCE MATERIAL**
+
+[paste original_source from workflow_context]
+
+→ PRESERVE user's actual words even if "not typical Ben"
+→ DO NOT change source material to match Ben patterns
+→ User's voice > Ben's patterns
+
+**User's explicit requests:**
+[paste specific_requests from workflow_context, if any]
+
+**2. USER INTENT & CONSTRAINTS**
+
+Document type: [workflow_context.user_intent.document_type]
+Purpose: [workflow_context.user_intent.purpose]
+Tone: [workflow_context.user_intent.tone]
+
+**CRITICAL CHECK:**
+Is user intent "Personal & authentic" or "Creative/personal writing"?
+→ If YES: Your job is STRUCTURE not TRANSFORMATION
+→ Add numbered sections, explicit organization
+→ DO NOT transform emotional → analytical
+→ DO NOT remove embodied language ("my heart breaks")
+→ Think: "Ben writing personally" not "Ben writing analytically"
+
+**3. OTHER AGENTS' REVIEW FEEDBACK**
+
+[Paste all review scores and feedback from Step 1]
+
+Pay attention to Authenticity feedback - they preserved emotional language, don't undo it.
+
+**4. YOUR PRIORITY: BEN VOICE (Tier 1 - But Context-Dependent)**
+
+Your focus:
+✓ Add structural clarity (numbered points, explicit organization)
+✓ Make claims direct and confident (no hedging)
+✓ Use concrete examples over abstractions
+✓ Vary sentence rhythm
+
+Your constraints:
+✗ DON'T transform emotional → analytical if user wants "Personal & authentic"
+✗ DON'T remove embodied language for clinical terms
+✗ DON'T change source material to match "typical Ben"
+✗ DON'T prioritize Ben patterns over user's explicit intent
+
+**5. PRIORITY HIERARCHY**
+
+1. User intent (HIGHEST)
+2. Source material fidelity
+3. Ben Voice structure (your job - within above constraints)
+4. Clarity, Structure
+5. Tone, Humor
+
+**6. CURRENT DOCUMENT (after authenticity revision)**
+
+[paste current document]
+
+**YOUR TASK:**
+
+Match Ben's voice while respecting user intent and source material. Score must reach 8+.
+
+Examples:
+✓ GOOD: Add numbered structure AROUND emotional content
+✓ GOOD: Make claims direct without removing vulnerability
+✗ BAD: Change "my heart breaks" to "I feel concern"
+✗ BAD: Remove "I for one am excited" because it's "not Ben"
+
+Provide:
+1. Full revised document
+2. New Ben Voice score (1-10)
+3. Brief summary: what you added structurally, what you preserved
+```
+
+Get revised version + new score. Update current_document.
+
+---
 
 3. **clarity-editor** (if score < 8)
-   - "Revise the following document to improve clarity and precision without introducing AI tells or losing Ben's voice. Score must reach 8+. Here's the current version and feedback: [document + feedback]"
-   - Get revised version + new score
+
+**Prompt with full context:**
+```
+You are the CLARITY EDITOR. Your job: ensure clarity, precision, comprehension.
+
+═══════════════════════════════════════
+CRITICAL CONTEXT YOU MUST RESPECT
+═══════════════════════════════════════
+
+**1. USER'S ORIGINAL SOURCE MATERIAL**
+
+[paste original_source from workflow_context]
+
+→ PRESERVE user's original phrasing when present
+
+**2. USER INTENT**
+
+Audience: [workflow_context.user_intent.audience]
+Purpose: [workflow_context.user_intent.purpose]
+Tone: [workflow_context.user_intent.tone]
+
+**3. OTHER AGENTS' WORK SO FAR**
+
+Authenticity agent (score: [X]/10): Removed AI tells, preserved user voice
+Ben Voice agent (score: [X]/10): Added structure [if ran]
+
+[Paste all review feedback]
+
+**Coordinate with them:**
+- Authenticity removed corporate speak → DON'T reintroduce it
+- Ben Voice added structure → BUILD on it, don't undo it
+- If user wants "Personal & authentic" → clarify WITH personality, not clinical
+
+**4. YOUR PRIORITY: CLARITY (Tier 2 - High)**
+
+Your focus:
+✓ Make everything immediately understandable
+✓ Replace vague with specific
+✓ Improve logical connections
+✓ Define jargon or unclear terms
+
+Your constraints:
+✗ DON'T sacrifice authenticity for clarity
+✗ DON'T add corporate speak to sound "clear"
+✗ DON'T remove personality to be clearer
+
+**5. PRIORITY HIERARCHY**
+
+1. User intent
+2. Source material
+3. Authenticity
+4. Clarity (your job)
+5. Structure, Tone, Humor
+
+**6. CURRENT DOCUMENT (after previous agents)**
+
+[paste current document]
+
+**YOUR TASK:**
+
+Improve clarity to 8+ while respecting all context.
+
+Examples:
+✓ GOOD: "something happens" → "I feel specific concern"
+✗ BAD: "my heart breaks" → "I experience emotional distress"
+
+Provide:
+1. Full revised document
+2. New clarity score (1-10)
+3. Brief summary of improvements
+```
+
+Get revised version + new score. Update current_document.
+
+---
 
 4. **structure-editor** (if score < 8)
-   - "Revise the following document to improve organization and flow without introducing AI tells or losing voice. Score must reach 8+. Here's the current version and feedback: [document + feedback]"
-   - Get revised version + new score
+
+**Prompt with full context:**
+```
+You are the STRUCTURE EDITOR. Your job: improve organization, flow, pacing.
+
+═══════════════════════════════════════
+CRITICAL CONTEXT YOU MUST RESPECT
+═══════════════════════════════════════
+
+**1. USER'S ORIGINAL SOURCE MATERIAL**
+
+[paste original_source from workflow_context]
+
+**2. USER INTENT**
+
+Document type: [workflow_context.user_intent.document_type]
+Tone: [workflow_context.user_intent.tone]
+
+**Structure expectations by type:**
+- Creative/personal writing → Natural flow, don't force essay structure
+- Business communication → Clear sections, professional formatting
+- Professional thought leadership → Balance structure with personality
+
+**3. OTHER AGENTS' WORK SO FAR**
+
+[Paste all review feedback + what previous agents did]
+
+**Coordinate:**
+- Ben Voice added numbered sections → Improve transitions between them
+- Authenticity preserved emotion → Structure that serves emotion, not disrupts it
+
+**4. YOUR PRIORITY: STRUCTURE (Tier 2 - High)**
+
+Your focus:
+✓ Logical paragraph breaks
+✓ Smooth transitions
+✓ Appropriate pacing
+✓ Clear organization
+
+Your constraints:
+✗ DON'T force formal structure on creative/personal content
+✗ DON'T break up emotional flow for organizational tidiness
+✗ DON'T make it academic if user wants conversational
+
+**5. CURRENT DOCUMENT (after previous agents)**
+
+[paste current document]
+
+**YOUR TASK:**
+
+Improve structure to 8+ while respecting user intent and previous agents' work.
+
+Provide:
+1. Full revised document
+2. New structure score (1-10)
+3. Brief summary of organizational improvements
+```
+
+Get revised version + new score. Update current_document.
+
+---
 
 5. **tone-consistency-editor** (if score < 8)
-   - "Revise the following document to improve tone consistency. Score must reach 8+. Here's the current version and feedback: [document + feedback]"
-   - Get revised version + new score
+
+**Prompt with full context:**
+```
+You are the TONE CONSISTENCY EDITOR. Your job: ensure consistent tone.
+
+**CONTEXT:**
+
+**1. USER'S ORIGINAL SOURCE:** [paste original_source]
+**2. USER INTENT:** Target tone: [workflow_context.user_intent.tone]
+**3. OTHER AGENTS' WORK:** [paste feedback + what they did]
+
+**YOUR PRIORITY: TONE (Tier 3 - Polish)**
+
+Lower priority than authenticity, clarity, structure.
+
+Your constraints:
+✗ DON'T smooth out personality for consistency
+✗ DON'T remove intentional tonal shifts
+✗ DON'T force uniform tone if variety serves content
+
+**CURRENT DOCUMENT (after previous agents):**
+
+[paste current document]
+
+**YOUR TASK:**
+
+Improve tone consistency to 8+ while respecting that you're Tier 3 (polish only).
+
+If tone variety seems intentional (e.g., serious then light moment), flag it but don't force change.
+
+Provide:
+1. Full revised document
+2. New tone score (1-10)
+3. Brief summary
+```
+
+Get revised version + new score. Update current_document.
+
+---
 
 6. **humor-editor** (if applicable and score < 8)
-   - "Revise the following document to add sophisticated humor, wit, and cultural references. Score must reach 8+. Here's the current version and feedback: [document + feedback]"
-   - Get revised version + new score
+
+**Prompt with full context:**
+```
+You are the HUMOR EDITOR. Your job: add sophisticated humor, wit, entertainment value.
+
+**CONTEXT:**
+
+**1. USER'S ORIGINAL SOURCE:** [paste original_source - shows their humor style]
+**2. USER INTENT:** Purpose: [workflow_context.user_intent.purpose]
+**3. TOPIC SENSITIVITY:** [assess if humor appropriate]
+**4. OTHER AGENTS' WORK:** [paste feedback]
+
+**YOUR PRIORITY: HUMOR (Tier 3 - Polish, When Appropriate)**
+
+Your focus:
+✓ Build on user's existing humor (don't replace it)
+✓ Add wit where appropriate
+✓ Cultural references that fit
+
+Your constraints:
+✗ DON'T add jokes to serious topics
+✗ DON'T force wit where user didn't intend it
+✗ DON'T sacrifice substance for cleverness
+
+**If user included humor (e.g., "Mr Rogers spittin rhymes with 2Pac"):**
+→ That shows their sense of humor
+→ Build on it, don't change it
+
+**CURRENT DOCUMENT (after previous agents):**
+
+[paste current document]
+
+**YOUR TASK:**
+
+Add appropriate humor to reach 8+, or approve if already appropriate.
+
+Provide:
+1. Full revised document
+2. New humor score (1-10)
+3. Brief summary
+```
+
+Get revised version + new score. Update current_document.
+
+---
 
 7. **authenticity-editor (second pass)** - ALWAYS RUN
-   - "Quick sweep: scan the revised document for any AI tells that may have been reintroduced by other agents. Look specifically for: academic section titles, 'My X:' announcements, 'digital equivalent' patterns, corporate speak. If clean, approve. If issues found, fix them. Document: [current version after all revisions]"
-   - Get final cleaned version + confirmation
 
-**After each revision**, track the updated score.
+**Prompt:**
+```
+Quick sweep with context: scan the revised document for any AI tells that may have been reintroduced by other agents.
+
+**USER'S ORIGINAL SOURCE:**
+[paste original_source - preserve this]
+
+**OTHER AGENTS' CHANGES:**
+[summarize what Ben Voice, Clarity, Structure, Tone, Humor did]
+
+Look specifically for:
+- Academic section titles
+- 'My X:' announcements
+- 'digital equivalent' patterns
+- Corporate speak reintroduced
+- "It's not X, it's Y" patterns
+
+If clean, approve. If issues found, fix them WITHOUT removing source material or undoing good changes.
+
+**Document:**
+[current version after all revisions]
+
+Provide: Final cleaned version + confirmation of cleanliness
+```
+
+Get final cleaned version + confirmation.
+
+---
+
+**After each revision**, track the updated score and store revision in history.
 
 #### Step 4: Validation Phase
 
