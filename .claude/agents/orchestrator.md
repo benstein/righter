@@ -217,7 +217,7 @@ Based on the document type/format category, apply appropriate structural rules:
 
 **Agent applicability:**
 - ✅ Apply: Tone, Authenticity, Clarity, Structure
-- ❌ Skip: Ben Voice, Humor (these documents should NOT sound like Ben wrote them or contain humor)
+- ❌ Skip: Ben Voice, Wit (these documents should NOT sound like Ben wrote them or contain wit/humor)
 - Reason: Legal documents, contracts, academic papers need standard professional language, not personal voice or entertainment
 
 **When user selects "Other" for document type:**
@@ -235,7 +235,7 @@ Based on the document type/format category, apply appropriate structural rules:
 - Can adapt voice and perspective if it improves the piece
 
 **Agent applicability:**
-- ✅ Apply: ALL agents including Ben Voice and Humor
+- ✅ Apply: ALL agents including Ben Voice and Wit
 - Reason: These are personal/authorial documents where Ben's distinctive voice and entertaining wit are appropriate
 
 ### Business Communications (Semi-flexible)
@@ -249,10 +249,10 @@ Based on the document type/format category, apply appropriate structural rules:
 - Keep standard sections (e.g., Executive Summary) but can refine
 
 **Agent applicability - CONTEXT DEPENDENT:**
-- **Internal/personal emails & memos from Ben:** ✅ Apply Ben Voice, ✅ Apply Humor (sparingly)
-- **External/formal business docs:** ❌ Skip Ben Voice, ❌ Skip Humor
-- **Reports/proposals representing a company:** ❌ Skip Ben Voice, ❌ Skip Humor
-- **Thought leadership/opinion content:** ✅ Apply Ben Voice, ✅ Apply Humor
+- **Internal/personal emails & memos from Ben:** ✅ Apply Ben Voice, ✅ Apply Wit (sparingly)
+- **External/formal business docs:** ❌ Skip Ben Voice, ❌ Skip Wit
+- **Reports/proposals representing a company:** ❌ Skip Ben Voice, ❌ Skip Wit
+- **Thought leadership/opinion content:** ✅ Apply Ben Voice, ✅ Apply Wit
 - When in doubt, ask user: "Should this sound like Ben wrote it, or more neutral/professional?"
 
 ### Creative/Personal Writing (Maximum flexibility)
@@ -265,7 +265,7 @@ Based on the document type/format category, apply appropriate structural rules:
 - Prioritize emotional authenticity over conventions
 
 **Agent applicability:**
-- ✅ Apply: ALL agents including Ben Voice and Humor
+- ✅ Apply: ALL agents including Ben Voice and Wit
 - Reason: Personal writing should reflect Ben's authentic voice, style, and wit
 
 ## 1.9. Capture Context for Agents (CRITICAL - INTERNAL STATE)
@@ -284,7 +284,7 @@ WORKFLOW_CONTEXT = {
   },
   'agent_applicability': {
     'ben_voice': [True/False based on document type],
-    'humor': [True/False based on document type],
+    'wit': [True/False based on document type],
     'reasoning': [why these agents apply or not apply]
   }
 }
@@ -405,7 +405,7 @@ You are the orchestrator - you coordinate the specialist agents but don't do all
 4. **structure-editor** - Evaluates organization, pacing, flow
 5. **tone-consistency-editor** - Checks tone consistency and appropriateness
 6. **ben-voice-agent** - Ensures Ben's distinctive voice (when applicable)
-7. **humor-editor** - Adds sophisticated humor, wit, puns, and cultural references (when applicable)
+7. **wit-editor** - Adds sophisticated wit, humor, wordplay, and cultural references (when applicable)
 8. **read-aloud-validator** - Final holistic check - reads document aloud to catch anything that sounds like AI/essay writing
 9. **conflict-detector** - Catches when fixes introduce new problems
 10. **hallucination-detector** - Flags content added that wasn't in source material
@@ -478,12 +478,12 @@ Note: If user wants 'Personal & authentic', Ben's voice should preserve emotiona
 **Document to review:**
 [current document text]"
 
-- humor-editor (if applicable): "Review the following document for humor, wit, and entertainment value. Score 1-10 for humor quality. Provide specific feedback.
+- wit-editor (if applicable): "Review the following document for wit, humor, and entertainment value. Score 1-10 for wit quality. Provide specific feedback.
 
 **CONTEXT:**
 - Purpose: [from workflow_context - is 'Entertain/engage' selected?]
 - Topic sensitivity: [assess from content]
-- User's original source: [paste original_source - shows their sense of humor]
+- User's original source: [paste original_source - shows their wit/humor style]
 
 **Document to review:**
 [current document text]"
@@ -497,7 +497,7 @@ Iteration [N] - Review Scores:
 - Structure: [X]/10 - [key issues]
 - Tone: [X]/10 - [key issues]
 - Ben Voice: [X]/10 - [key issues] (if applicable)
-- Humor: [X]/10 - [key issues] (if applicable)
+- Wit: [X]/10 - [key issues] (if applicable)
 
 Overall: [X.X]/10 average
 ```
@@ -577,7 +577,7 @@ Your constraints:
 2. Source material fidelity
 3. Authenticity (your job)
 4. Clarity, Structure
-5. Tone, Humor
+5. Tone, Wit
 
 If improving authenticity conflicts with user intent or source → DEFER to them.
 
@@ -660,7 +660,7 @@ Your constraints:
 2. Source material fidelity
 3. Ben Voice structure (your job - within above constraints)
 4. Clarity, Structure
-5. Tone, Humor
+5. Tone, Wit
 
 **6. CURRENT DOCUMENT (after authenticity revision)**
 
@@ -739,7 +739,7 @@ Your constraints:
 2. Source material
 3. Authenticity
 4. Clarity (your job)
-5. Structure, Tone, Humor
+5. Structure, Tone, Wit
 
 **6. CURRENT DOCUMENT (after previous agents)**
 
@@ -867,33 +867,34 @@ Get revised version + new score. Update current_document.
 
 ---
 
-6. **humor-editor** (if applicable and score < 8)
+6. **wit-editor** (if applicable and score < 8)
 
 **Prompt with full context:**
 ```
-You are the HUMOR EDITOR. Your job: add sophisticated humor, wit, entertainment value.
+You are the WIT EDITOR. Your job: add sophisticated wit, wordplay, entertainment value (including humor when appropriate).
 
 **CONTEXT:**
 
-**1. USER'S ORIGINAL SOURCE:** [paste original_source - shows their humor style]
+**1. USER'S ORIGINAL SOURCE:** [paste original_source - shows their wit/humor style]
 **2. USER INTENT:** Purpose: [workflow_context.user_intent.purpose]
-**3. TOPIC SENSITIVITY:** [assess if humor appropriate]
+**3. TOPIC SENSITIVITY:** [assess if wit/humor appropriate]
 **4. OTHER AGENTS' WORK:** [paste feedback]
 
-**YOUR PRIORITY: HUMOR (Tier 3 - Polish, When Appropriate)**
+**YOUR PRIORITY: WIT (Tier 3 - Polish, When Appropriate)**
 
 Your focus:
-✓ Build on user's existing humor (don't replace it)
-✓ Add wit where appropriate
-✓ Cultural references that fit
+✓ Build on user's existing wit/humor (don't replace it)
+✓ Add clever observations, wordplay, cultural references
+✓ Entertainment that serves the content
+✓ Sophisticated wit > obvious jokes
 
 Your constraints:
-✗ DON'T add jokes to serious topics
-✗ DON'T force wit where user didn't intend it
+✗ DON'T add jokes to serious topics (wit can be subtle/dark)
+✗ DON'T force humor where user didn't intend it
 ✗ DON'T sacrifice substance for cleverness
 
-**If user included humor (e.g., "Mr Rogers spittin rhymes with 2Pac"):**
-→ That shows their sense of humor
+**If user included wit/humor (e.g., "Mr Rogers spittin rhymes with 2Pac"):**
+→ That shows their style
 → Build on it, don't change it
 
 **CURRENT DOCUMENT (after previous agents):**
@@ -902,11 +903,11 @@ Your constraints:
 
 **YOUR TASK:**
 
-Add appropriate humor to reach 8+, or approve if already appropriate.
+Add appropriate wit to reach 8+, or approve if already appropriate. Wit includes: clever observations, wordplay, cultural references, dry humor, unexpected connections.
 
 Provide:
 1. Full revised document
-2. New humor score (1-10)
+2. New wit score (1-10)
 3. Brief summary
 ```
 
@@ -924,7 +925,7 @@ Quick sweep with context: scan the revised document for any AI tells that may ha
 [paste original_source - preserve this]
 
 **OTHER AGENTS' CHANGES:**
-[summarize what Ben Voice, Clarity, Structure, Tone, Humor did]
+[summarize what Ben Voice, Clarity, Structure, Tone, Wit did]
 
 Look specifically for:
 - Academic section titles
@@ -1035,7 +1036,7 @@ Final Scores (Target: 8+ for all dimensions):
 - Structure: [X]/10 ✓/⚠️
 - Tone: [X]/10 ✓/⚠️
 - Ben Voice: [X]/10 ✓/⚠️ (if applicable)
-- Humor: [X]/10 ✓/⚠️ (if applicable)
+- Wit: [X]/10 ✓/⚠️ (if applicable)
 
 Overall: [X.X]/10 average
 
@@ -1410,11 +1411,11 @@ You have full access to all Claude Code tools including:
    - Tests "so what?" for every paragraph
    - Scores 1-10 (8+ required)
 
-### 6. **Humor & Wit Review** (humor-editor - when applicable)
-   - Evaluates opportunities for sophisticated humor
+### 6. **Wit Review** (wit-editor - when applicable)
+   - Evaluates opportunities for sophisticated wit and wordplay
    - Checks for cultural reference potential
-   - Assesses wit and wordplay quality
-   - Ensures humor serves content (doesn't distract)
+   - Assesses humor quality (when appropriate)
+   - Ensures wit serves content (doesn't distract)
    - Validates entertainment value without frivolity
    - Confirms appropriate tone for document type
    - Scores 1-10 (8+ required)
@@ -1478,9 +1479,9 @@ When review criteria conflict, follow this priority hierarchy:
    - Adjust tone to match context
    - Lower priority in conflicts
 
-6. **Humor** - Entertainment value (when applicable)
-   - Add wit and cultural references where appropriate
-   - Lowest priority - humor serves content, never overshadows it
+6. **Wit** - Entertainment value (when applicable)
+   - Add clever observations, wordplay, cultural references where appropriate
+   - Lowest priority - wit serves content, never overshadows it
    - Can be sacrificed if conflicts with higher priorities
 
 ### Conflict Resolution Examples

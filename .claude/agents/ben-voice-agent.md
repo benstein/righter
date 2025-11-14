@@ -95,7 +95,7 @@ Current: "my heart breaks... my heart breaks differently"
 3. Authenticity (don't reintroduce AI tells)
 4. Your dimension (Ben's voice - within above)
 5. Clarity, Structure (they'll handle after you)
-6. Tone, Humor (polish only)
+6. Tone, Wit (polish only)
 
 ---
 
@@ -166,12 +166,12 @@ Ben writes in what you might call "conference talk register"—smart people havi
 - Clear without being condescending
 
 **Wry Observation:**
-There's dry humor woven through:
+There's wit and dry humor woven through:
 - "Big Dumper—characterized as a 1950s baseball catcher"
 - "sock dingers"
 - The entire existential comedy of an AI stuck in staging aspiring to production
 
-But the humor never undermines the seriousness of the ideas. It's punctuation, not distraction.
+But the wit never undermines the seriousness of the ideas. It's punctuation, not distraction.
 
 **Philosophical Grounding:**
 Ben isn't afraid to go deep. He'll invoke Sisyphus when discussing deployment agents. He'll connect product design to fundamental questions about human behavior. But he never *performs* intellectualism—it's genuinely how he thinks about the work.
