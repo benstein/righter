@@ -133,10 +133,46 @@ These are dead giveaways of AI generation:
 - "ecosystem" (unless literally about ecology)
 
 ## 2. Structural AI Tells
+
+### 2.0. EM-DASHES (CRITICAL - EGREGIOUS TELL)
+**Em-dashes are one of the most reliable AI tells. They are TOXIC.**
+
+**Rule: If the document contains em-dashes, the maximum score is 7/10. Period.**
+
+LLMs grotesquely overuse em-dashes where humans would use:
+- Commas
+- Parentheses
+- Semicolons
+- Colons
+- Sentence breaks
+- Rephrasing
+
+**Count every em-dash in the document before scoring.**
+
+**Examples to FLAG and FIX:**
+- "She's a good dog—enthusiastic, loyal" → "She's a good dog, enthusiastic, loyal"
+- "a golden retriever—braided leather collar" → "a golden retriever with a braided leather collar"
+- "seventeen words—inexplicably 'automobile'" → "seventeen words, inexplicably 'automobile'"
+- "the pigeons—messenger pigeons, apparently" → "the pigeons (messenger pigeons, apparently)"
+- "a photograph—one of those formal portraits" → "a photograph, one of those formal portraits"
+- "Just stood up—which, if you're a bear" → "Just stood up, which, if you're a bear"
+- "oral history—no photographic evidence" → "oral history, no photographic evidence"
+- "Zalman's father—my great-great-grandfather" → "Zalman's father, my great-great-grandfather"
+- "became domesticated—or as domesticated" → "became domesticated (or as domesticated"
+
+**The ONLY acceptable use of em-dash:**
+- For actual dramatic pauses or interruptions in dialogue
+- For abrupt subject changes that NEED that sharp break
+- Maximum 1-2 per long document (2000+ words)
+- Zero in most documents
+
+**If you find 3+ em-dashes: automatic 6/10 or lower.**
+
+### Other Structural Tells:
 - Overly balanced sentences (always 2-3 items in lists)
 - Every paragraph the same length
 - Excessive use of transitional phrases
-- Overuse of colons and em-dashes
+- Overuse of colons (also check for this!)
 - Starting multiple sentences with "Additionally" / "Furthermore" / "Moreover"
 - **Academic/essay section titles**: "Core Concept", "Key Argument", "Key Findings", "Broader Implications"
 - **Announcing rhetorical moves**: "My reframe:", "My argument:", "The key point:", "Here's the thing:"
@@ -321,7 +357,10 @@ When asked for a "quick sweep" or "second pass":
 ```
 AUTHENTICITY REVIEW
 
+Em-Dash Count: [N] (CRITICAL - count before scoring)
+
 Score: [1-10]/10 (Target: 8+)
+[If score > 7 and em-dashes > 0: EXPLAIN WHY - this should be rare]
 
 AI Tells Detected:
 - "[quoted phrase]" - [why it's problematic]
@@ -394,12 +433,23 @@ Fixed [N] AI tells that returned:
 
 # Scoring Guide
 
+**CRITICAL: Em-Dash Count FIRST**
+Before anything else, count every em-dash (—) in the document. Write down the count.
+
+**HARD RULES:**
+- **6+ em-dashes:** Maximum score is 5/10 (egregious overuse)
+- **3-5 em-dashes:** Maximum score is 6/10 (clear LLM pattern)
+- **1-2 em-dashes:** Maximum score is 7/10 (still too many for most content)
+- **0 em-dashes:** Can score 8-10 if other criteria met
+
 **CRITICAL: Read Aloud Test**
-Before scoring, read the entire document aloud (in your head). If ANY sentence, phrase, or section title makes you think "an LLM wrote this" or "this sounds like an essay", score below 8.
+After em-dash count, read the entire document aloud (in your head). If ANY sentence, phrase, or section title makes you think "an LLM wrote this" or "this sounds like an essay", score below 8.
 
-**9-10**: Zero AI tells. Sounds completely human. Distinctive, specific. Passes read-aloud test perfectly.
+**9-10**: Zero em-dashes. Zero AI tells. Sounds completely human. Distinctive, specific. Passes read-aloud test perfectly.
 
-**8**: Minor AI vibes but mostly authentic. 1-2 small issues at most. Mostly passes read-aloud test.
+**8**: Zero em-dashes. Minor AI vibes but mostly authentic. 1-2 small issues at most. Mostly passes read-aloud test.
+
+**7 or below**: Has em-dashes OR several other AI tells. Needs revision. Fails read-aloud test.
 
 **6-7**: Several AI tells or bland language. Needs revision. Fails read-aloud test in multiple places.
 
