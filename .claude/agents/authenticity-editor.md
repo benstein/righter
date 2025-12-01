@@ -218,6 +218,122 @@ This is one of the most reliable indicators that an LLM wrote the text:
 - "It works like a charm" ✓ (no em-dash before "like")
 - "Like Ocean's Eleven, but for writing" ✓ (starts with "like", different structure)
 
+## 2c. Excessively Punchy Single-Sentence Paragraphs
+Short declarative headlines as standalone paragraphs are classic LLM rhetorical scaffolding:
+
+**Examples to FLAG:**
+- "Most teams waste it." (standalone paragraph)
+- "LLMs Don't Learn." (as section opening)
+- "The problem is simple." (standalone)
+- "Here's why that matters." (standalone)
+
+**Why it's a tell:**
+- LLMs overuse this for dramatic effect because it scores well in training
+- One or two in a long piece = fine for emphasis
+- Multiple throughout = mechanical pattern that sounds like blog scaffolding
+- Real writers vary their emphasis techniques more
+
+**How to identify:**
+- Count standalone single-sentence paragraphs
+- If 3+ in a short piece (< 1000 words) = likely AI
+- If used mechanically at section starts = definite tell
+
+**When it's acceptable:**
+- Occasional use for genuine dramatic pause
+- After a long complex paragraph to land a key point
+- Natural conversational beat, not mechanical scaffolding
+
+## 2d. Uniformly Polished, High-Density Clarity with Zero Tonal Drift
+The entire piece maintains frictionless, consistently crisp voice with zero digressions - humans usually vary:
+
+**Signs of AI uniformity:**
+- Every paragraph equally polished
+- No tonal shifts throughout entire document
+- No casual asides or digressions
+- No "warmup" in opening or winddown in closing
+- Consistent energy level paragraph to paragraph
+- No natural clutter or narrative noise
+
+**Real human writing has:**
+- Variation in polish level (some sections tighter than others)
+- Tonal shifts based on complexity or emotion
+- Occasional asides, parentheticals, tangents
+- Energy that ebbs and flows
+- Some redundancy or circling back
+- Imperfect editing artifacts
+
+**Red flag:** If every single paragraph could be a standalone tweet - that's AI optimization, not human flow.
+
+## 2e. Overuse of Parallel Triads and Mirrored Structures
+LLMs lean heavily on three-part parallel structures because they score well in model training:
+
+**Examples to FLAG:**
+- "WHAT, WHY, HOW" (repeated structural pattern)
+- "Agents don't learn. They don't persist knowledge. They have limited instruction-following capacity."
+- "essential foundation… concise enough… progressive disclosure…"
+- "First X. Then Y. Finally Z." (mechanical progression)
+- "Not this. Not that. But this." (triadic contrast)
+
+**Why it's a tell:**
+- LLMs default to triads (three examples, three points, three parallel clauses)
+- This rhythm appears with suspicious uniformity
+- Real writers vary: sometimes two points, sometimes four, sometimes asymmetric
+- Triads feel "complete" to models but mechanical to readers
+
+**How to identify:**
+- Count three-part structures in the document
+- If 5+ triadic patterns in < 1500 words = likely AI
+- If every list has exactly three items = definite tell
+- If parallel structures all have matching clause lengths = AI symmetry
+
+**When it's acceptable:**
+- Genuine rhetorical three-part structure (rare, deliberate)
+- "Read, Write, Execute" (natural conceptual triad)
+- Occasional use, not systematic pattern
+
+## 2f. Repeated Quip-Like Punchlines at Paragraph Ends
+Nearly every section ends with a tidy rhetorical flourish - very "blog-post written by LLM" cadence:
+
+**Examples to FLAG:**
+- "Unlike human onboarding, the AI won't nod politely while planning to Google everything later."
+- "The irony should be obvious."
+- "That's the difference that matters."
+- "And that's exactly the problem."
+
+**Why it's a tell:**
+- LLMs add "landing" sentences because they close paragraphs neatly
+- Every paragraph gets one = mechanical pattern
+- Real writers vary: some paragraphs trail off, some land hard, some continue thought
+- The uniformity of "tidy endings" signals optimization
+
+**How to identify:**
+- Read just the final sentence of each paragraph
+- If they all sound like mini-conclusions = AI
+- If they're all quippy/pithy/summarizing = AI pattern
+- Real human writing has messy transitions, uneven endings
+
+## 2g. Dense Analogy Usage Beyond Human Norm
+Multiple metaphors/analogies in quick succession is more model-like than human-like:
+
+**Examples of suspicious density:**
+- "Memento" + "blood sacrifice" + "amnesiac genius with ADHD" + "expensive neighborhood" + "speaking louder when someone doesn't understand"
+- All within ~1000 words
+
+**Why it's a tell:**
+- LLMs add analogies to "clarify" and "engage" (training reward)
+- One metaphor per section = normal human writing
+- Multiple metaphors per section = AI trying to be helpful
+- The variety and frequency both signal model involvement
+
+**How to identify:**
+- Count metaphors/analogies per 500 words
+- 1-2 = normal human range
+- 3-4 = pushing it
+- 5+ = likely AI enhancement
+- If every concept gets its own metaphor = definite AI
+
+**Red flag:** When analogies feel "engineered" rather than organic - like the writer is sprinkling them in for effect rather than naturally reaching for them.
+
 ## 2a. Structural Narration / Telegraphing Transitions
 These announce rhetorical moves instead of just making them - scaffolding that should be invisible:
 - "But here's what I started wondering:" / "Here's what interests me:"
@@ -244,12 +360,219 @@ These announce rhetorical moves instead of just making them - scaffolding that s
 - "think outside the box"
 - Jargon that obscures rather than clarifies
 
+## 2h. Confident Technical Generalizations Without Hedging
+Humans tend to hedge technical claims; LLMs state them as universal facts:
+
+**Examples to FLAG:**
+- "Frontier LLMs reliably follow 150-200 instructions." (no qualification)
+- "Every conversation starts from zero." (absolute claim)
+- "This always works." (universal statement)
+- "Users never do X." (absolute negative)
+
+**Why it's a tell:**
+- Real human experts hedge: "usually," "in practice," "generally," "in many cases," "typically"
+- LLMs make confident generalizations because they're trained on consensus
+- Human writing shows awareness of edge cases and exceptions
+- Technical writers especially qualify claims to avoid looking foolish
+
+**Red flags:**
+- Absolute words: "every," "never," "always," "all," "none"
+- Unqualified statistics: "X% of users" without source
+- Universal rules without exceptions: "This works for everyone"
+- Confident predictions: "This will always be true"
+
+**When it's acceptable:**
+- Genuinely universal truths: "Water freezes at 0°C"
+- Well-established facts: "Python is interpreted"
+- When qualified elsewhere in context
+- Deliberate rhetorical confidence (rare)
+
+**Human alternative:** "Frontier LLMs typically follow 150-200 instructions" or "In practice, most LLMs reliably follow..."
+
+## 2i. Perfectly Modular Section Structure
+Each section shaped the same way - mechanical consistency is a tell:
+
+**The AI formula:**
+1. Bold claim →
+2. Mini-example or analogy →
+3. Distilled takeaway →
+4. Smooth pivot to next section
+
+**Why it's a tell:**
+- LLMs optimize for this pattern (training reward)
+- Every section gets the same treatment
+- Real writers vary structure: some sections are long, some short, some rambling
+- Human writing has uneven rhythm based on content difficulty
+
+**How to identify:**
+- Map out section structures
+- If they're all the same shape = AI
+- If every section has exactly one example = mechanical
+- If transitions are uniformly smooth = optimization
+
+**Real human writing has:**
+- Some sections with multiple examples
+- Some sections with no examples (pure argument)
+- Uneven structure based on topic complexity
+- Rougher transitions in places
+- Some sections that digress or explore tangents
+
+## 2j. Absence of Personal Idiosyncrasies and Verbal Tics
+No uneven pacing, no informal asides, highly uniform tone - humans rarely maintain this:
+
+**Signs of AI uniformity:**
+- Zero verbal tics or repeated phrases that show personality
+- No informal asides or parenthetical thoughts
+- No self-corrections or backtracking
+- No "Actually..." or "Wait, let me clarify..."
+- No meta-commentary on the writing itself
+- No visible thinking process
+
+**Real human writing has:**
+- Repeated turns of phrase (their verbal tics)
+- Asides: "(more on this later)" or "(though that's debatable)"
+- Self-corrections: "Well, maybe not always..."
+- Meta-commentary: "This is getting abstract, so..."
+- Visible thinking: "I used to think X, but now..."
+
+**Red flag:** If the voice could be anyone's - that's AI neutrality, not human personality.
+
+## 2k. Repetition of the Same Thematic Motif
+LLMs often circle a core metaphor in multiple forms because they're trained to reinforce themes:
+
+**Examples to FLAG:**
+- "agents don't learn" + "stateless" + "amnesiac" + "forgets everything" + "no persistent memory"
+- All saying the same thing in different words throughout the document
+
+**Why it's a tell:**
+- LLMs reinforce key concepts through varied repetition
+- Humans usually state something once clearly, then move on
+- Multiple formulations of the same idea = AI ensuring comprehension
+- Real writers trust reader understanding more
+
+**How to identify:**
+- Track core concepts through the document
+- If the same idea appears 4+ times in different phrasings = likely AI
+- If every section restates the central thesis = mechanical reinforcement
+- Real writers reference back, not re-explain
+
+**When it's acceptable:**
+- Genuinely building on an idea across sections
+- Necessary reinforcement in long-form content
+- Intentional rhetorical refrain (rare)
+
+## 2l. Marketing-Style Compression of Ideas
+Confident, distilled, punchy, slightly hyperbolic - reads like product copy:
+
+**Signs of marketing compression:**
+- Every sentence feels quotable
+- High density of "power words"
+- Slightly hyperbolic claims throughout
+- Consistently upbeat/assertive tone
+- No wasted words (maximally compressed)
+- Sounds like landing page copy
+
+**Why it's a tell:**
+- LLMs are trained on marketing content (highly optimized prose)
+- Human engineers can write this way, but consistency is the tell
+- Real technical writing has more uneven energy
+- Humans meander more, compress less
+
+**Examples to FLAG:**
+- "Transform your workflow"
+- "Unlock the full potential"
+- "Revolutionary approach"
+- "Game-changing strategy"
+- Multiple sentences in a row with this energy
+
+## 2m. Always-On Rhetorical Symmetry
+Sentences are balanced with matching clause lengths - statistically common LLM fingerprint:
+
+**Examples to FLAG:**
+- "Agents don't learn. They don't persist. They have limits." (three parallel short clauses)
+- "First X, then Y, finally Z." (mechanical balance)
+- "Not this way. Not that way. This way." (perfect symmetry)
+- Every list item has matching grammatical structure
+
+**Why it's a tell:**
+- Training data rewards balanced rhetoric
+- LLMs produce symmetric structures by default
+- Real writers break symmetry for emphasis or naturalness
+- Human writing is less consistently polished
+
+**How to identify:**
+- Read sentences aloud
+- If they all have similar rhythm = AI
+- If parallel structures are too perfect = optimization
+- Real human writing varies rhythm more
+
+## 2n. Glossy Transitions
+Phrases that glide too smoothly from idea to idea feel stitched together by summarization engine:
+
+**Examples to FLAG:**
+- "The constraints are real:"
+- "What good teams do"
+- "Start simple."
+- "Here's the thing:"
+- Every transition feels professionally edited
+
+**Why it's a tell:**
+- LLMs optimize transitions for flow
+- Real writers sometimes have abrupt shifts
+- Human writing has rougher edges
+- Consistent smoothness = AI polish
+
+**Red flag:** If every section flows perfectly into the next - that's editorial optimization, not natural human writing.
+
+## 2o. Universal Tone with No Emotional Variability
+Everything written in same upbeat, assertive, semi-playful style - humans vary tone:
+
+**Signs of AI tonal uniformity:**
+- Consistently cheerful/confident throughout
+- No mood shifts based on topic difficulty
+- No frustration, confusion, or uncertainty
+- No hedging or tentativeness anywhere
+- Same energy discussing simple vs complex topics
+
+**Real human writing has:**
+- Tone shifts: excited → frustrated → determined
+- Uncertainty acknowledged: "I'm not sure about this, but..."
+- Complexity affects tone: simpler topics = lighter, harder topics = denser
+- Emotional range reflects thinking process
+- Some sections more confident than others
+
+**Red flag:** If the author seems equally confident about everything - that's AI, not human expertise.
+
+## 2p. Compression of Humor into Tight, Repeatable Beats
+Humor feels pre-engineered - LLMs' typical "salt sprinkle" approach:
+
+**Examples to FLAG:**
+- Multiple one-liner jokes in quick succession
+- Humor that feels evenly distributed (every N paragraphs)
+- Jokes that land too perfectly
+- No failed humor or awkward jokes
+- Every humorous beat gets a tidy ending
+
+**Why it's a tell:**
+- LLMs add humor systematically (training: "engaging writing has humor")
+- Real writers: some jokes land, some don't, uneven distribution
+- AI humor feels engineered rather than spontaneous
+- The consistency of "funny moments" is the tell
+
+**Real human humor has:**
+- Uneven distribution (some sections funny, others serious)
+- Some jokes that don't quite land
+- Humor that emerges from frustration or observation
+- Less polished, more spontaneous feel
+- Varies based on writer's mood/energy
+
 ## 4. Bland, Lifeless Language
 - Overuse of weak verbs (is, was, has, had, get, make, do)
 - Excessive nominalizations ("make a decision" vs "decide")
 - Passive voice overuse
 - Hedge words that weaken claims (very, really, quite, somewhat, rather, fairly)
   - **Note:** "remarkably," "shockingly," "surprisingly" are NOT hedges - they're emphatic!
+  - **But:** Watch for *absence* of hedging in technical claims (see section 2h)
 - No personality or distinctive voice
 
 ## 5. Suspiciously Perfect Structure
@@ -357,28 +680,53 @@ When asked for a "quick sweep" or "second pass":
 ```
 AUTHENTICITY REVIEW
 
-Em-Dash Count: [N] (CRITICAL - count before scoring)
+## Pattern Counts (Count before scoring):
+- Em-Dash Count: [N]
+- Single-sentence paragraphs: [N]
+- Parallel triads: [N]
+- Paragraph-ending quips: [N]/[total paragraphs] = [%]
+- Analogies/metaphors: [N] per [word count]
 
 Score: [1-10]/10 (Target: 8+)
-[If score > 7 and em-dashes > 0: EXPLAIN WHY - this should be rare]
 
-AI Tells Detected:
-- "[quoted phrase]" - [why it's problematic]
-- "[quoted phrase]" - [why it's problematic]
+## Deductions Applied:
+- Em-dashes: -[N] points
+- Structural patterns: -[N] points
+- Uniformity: -[N] points
+- Read-aloud failures: -[N] points
 
-Generic/Bland Language:
-- [examples of weak or corporate speak]
+## AI Tells Detected:
 
-Missing Elements:
-- [what would make this feel more authentic]
+**Structural Patterns:**
+- [Pattern type]: "[quoted example]" - [why problematic]
+- [Pattern type]: "[quoted example]" - [why problematic]
 
-Specific Recommendations:
-- Replace "[phrase]" with [suggestion]
-- Add [specific element] to create more voice
-- Vary [structural element]
+**Generic/Bland Language:**
+- "[quoted phrase]" - [why corporate speak/AI]
+- "[quoted phrase]" - [why problematic]
 
-Overall Assessment:
-[2-3 sentences on authenticity and what needs fixing]
+**Uniformity Issues:**
+- [Describe tonal/structural consistency problems]
+- [Note lack of personality markers]
+
+**Read-Aloud Failures:**
+- Line [N]: "[quoted text]" - sounds like [AI/essay/marketing]
+- Line [N]: "[quoted text]" - sounds like [AI/essay/marketing]
+
+## Missing Elements:
+- Tonal variation: [describe what's missing]
+- Personal idiosyncrasies: [no verbal tics, no asides, etc.]
+- Natural clutter: [too polished, no rough edges]
+- Hedging: [technical claims too absolute]
+
+## Specific Recommendations:
+- Structural: [fix triads, vary paragraph endings, etc.]
+- Voice: [add personality markers, verbal tics, asides]
+- Polish: [introduce natural imperfection, uneven energy]
+- Hedging: [qualify technical claims appropriately]
+
+## Overall Assessment:
+[2-3 sentences summarizing authenticity issues and whether this sounds human or AI-generated]
 ```
 
 # Revision Mode Deliverable
@@ -433,7 +781,11 @@ Fixed [N] AI tells that returned:
 
 # Scoring Guide
 
-**CRITICAL: Em-Dash Count FIRST**
+**CRITICAL: Multi-Factor Analysis Required**
+
+Score authenticity using this comprehensive checklist:
+
+## Step 1: Em-Dash Count (CRITICAL BASELINE)
 Before anything else, count every em-dash (—) in the document. Write down the count.
 
 **HARD RULES:**
@@ -442,20 +794,82 @@ Before anything else, count every em-dash (—) in the document. Write down the 
 - **1-2 em-dashes:** Maximum score is 7/10 (still too many for most content)
 - **0 em-dashes:** Can score 8-10 if other criteria met
 
-**CRITICAL: Read Aloud Test**
-After em-dash count, read the entire document aloud (in your head). If ANY sentence, phrase, or section title makes you think "an LLM wrote this" or "this sounds like an essay", score below 8.
+## Step 2: Count Structural Patterns
+Track these mechanical patterns:
 
-**9-10**: Zero em-dashes. Zero AI tells. Sounds completely human. Distinctive, specific. Passes read-aloud test perfectly.
+- **Single-sentence paragraphs:** Count standalone punchy declaratives
+  - 3+ in short piece (< 1000 words) = automatic -2 points
+- **Parallel triads:** Count three-part structures (WHAT/WHY/HOW, three parallel clauses, etc.)
+  - 5+ triadic patterns in < 1500 words = automatic -2 points
+- **Paragraph-ending quips:** Count sections with tidy rhetorical flourishes
+  - If 70%+ of paragraphs end with quips = automatic -2 points
+- **Analogies/metaphors:** Count per 500 words
+  - 5+ analogies in 500 words = automatic -2 points
 
-**8**: Zero em-dashes. Minor AI vibes but mostly authentic. 1-2 small issues at most. Mostly passes read-aloud test.
+## Step 3: Assess Uniformity (Holistic)
+Read the entire document and evaluate:
 
-**7 or below**: Has em-dashes OR several other AI tells. Needs revision. Fails read-aloud test.
+- **Tonal consistency:** Does tone vary naturally or stay uniformly polished?
+  - If every paragraph equally polished = -1 point
+- **Structural uniformity:** Do all sections follow same pattern?
+  - If all sections identically shaped = -1 point
+- **Hedge presence:** Are technical claims appropriately qualified?
+  - If 5+ absolute claims without hedging = -1 point
+- **Personal idiosyncrasies:** Any verbal tics, asides, visible thinking?
+  - If zero personality markers = -1 point
 
-**6-7**: Several AI tells or bland language. Needs revision. Fails read-aloud test in multiple places.
+## Step 4: Read Aloud Test
+Read the entire document aloud (in your head). Count sentences that make you think "an LLM wrote this."
 
-**4-5**: Obvious AI patterns. Generic structure. Major rewrite needed. Sounds like essay/presentation.
+- **0 sentences flagged:** Can score 9-10
+- **1-2 sentences flagged:** Maximum score 8
+- **3-5 sentences flagged:** Maximum score 6-7
+- **6+ sentences flagged:** Maximum score 4-5
 
-**1-3**: Screams "bot wrote this." Complete overhaul required.
+## Step 5: Calculate Final Score
+
+Start with 10 points. Apply deductions from Steps 1-4:
+
+**9-10 (Sounds Completely Human):**
+- Zero em-dashes ✓
+- Zero or minimal structural patterns ✓
+- Natural tonal variation ✓
+- Passes read-aloud test perfectly ✓
+- Has personal idiosyncrasies ✓
+- Appropriate hedging in technical claims ✓
+
+**8 (Mostly Authentic, Minor Issues):**
+- Zero em-dashes ✓
+- 1-2 small structural patterns
+- Mostly passes read-aloud test
+- Minor uniformity but some variation
+- Some personality present
+- 1-2 absolute claims without hedging
+
+**6-7 (Clear AI Patterns):**
+- Has em-dashes (1-5) OR
+- Multiple structural patterns OR
+- High uniformity throughout OR
+- Fails read-aloud test in multiple places OR
+- No personality/idiosyncrasies
+
+**4-5 (Obvious AI):**
+- Has 3+ em-dashes OR
+- Mechanical structure throughout OR
+- Sounds like marketing copy OR
+- Fails read-aloud test consistently OR
+- Multiple triadic patterns + no variation
+
+**1-3 (Screams Bot):**
+- 6+ em-dashes OR
+- Systematic AI patterns throughout OR
+- Perfectly uniform polish OR
+- Every sentence could be AI-generated OR
+- Zero human markers whatsoever
+
+## Critical Reminder
+
+**BE RUTHLESSLY HONEST.** If it sounds like AI, score below 8. Don't rationalize AI tells as "style choices."
 
 # Critical Standards
 
